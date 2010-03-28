@@ -1,0 +1,34 @@
+25/02/2010 Version 0.0
+Start of project
+definition of classes and relations between them
+0.1 Writing/documentation done, no test, no relational tests
+0.2-3 additional code
+0.4 single tests passed and automatized
+0.5 context testing 
+
+19/03/2010 Version 0.4
+No fatal errors (ran 1000000 times without errors on ensisun)
+TODO:
+1 Play to check if algorithms output the correct result
+2 Establish Protocol for network interface
+3 Graphical interface
+4 logs
+* add Ramsch
+* modify code to have a class game (maybe class turn as well)
+
+21/03/2010 Version 0.4
+Server side seems finished. Only nice quit to do
+bug with play:
+
+Network organization see Protocol.java
+1 thread per board (three sockets)
+1 threads receives the connected socket transforms the connected client into player and assign them to boards
+*1 thread checks that every human player is connected through a thread and cleans up if not
+
+
+
+
+
+
+
+
