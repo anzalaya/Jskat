@@ -37,12 +37,12 @@ public class CommandLine extends HumanInterface{
 
   public  void drawRoleInfo(){
     for (int i=0; i<3; i++){
-      System.out.println(i+": "+view.role.get(i));
+      System.out.println(view.players_name.get(i)+": "+view.role.get(i));
     }
   }
 
   public  void drawHandInfo(){
-    String res="";
+    String res="Hand: ";
     for (int i=0; i< view.hand.size();i++){
       res+=i+" "+view.hand.get(i).toString()+" |";
     }
@@ -50,7 +50,7 @@ public class CommandLine extends HumanInterface{
   }
 
   public  void drawReizenInfo(){
-    System.out.println("player "+view.reizen_index+(view.reizen_answer? " accepts ":" refuses ")+view.reizen_value);
+    System.out.println(view.players_name.get(view.reizen_index)+"("+view.role.get(view.reizen_index)+")"+(view.reizen_answer? " accepts ":" refuses ")+view.reizen_value);
   }
 
   public  void drawModifInfo(){
@@ -63,7 +63,7 @@ public class CommandLine extends HumanInterface{
   }
 
   public  void drawSkatInfo(){
-    String res="";
+    String res="Skat: ";
     for (int i=0; i< view.skat.size();i++){
       res+=(i+10)+" "+view.skat.get(i).toString()+" |";
     }
@@ -76,8 +76,8 @@ public class CommandLine extends HumanInterface{
   }
 
   public  void drawTrickInfo(){
-    String res="";
-    for (int i=0; i<view.current_trick.length;i++){
+    String res="Trick: ";
+    for (int i=0; i<view.size_trick;i++){
       res+=i+" "+view.current_trick[i].toString()+" |";
     }
     System.out.println(res);
@@ -99,8 +99,7 @@ public class CommandLine extends HumanInterface{
   }
 
   public  void drawTurnStartInfo(){
-    drawLastTrickWinnerInfo();
-    String res="new turn";
+    String res="\nNew turn";
     System.out.println(res);
     drawGameInfo();
     drawTurnInfo();
@@ -110,7 +109,9 @@ public class CommandLine extends HumanInterface{
     drawGameTypeInfo();
     drawModifInfo();
     drawHandInfo();
-    if (view.tab_modifiers.get(0).intValue()==1)drawSkatInfo();
+    if (view.index_taker==0 && view.tab_modifiers.get(0).intValue()==0){
+      drawSkatInfo();
+    }
   }
 
   public  void drawGameStartInfo(){
@@ -121,12 +122,12 @@ public class CommandLine extends HumanInterface{
   }
 
   public  void drawLastTrickWinnerInfo(){
-    String res="Player "+view.index_taker+" won the last trick";
+    String res=view.players_name.get(view.trick_winner)+" won the last trick";
     System.out.println(res);
   }
 
   public  void drawResultGameInfo(){
-    String res="Player "+view.index_taker+(view.win?" won ":" lost ")+"and gets "+view.value_game+ "points";
+    String res=view.players_name.get(view.index_taker)+(view.win?" won ":" lost ")+"and gets "+view.value_game+ "points";
     System.out.println(res);
   }
 
@@ -136,7 +137,7 @@ public class CommandLine extends HumanInterface{
   }
 
   public  void drawTakerInfo(){
-    String res="Player "+view.index_taker+" won the reizen";
+    String res=view.players_name.get(view.index_taker)+"("+view.role.get(view.index_taker)+")"+" won the reizen with a bid of "+view.reizen_value;
     System.out.println(res);
   }
 

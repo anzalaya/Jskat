@@ -257,7 +257,7 @@ public class HumanPlayer extends Player{
     action_player_bool=false;
     while (true){
       if (reader.hasNextInt()){
-        index=reader.nextInt(player_hand.getCurrentHandSize()) ;
+        index=reader.nextInt()%player_hand.getCurrentHandSize() ;
         return player_hand.getHand().get(index);
       }
       reader.next();

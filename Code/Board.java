@@ -337,6 +337,7 @@ public class Board extends Observable{
     deck.reset();
     deck.shuffle();
     deal(dealer_index);
+    System.out.println(this.toString());
 
     sendNotification(12);
 
@@ -349,7 +350,7 @@ public class Board extends Observable{
     tab_player.get(0).getStat()[0]++;
     tab_player.get(1).getStat()[0]++;
     tab_player.get(2).getStat()[0]++;
-    last_winner=index_taker;
+    last_winner=(dealer_index+1)%3;
     tab_player.get(index_taker).getStat()[1]++;
     tab_player.get((index_taker+1)%3).getStat()[3]++;
     tab_player.get((index_taker+2)%3).getStat()[3]++;
@@ -382,6 +383,8 @@ public class Board extends Observable{
       modifier_ouvert=chosen_modifiers.get(3).equals(new Integer(1));
     }
 
+    sendNotification(12);
+
     sendNotification(14);
 
     if (modifier_ouvert){
@@ -396,14 +399,19 @@ public class Board extends Observable{
       sendNotification(15);
       action_player=index_taker;
       chosen_skat=tab_player.get(index_taker).chooseSkat();
+      System.out.println("Skat choisi "+chosen_skat.toString());
       tab_player.get(index_taker).remove(chosen_skat);
       //cas ou pas hand, on remplace
       skat.clear();
       skat.addAll(chosen_skat);
+      sendNotification(15);
     }
-    for (int i=1;i<=10;i++){
+//    System.out.println("Size hand"+tab_player.get(index_taker).getHand().getHand().size());
+  //  System.out.println("Hand"+tab_player.get(index_taker).getHand().toString());
+    for (turn=1;turn<=10;turn++){
       sendNotification(21);
       sendNotification(19);
+      sendNotification(12);
       doTurn();
       sendNotification(18);
       sendNotification(23);
@@ -469,15 +477,15 @@ public class Board extends Observable{
   public void sendNotification(int code){
     setChanged();
     notifyObservers(new Integer(code));
- //   while(!hasChanged()) {
- //   System.out.println("Sleep");
- //     synchronized(Thread.currentThread()){
- //       try {
- //         Thread.currentThread().wait();
- //       } catch (InterruptedException e) {System.err.println("Failed wait"+e.toString());System.exit(1);}
- //     }
- //   System.out.println("Wake up");
- //   }
+    //   while(!hasChanged()) {
+    //   System.out.println("Sleep");
+    //     synchronized(Thread.currentThread()){
+    //       try {
+    //         Thread.currentThread().wait();
+    //       } catch (InterruptedException e) {System.err.println("Failed wait"+e.toString());System.exit(1);}
+    //     }
+    //   System.out.println("Wake up");
+    //   }
   }
 
   /**
@@ -524,7 +532,7 @@ public class Board extends Observable{
             action_player=listener_index;
             reizen_proposal=reizen_array[ind];
 
-        answer_proposal=tab_player.get(listener_index).decideReizen(reizen_array[ind]);
+            answer_proposal=tab_player.get(listener_index).decideReizen(reizen_array[ind]);
             sendNotification(13);
             if (answer_proposal){
               index_taker=listener_index;
@@ -601,7 +609,6 @@ public class Board extends Observable{
     tab_player.get(last_winner).modifGameScore(t.getValue());
     board_tricks.add(t);
     tab_player.get(last_winner).getTricks().add(new Integer(board_tricks.size()-1));
-    turn++;
   }
 
   /**

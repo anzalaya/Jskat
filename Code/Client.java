@@ -37,6 +37,7 @@ public class Client extends Thread{
     public boolean win;
     public int value_game;
     public int[] scores;
+    public int size_trick;
 
 
 
@@ -59,6 +60,7 @@ public class Client extends Thread{
     }
 
     public synchronized void turnStart(){
+      size_trick=0;
     }
 
     public synchronized void processNameInfo(){
@@ -155,6 +157,7 @@ public class Client extends Thread{
     public synchronized void processTrickInfo(){
       try{
         current_trick=(Card[])c.in_stream.readObject();
+      size_trick++;
       }catch (IOException e){
         System.err.println("Serialization error:"+e.toString());
         e.printStackTrace();
@@ -377,6 +380,7 @@ public class Client extends Thread{
     CommandLine ihm=new CommandLine(getView(),this);
     while(true){
       chooser=c.in.nextInt();
+      System.out.println("chooser="+chooser);
       switch(chooser){
         case 0:processAIRequest(); break;
         case 1:processNmRequest(); break;

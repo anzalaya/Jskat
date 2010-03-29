@@ -420,6 +420,7 @@ public class WorkerThread{
 
 
     public synchronized void sendSkatInfo(){
+      if (!(board.getIndexTaker()<human_number)) return;
       connection_array.get(board.getIndexTaker()).out.println(15);
       try{
         connection_array.get(board.getIndexTaker()).out_stream.writeObject(Collections.unmodifiableList(board.getSkat()));
@@ -582,6 +583,7 @@ public class WorkerThread{
       }
       int switch_index=-1;
       while(true){
+        if (!(board.getActionPlayerIndex()<human_number)) continue;
         if (input_flow_array.get(board.getActionPlayerIndex()).hasNextInt()){
           switch_index=input_flow_array.get(board.getActionPlayerIndex()).nextInt();
         }

@@ -122,7 +122,13 @@ public static final long serialVersionUID = 1L;
   }
 
   public String toString(){
-    return "["+trick_cards[0].toString()+","+trick_cards[1].toString()+","+trick_cards[2].toString()+"] The current winner is player["+current_winner+"] and the value is "+value;
+    String res;
+    res="[";
+    res+=trick_cards[0].toString()+",";
+    //res+=trick_cards[1].toString()+",";
+    //res+=trick_cards[2].toString();
+    res+="] The current winner is player["+current_winner+"] and the value is "+value;
+    return res;
   }
 
 /**
