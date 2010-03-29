@@ -15,7 +15,6 @@ public abstract class HumanInterface implements Observer{
 
   public void update(Observable o, Object arg){
     Integer decide=(Integer)arg;
-      System.out.println("update decider="+decide.toString());
     switch(decide.intValue()){
       case  8:drawNameInfo();  break;
       case  9:drawStatInfo();  break;

@@ -211,7 +211,7 @@ public class HumanPlayer extends Player{
     Card c2=null;
     while(true){
       if (reader.hasNextInt()){
-        c1=player_hand.getHand().get(reader.nextInt(12));
+        c1=player_hand.getHand().get(reader.nextInt()%12);
         break;
       }
       reader.next();
@@ -219,7 +219,7 @@ public class HumanPlayer extends Player{
     }
     while(true){
       if (reader.hasNextInt()){
-        c2=player_hand.getHand().get(reader.nextInt(12));
+        c2=player_hand.getHand().get(reader.nextInt()%12);
         break;
       }
       reader.next();
@@ -228,7 +228,7 @@ public class HumanPlayer extends Player{
     while (c1.equals(c2)){
       while(true){
         if (reader.hasNextInt()){
-          c2=player_hand.getHand().get(reader.nextInt(12));
+          c2=player_hand.getHand().get(reader.nextInt()%12);
           break;
         }
         reader.next();

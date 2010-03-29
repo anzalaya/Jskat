@@ -46,48 +46,22 @@ public class Client extends Thread{
       players_name.add("");
       players_name.add("");
       role=new ArrayList<Player.Role>(3);
-      role.add(null);
+      role.add(0,null);
       role.add(null);
       role.add(null);
       stats=new ArrayList<int[]>(3);
       stats.add(null);
       stats.add(null);
       stats.add(null);
-      skat=null;
-      tab_modifiers=null;
-      game_type=null;
-      role=null;
-      game=-1;
-      turn=-1;
-      trick_list=null;
-      current_trick=null;
-      hand=null;
-      trick_winner=-1;
-      scores=null;
     }
 
-    public void gameStart(){
-      skat=null;
-      tab_modifiers=null;
-      game_type=null;
-      role=null;
-      game=-1;
-      turn=-1;
-      trick_list=null;
-      current_trick=null;
-      hand=null;
-      trick_winner=-1;
-      scores=null;
+    public synchronized void gameStart(){
     }
 
-    public void turnStart(){
-      turn=-1;
-      current_trick=null;
-      hand=null;
-      trick_winner=-1;
+    public synchronized void turnStart(){
     }
 
-    public void processNameInfo(){
+    public synchronized void processNameInfo(){
       int index;
       index=c.in.nextInt();
       players_name.set(index,c.in.next());
@@ -95,142 +69,145 @@ public class Client extends Thread{
       players_name.set(index,c.in.next());
     }
 
-    public void processStatInfo(){
+    public synchronized void processStatInfo(){
       int index=c.in.nextInt();
       try{
         stats.set(index,(int[])c.in_stream.readObject());
       }catch (IOException e){
         System.err.println("Serialization error:"+e.toString());
+        e.printStackTrace();
         System.exit(1);
       }catch (ClassNotFoundException e){
         System.err.println("Class not found error:"+e.toString());
+        e.printStackTrace();
         System.exit(1);
       }
     }
 
-    public void processGameInfo(){
+    public synchronized void processGameInfo(){
       game=c.in.nextInt();
     }
 
-    public void processRoleInfo(){
-      try{
-        role.set(0,(Player.Role)c.in_stream.readObject());
-      }catch (IOException e){
-        System.err.println("Serialization error:"+e.toString());
-        System.exit(1);
-      }catch (ClassNotFoundException e){
-        System.err.println("Class not found error:"+e.toString());
-        System.exit(1);
-      }
+    public synchronized void processRoleInfo(){
+      String res =c.in.next();
+      role.add(0,Player.Role.valueOf(res));
       role.set(1,Player.Role.idToRole((role.get(0).getRoleId()+1)%3));
       role.set(2,Player.Role.idToRole((role.get(1).getRoleId()+1)%3));
     }
 
-    public void processHandInfo(){
+    public synchronized void processHandInfo(){
       try{
         hand=(List<Card>)c.in_stream.readObject();
       }catch (IOException e){
         System.err.println("Serialization error:"+e.toString());
+        e.printStackTrace();
         System.exit(1);
       }catch (ClassNotFoundException e){
         System.err.println("Class not found error:"+e.toString());
+        e.printStackTrace();
         System.exit(1);
       }
     }
 
-    public void processReizenInfo(){
+    public synchronized void processReizenInfo(){
       reizen_index=c.in.nextInt();
       reizen_value=c.in.nextInt();
       reizen_answer=c.in.nextBoolean();
     }
 
 
-    public void processModifInfo(){
-      try{
-        tab_modifiers=(List<Integer>)c.in_stream.readObject();
-      }catch (IOException e){
-        System.err.println("Serialization error:"+e.toString());
-        System.exit(1);
-      }catch (ClassNotFoundException e){
-        System.err.println("Class not found error:"+e.toString());
-        System.exit(1);
-      }
+    public synchronized void processModifInfo(){
+      tab_modifiers=new ArrayList<Integer>(4);
+      tab_modifiers.add(c.in.nextBoolean() ? new Integer(1) : new Integer(0));
+      tab_modifiers.add(c.in.nextBoolean() ? new Integer(1) : new Integer(0));
+      tab_modifiers.add(c.in.nextBoolean() ? new Integer(1) : new Integer(0));
+      tab_modifiers.add(c.in.nextBoolean() ? new Integer(1) : new Integer(0));
     }
 
-    public void processSkatInfo(){
+    public synchronized void processSkatInfo(){
       try{
         skat=(List<Card>)c.in_stream.readObject();
       }catch (IOException e){
         System.err.println("Serialization error:"+e.toString());
+        e.printStackTrace();
         System.exit(1);
       }catch (ClassNotFoundException e){
         System.err.println("Class not found error:"+e.toString());
+        e.printStackTrace();
         System.exit(1);
       }
     }
 
-    public void processGameTypeInfo(){
+    public synchronized void processGameTypeInfo(){
       try{
         game_type=(Board.GameType)c.in_stream.readObject();
       }catch (IOException e){
         System.err.println("Serialization error:"+e.toString());
+        e.printStackTrace();
         System.exit(1);
       }catch (ClassNotFoundException e){
         System.err.println("Class not found error:"+e.toString());
+        e.printStackTrace();
         System.exit(1);
       }
     }
 
-    public void processTrickInfo(){
+    public synchronized void processTrickInfo(){
       try{
         current_trick=(Card[])c.in_stream.readObject();
       }catch (IOException e){
         System.err.println("Serialization error:"+e.toString());
+        e.printStackTrace();
         System.exit(1);
       }catch (ClassNotFoundException e){
         System.err.println("Class not found error:"+e.toString());
+        e.printStackTrace();
         System.exit(1);
       }
     }
 
-    public void processTrickListInfo(){
+    public synchronized void processTrickListInfo(){
       try{
         trick_list=(List<Trick>)c.in_stream.readObject();
       }catch (IOException e){
         System.err.println("Serialization error:"+e.toString());
+        e.printStackTrace();
         System.exit(1);
       }catch (ClassNotFoundException e){
         System.err.println("Class not found error:"+e.toString());
+        e.printStackTrace();
         System.exit(1);
       }
     }
 
-    public void processTurnInfo(){
+    public synchronized void processTurnInfo(){
       turn=c.in.nextInt();
     }
 
-    public void processOuvertInfo(){
+    public synchronized void processOuvertInfo(){
       try{
         hand_taker_ouvert=(List<Card>)c.in_stream.readObject();
       }catch (IOException e){
         System.err.println("Serialization error:"+e.toString());
+        e.printStackTrace();
         System.exit(1);
       }catch (ClassNotFoundException e){
         System.err.println("Class not found error:"+e.toString());
+        e.printStackTrace();
         System.exit(1);
       }
     }
 
-    public void processTrickWinnerInfo(){
+    public synchronized void processTrickWinnerInfo(){
       trick_winner=c.in.nextInt();
     }
 
-    public void processResultGameInfo(){
+    public synchronized void processResultGameInfo(){
       win=c.in.nextBoolean();
       value_game=c.in.nextInt();
     }
 
-    public void processScoreInfo(){
+    public synchronized void processScoreInfo(){
       int index;
       scores=new int[3];
       index=c.in.nextInt();
@@ -241,22 +218,22 @@ public class Client extends Thread{
       scores[index]=c.in.nextInt();
     }
 
-    public void processTakerInfo(){
+    public synchronized void processTakerInfo(){
       index_taker=c.in.nextInt();
     }
 
-    public void sendNotification(int code){//bof
+    public synchronized void sendNotification(int code){//bof
       setChanged();
       notifyObservers(new Integer(code));
-//      System.out.println("proutD");
-//      while(!hasChanged()) {
-//        synchronized(Thread.currentThread()){
-//          try {
-//            Thread.currentThread().wait();
-//          } catch (InterruptedException e) {System.err.println("Failed wait"+e.toString());System.exit(1);}
-//        }
-//      }
-//      System.out.println("proutE");
+      //      System.out.println("proutD");
+      //      while(!hasChanged()) {
+      //        synchronized(Thread.currentThread()){
+      //          try {
+      //            Thread.currentThread().wait();
+      //          } catch (InterruptedException e) {System.err.println("Failed wait"+e.toString());System.exit(1);}
+      //        }
+      //      }
+      //      System.out.println("proutE");
     }
 
   }
@@ -305,6 +282,7 @@ public class Client extends Thread{
       c=new Connection(new Socket(server_name,server_port));
     } catch (IOException e) {
       System.err.println("connection to "+server_name+" impossible");
+      e.printStackTrace();
       System.exit(1);
     }
     view=new View(name);
@@ -328,78 +306,77 @@ public class Client extends Thread{
       pout=new PipedOutputStream(in);
     } catch (IOException e){
       System.err.println("pipe failed "+e.toString());
+      e.printStackTrace();
       System.exit(1);
     }
     return pout;
   }
 
 
-  public void processAIRequest(){
+  public synchronized void processAIRequest(){
     System.out.println("AI?");
     boolean reply=reader.nextBoolean();
     c.out.println(0);
     c.out.println(reply);
   }
 
-  public void processNmRequest(){
+  public synchronized void processNmRequest(){
     String reply=view.players_name.get(0);
     c.out.println(1);
     c.out.println(reply);
   }
 
 
-  public void processRzRequest(){
+  public synchronized void processRzRequest(){
     System.out.println("Reizen? "+c.in.nextInt());
     boolean reply=reader.nextBoolean();
     c.out.println(2);
     c.out.println(reply);
   }
 
-  public void processGmTRequest(){
+  public synchronized void processGmTRequest(){
     System.out.println("Game Type ?");
     int reply=reader.nextInt();
     c.out.println(3);
     c.out.println(reply);
   }
 
-  public void processGmMRequest(){
+  public synchronized void processGmMRequest(){
     System.out.println("Game Modifier?");
     boolean reply=reader.nextBoolean();
     c.out.println(4);
     c.out.println(reply);
   }
 
-  public void processSkRequest(){
+  public synchronized void processSkRequest(){
     System.out.println("Skat?");
     int reply=reader.nextInt();
     c.out.println(5);
     c.out.println(reply);
   }
 
-  public void processPlRequest(){
+  public synchronized void processPlRequest(){
     System.out.println("Play?");
     int reply=reader.nextInt();
     c.out.println(6);
     c.out.println(reply);
   }
 
-  public void processExRequest(){
+  public synchronized void processExRequest(){
     System.out.println("Exit");
     try{
       c.close();
-    }catch (IOException e){}
+    }catch (IOException e){
+      e.printStackTrace();
+    }
     System.exit(1);
   }
 
   public void run(){
     int chooser;
     CommandLine ihm=new CommandLine(getView(),this);
-    System.out.println("Client "+Thread.currentThread().toString());
     while(true){
-      System.out.println("debut");
       chooser=c.in.nextInt();
-      System.out.println("apres extract chooser");
-      System.out.println("chooser="+chooser);
       switch(chooser){
         case 0:processAIRequest(); break;
         case 1:processNmRequest(); break;
@@ -433,12 +410,10 @@ public class Client extends Thread{
       if (chooser>7){
         view.sendNotification(chooser);
       }
-      System.out.println("bobobobobob");
     }
   }
 
   public static void main(String[] args){
-    System.out.println("Main "+Thread.currentThread().toString());
     (new Client(args[0],Integer.parseInt(args[1]),"Test",false)).start();
   }
 }

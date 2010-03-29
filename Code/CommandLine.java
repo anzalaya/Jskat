@@ -65,7 +65,7 @@ public class CommandLine extends HumanInterface{
   public  void drawSkatInfo(){
     String res="";
     for (int i=0; i< view.skat.size();i++){
-      res+=i+" "+view.skat.get(i).toString()+" |";
+      res+=(i+10)+" "+view.skat.get(i).toString()+" |";
     }
     System.out.println(res);
   }

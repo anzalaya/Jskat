@@ -317,7 +317,6 @@ public class Board extends Observable{
     sendNotification(8);
 
     sendNotification(22);
-    System.out.println("apres game");
 
     sendNotification(9);
 
@@ -470,7 +469,6 @@ public class Board extends Observable{
   public void sendNotification(int code){
     setChanged();
     notifyObservers(new Integer(code));
-    System.out.println("avant");
  //   while(!hasChanged()) {
  //   System.out.println("Sleep");
  //     synchronized(Thread.currentThread()){
@@ -480,7 +478,6 @@ public class Board extends Observable{
  //     }
  //   System.out.println("Wake up");
  //   }
-    System.out.println("apres");
   }
 
   /**

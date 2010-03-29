@@ -1,0 +1,1 @@
+javac Skat.java -d ../Server

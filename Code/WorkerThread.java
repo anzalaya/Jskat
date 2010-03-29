@@ -229,10 +229,8 @@ public class WorkerThread{
     }
 
     public synchronized void processRzRequest(){
-      //log
       Connection c=connection_array.get(board.getActionPlayerIndex());
       int possible_reizen=input_flow_array.get(board.getActionPlayerIndex()).nextInt();
-      System.out.println(possible_reizen);
       boolean reply;
 
       c.out.println(2);
@@ -383,15 +381,10 @@ public class WorkerThread{
     public synchronized void sendRoleInfo(){
       for (int i=0;i<human_number;i++){
         connection_array.get(i).out.println(11);
-        try{
-          connection_array.get(i).out_stream.writeObject(board.getTabPlayer().get(i).getRole());
-          connection_array.get(i).out_stream.reset();
-        }catch (IOException e){
-          System.err.println("Serialization error:"+e.toString());
-          System.exit(1);
+        System.out.println(board.getTabPlayer().get(i).getRole().toString());
+        connection_array.get(i).out.println(board.getTabPlayer().get(i).getRole().toString());
         }
       }
-    }
 
     public synchronized void sendHandInfo(){
       for (int i=0;i<human_number;i++){
