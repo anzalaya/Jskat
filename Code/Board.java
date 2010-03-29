@@ -305,9 +305,6 @@ public class Board extends Observable{
     game=0;
     game_type=GameType.GRAND;//game_type cannot be null;
     dealer_index=0;
-
-    setChanged();
-    notifyObservers(new Integer(8));
   }
 
   /**
@@ -317,7 +314,10 @@ public class Board extends Observable{
     List<Card> chosen_skat;
     List<Integer> chosen_modifiers;
 
+    sendNotification(8);
+
     sendNotification(22);
+    System.out.println("apres game");
 
     sendNotification(9);
 
@@ -470,13 +470,17 @@ public class Board extends Observable{
   public void sendNotification(int code){
     setChanged();
     notifyObservers(new Integer(code));
-    while(!hasChanged()) {
-      synchronized(Thread.currentThread()){
-        try {
-          Thread.currentThread().wait();
-        } catch (InterruptedException e) {System.err.println("Failed wait"+e.toString());System.exit(1);}
-      }
-    }
+    System.out.println("avant");
+ //   while(!hasChanged()) {
+ //   System.out.println("Sleep");
+ //     synchronized(Thread.currentThread()){
+ //       try {
+ //         Thread.currentThread().wait();
+ //       } catch (InterruptedException e) {System.err.println("Failed wait"+e.toString());System.exit(1);}
+ //     }
+ //   System.out.println("Wake up");
+ //   }
+    System.out.println("apres");
   }
 
   /**

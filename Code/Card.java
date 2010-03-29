@@ -522,7 +522,7 @@ public static final long serialVersionUID = 1L;
    * @return string description of the card
    */
   public String toString(){
-    return "("+color+" "+face+")";
+    return "("+face+" "+color+")";
   }
 
 
