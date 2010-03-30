@@ -517,7 +517,7 @@ public class WorkerThread{
       for (int i=0;i<human_number;i++){
         connection_array.get(i).out.println(24);
         connection_array.get(i).out.println(board.isWon());
-        connection_array.get(i).out.println(board.getMaxReizenValue());
+        connection_array.get(i).out.println((board.isWon() ? 1 : -2)*board.getMaxReizenValue());
       }
     }
 

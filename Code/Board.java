@@ -383,7 +383,6 @@ public class Board extends Observable{
       modifier_ouvert=chosen_modifiers.get(3).equals(new Integer(1));
     }
 
-    sendNotification(12);
 
     sendNotification(14);
 
@@ -396,7 +395,9 @@ public class Board extends Observable{
     if (modifier_hand){
       tab_player.get(index_taker).remove(skat);
     }else{
+    tab_player.get(index_taker).sortHand();
       sendNotification(15);
+      sendNotification(12);
       action_player=index_taker;
       chosen_skat=tab_player.get(index_taker).chooseSkat();
       System.out.println("Skat choisi "+chosen_skat.toString());
@@ -681,7 +682,7 @@ public class Board extends Observable{
     for (int i=0;i<board_tricks.size();i++){
       res+=(i+1)+": "+board_tricks.get(i).toString()+"\n";
     }
-    res+="This is turn "+turn+" and the asked color is "+asked_info.toString()+"\n";
+    res+="This is turn "+turn+" and the asked color is "+(asked_info!=null ? asked_info.toString(): "non existent")+"\n";
 
     return res;
   }

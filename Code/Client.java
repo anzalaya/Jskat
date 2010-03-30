@@ -380,7 +380,6 @@ public class Client extends Thread{
     CommandLine ihm=new CommandLine(getView(),this);
     while(true){
       chooser=c.in.nextInt();
-      System.out.println("chooser="+chooser);
       switch(chooser){
         case 0:processAIRequest(); break;
         case 1:processNmRequest(); break;
