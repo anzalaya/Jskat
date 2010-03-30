@@ -357,6 +357,15 @@ public class WorkerThread{
 
     public synchronized void sendStatInfo(){
       for (int i=0;i<human_number;i++){
+          connection_array.get(i).out.println(9);
+          connection_array.get(i).out.println(relativeIndex(i,i));
+          try{
+            connection_array.get(i).out_stream.writeObject(board.getTabPlayer().get(i).getStat());
+            connection_array.get(i).out_stream.reset();
+          }catch (IOException e){
+            System.err.println("Serialization error:"+e.toString());
+            System.exit(1);
+          }
         for(int j=(i+1)%3;j!=i;j=(j+1)%3){
           connection_array.get(i).out.println(9);
           connection_array.get(i).out.println(relativeIndex(i,j));
@@ -569,7 +578,7 @@ public class WorkerThread{
       spawn=new Thread(
           new Runnable(){
           public void run(){
-          board.play_game();
+          while (true) board.play_game();
           }
           }
           );

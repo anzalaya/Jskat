@@ -413,6 +413,9 @@ public class Board extends Observable{
       sendNotification(21);
       sendNotification(19);
       sendNotification(12);
+      if (modifier_ouvert){
+        sendNotification(20);
+      }
       doTurn();
       sendNotification(18);
       sendNotification(23);

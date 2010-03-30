@@ -20,10 +20,20 @@ TODO:
 Server side seems finished. Only nice quit to do
 bug with play:
 
+30/03/2010 version 0.5
+Version commandline seems to be working
+TODO
+test with 2 3 human player to see if view is working 
+test bad combinaisons of modifiers
+test bad card 
+add exit strategy (add protocol request at end of game)
+replace integer value by constants in protocol and test that all is well
+finish commandline
+start graphic interface
+
 Network organization see Protocol.java
 1 thread per board (three sockets)
-1 threads receives the connected socket transforms the connected client into player and assign them to boards
-*1 thread checks that every human player is connected through a thread and cleans up if not
+1 threads receives the connected socket and wait to have enough to dispatch to boards
 
 
 

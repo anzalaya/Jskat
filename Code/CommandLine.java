@@ -28,6 +28,9 @@ public class CommandLine extends HumanInterface{
 
   public  void drawStatInfo(){
     String res="";
+   // res+="Stats of "+view.players_name.get(0)+" game played "+view.stats.get(0)[0]+", game taken "+view.stats.get(0)[1]+", game taken won "+view.stats.get(0)[2]+", game not taken "+view.stats.get(0)[3]+", game not taken won "+view.stats.get(0)[4]+"\n";
+   // res+="Stats of "+view.players_name.get(1)+" game played "+view.stats.get(1)[0]+", game taken "+view.stats.get(1)[1]+", game taken won "+view.stats.get(1)[2]+", game not taken "+view.stats.get(1)[3]+", game not taken won "+view.stats.get(1)[4]+"\n";
+   // res+="Stats of "+view.players_name.get(2)+" game played "+view.stats.get(2)[0]+", game taken "+view.stats.get(2)[1]+", game taken won "+view.stats.get(2)[2]+", game not taken "+view.stats.get(2)[3]+", game not taken won "+view.stats.get(2)[4]+"\n";
     System.out.println(res);
   }
 
@@ -85,6 +88,9 @@ public class CommandLine extends HumanInterface{
 
   public  void drawTrickListInfo(){
     String res="";
+    for (int i=0; i<view.trick_list.size();i++){
+      res+=i+": "+view.trick_list.get(i).toString()+"\n";
+    }
     System.out.println(res);
   }
 
@@ -94,7 +100,10 @@ public class CommandLine extends HumanInterface{
   }
 
   public  void drawOuvertInfo(){
-    String res="";
+    String res="Hand ouvert "+view.players_name.get(view.index_taker)+": ";
+    for (int i=0; i< view.hand.size();i++){
+      res+=i+" "+view.hand_taker_ouvert.get(i).toString()+" |";
+    }
     System.out.println(res);
   }
 
@@ -103,7 +112,6 @@ public class CommandLine extends HumanInterface{
     System.out.println(res);
     drawGameInfo();
     drawTurnInfo();
-    drawNameInfo();
     drawRoleInfo();
     drawTakerInfo();
     drawGameTypeInfo();
@@ -112,6 +120,10 @@ public class CommandLine extends HumanInterface{
     if (view.index_taker==0 && view.tab_modifiers.get(0).intValue()==0){
       drawSkatInfo();
     }
+    if (view.tab_modifiers.get(3).intValue()==1){
+      drawOuvertInfo();
+    }
+
   }
 
   public  void drawGameStartInfo(){
@@ -127,7 +139,7 @@ public class CommandLine extends HumanInterface{
   }
 
   public  void drawResultGameInfo(){
-    String res=view.players_name.get(view.index_taker)+(view.win?" won ":" lost ")+"and gets "+view.value_game+ "points";
+    String res=view.players_name.get(view.index_taker)+(view.win?" won ":" lost ")+"and gets "+view.value_game+" points";
     System.out.println(res);
   }
 

@@ -124,9 +124,9 @@ public static final long serialVersionUID = 1L;
   public String toString(){
     String res;
     res="[";
-    res+=trick_cards[0].toString()+",";
-    //res+=trick_cards[1].toString()+",";
-    //res+=trick_cards[2].toString();
+    res+=trick_cards[0].toString();
+    if (trick_cards.length>1) res+=","+trick_cards[1].toString();
+    if (trick_cards.length>2) res+=","+trick_cards[2].toString();
     res+="] The current winner is player["+current_winner+"] and the value is "+value;
     return res;
   }
