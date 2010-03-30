@@ -218,7 +218,7 @@ public class Board extends Observable{
   /**
    * Color asked by the first card of a trick
    */
-  private Card.Color asked_color;
+  private Card asked_info;
 
   /**
    * Access to <code>game_type</code>
@@ -237,11 +237,11 @@ public class Board extends Observable{
   }
 
   /**
-   *Access to asked_color
+   *Access to asked_info
    *@return the color asked by the initial player
    */
-  public Card.Color getAskedColor(){
-    return asked_color;
+  public Card getAskedInfo(){
+    return asked_info;
   }
 
   /**
@@ -571,7 +571,7 @@ public class Board extends Observable{
     c=tab_player.get(last_winner).play();//pas de check sur la premiere carte
     t.addCard(c,0);
     sendNotification(17);
-    asked_color=c.getColor();
+    asked_info=c;
     tab_player.get(last_winner).remove(c);
 
 
@@ -609,8 +609,8 @@ public class Board extends Observable{
    * @param c the card played
    */
   private boolean validPlay(Player p,Card c){
-    if (p.hasColor(game_type==GameType.NULL,asked_color)){
-      if (c.getColor()==asked_color) return true;
+    if (p.hasColor(game_type,asked_info)){
+      if (Card.sameColor(game_type,c,asked_info)) return true;
     }else{
       return true;
     }
@@ -673,7 +673,7 @@ public class Board extends Observable{
     for (int i=0;i<board_tricks.size();i++){
       res+=(i+1)+": "+board_tricks.get(i).toString()+"\n";
     }
-    res+="This is turn "+turn+" and the asked color is "+asked_color+"\n";
+    res+="This is turn "+turn+" and the asked color is "+asked_info.toString()+"\n";
 
     return res;
   }

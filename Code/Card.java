@@ -168,6 +168,18 @@ public static final long serialVersionUID = 1L;
     }return res+"\n";
   }
 
+  public static boolean sameColor(Board.GameType game_type,Card c1,Card c2){
+    if (game_type==Board.GameType.NULL) return c1.getColor()==c2.getColor();
+
+    if (c1.getFace()==Face.J && c2.getFace()==Face.J) return true;
+
+    if (c1.getFace()!=Face.J && c2.getFace()!=Face.J) return c1.getColor()==c2.getColor();
+
+    if (game_type==Board.GameType.GRAND) return false;
+
+    return ( (c1.getFace()==Face.J && c2.getColor()==game_type.getColor()) || (c2.getFace()==Face.J && c1.getColor()==game_type.getColor()) );
+  }
+
   static {
     order_game_clubs  =new ArrayList<Card>(32);
     order_game_spades =new ArrayList<Card>(32);

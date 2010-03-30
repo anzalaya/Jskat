@@ -311,10 +311,34 @@ public abstract class Player {
    * checks if player has color
    * @return true if player does, false otherwise
    */
-  public boolean hasColor(boolean is_null, Card.Color color){
-    for (Card c : player_hand.getHand()){
-      if (c.getColor()==color){
-        if (is_null || c.getFace()!=Card.Face.J) return true;
+  public boolean hasColor(Board.GameType game_type, Card first_card){
+    if (game_type==Board.GameType.NULL){
+      for (Card c : player_hand.getHand()){
+        if (c.getColor()==first_card.getColor()) return true;
+      }
+      return false;
+    }
+
+//    if (game_type==GRAND){
+//      if (first_card.getFace()==Card.Face.J){
+//        for (Card c : player_hand.getHand()){
+//          if (c.getFace()==Card.Face.J) return true;
+//        }
+//      }else{
+//        for (Card c : player_hand.getHand()){
+//          if (c.getColor()==first_card.getColor() && c.getFace()!=Card.Face.J) return true;
+//        }
+//      }
+//      return false;
+//    }
+
+    if (first_card.getFace()==Card.Face.J || first_card.getColor()==game_type.getColor()){
+      for (Card c : player_hand.getHand()){
+        if (c.getFace()==Card.Face.J || c.getColor()==game_type.getColor()) return true;
+      }
+    }else{
+      for (Card c : player_hand.getHand()){
+        if (c.getColor()==first_card.getColor() && c.getFace()!=Card.Face.J) return true;
       }
     }
     return false;
