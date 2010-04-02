@@ -31,7 +31,7 @@
  *6 client->BoardThread:6 card_index<br/>
  *6 BoardThread->Board : card_index<br/>
  *<br/>
- *7 client->BoardThread:7 (QUIT_REQUET)<br/>
+ *7 client->BoardThread:7 (QUIT_REQUEST)<br/>
  *<br/>
  *08 BoardThread->client:08 (NAME_INFO)(1,2) name_player[+i]<br/>
  *09 BoardThread->client:09 (STAT_INFO)(0,1,2) stats<br/>
@@ -116,9 +116,9 @@ public class Protocol{
 
 
   /**
-   * client->BoardThread: (QUIT_REQUET)<br/>
+   * client->BoardThread: (QUIT_REQUEST)<br/>
    */
-  public static final int QUIT_REQUET=7;
+  public static final int QUIT_REQUEST=7;
 
 
   /**

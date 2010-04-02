@@ -10,8 +10,11 @@ import java.util.*;
 
 public class CommandLine extends HumanInterface{
 
+  Scanner console;
+
   public CommandLine(Client.View v,Thread t){
     super(v,t);
+    console=new Scanner(System.in);
   }
 
   protected void clear(){
@@ -28,9 +31,9 @@ public class CommandLine extends HumanInterface{
 
   public  void drawStatInfo(){
     String res="";
-   // res+="Stats of "+view.players_name.get(0)+" game played "+view.stats.get(0)[0]+", game taken "+view.stats.get(0)[1]+", game taken won "+view.stats.get(0)[2]+", game not taken "+view.stats.get(0)[3]+", game not taken won "+view.stats.get(0)[4]+"\n";
-   // res+="Stats of "+view.players_name.get(1)+" game played "+view.stats.get(1)[0]+", game taken "+view.stats.get(1)[1]+", game taken won "+view.stats.get(1)[2]+", game not taken "+view.stats.get(1)[3]+", game not taken won "+view.stats.get(1)[4]+"\n";
-   // res+="Stats of "+view.players_name.get(2)+" game played "+view.stats.get(2)[0]+", game taken "+view.stats.get(2)[1]+", game taken won "+view.stats.get(2)[2]+", game not taken "+view.stats.get(2)[3]+", game not taken won "+view.stats.get(2)[4]+"\n";
+    // res+="Stats of "+view.players_name.get(0)+" game played "+view.stats.get(0)[0]+", game taken "+view.stats.get(0)[1]+", game taken won "+view.stats.get(0)[2]+", game not taken "+view.stats.get(0)[3]+", game not taken won "+view.stats.get(0)[4]+"\n";
+    // res+="Stats of "+view.players_name.get(1)+" game played "+view.stats.get(1)[0]+", game taken "+view.stats.get(1)[1]+", game taken won "+view.stats.get(1)[2]+", game not taken "+view.stats.get(1)[3]+", game not taken won "+view.stats.get(1)[4]+"\n";
+    // res+="Stats of "+view.players_name.get(2)+" game played "+view.stats.get(2)[0]+", game taken "+view.stats.get(2)[1]+", game taken won "+view.stats.get(2)[2]+", game not taken "+view.stats.get(2)[3]+", game not taken won "+view.stats.get(2)[4]+"\n";
     System.out.println(res);
   }
 
@@ -151,6 +154,95 @@ public class CommandLine extends HumanInterface{
   public  void drawTakerInfo(){
     String res=view.players_name.get(view.index_taker)+"("+view.role.get(view.index_taker)+")"+" won the reizen with a bid of "+view.reizen_value;
     System.out.println(res);
+  }
+
+  public void MmiAIRequest(){
+    System.out.println("AI?");
+    while(true){
+      if (console.hasNextBoolean()){
+        writer.println(console.nextBoolean());
+          break;
+      }
+      console.next();
+      System.out.println("AI must be a boolean");
+    }
+  }
+
+  public void MmiNmRequest(){
+    System.out.println("Name?");
+    while(true){
+      if (console.hasNext()){
+        writer.println(console.next());
+          break;
+      }
+      console.next();
+      System.out.println("Name must be a string");
+    }
+  }
+
+  public void MmiRzRequest(){
+    System.out.println("Reizen? "+reader.nextInt());
+    while(true){
+      if (console.hasNextBoolean()){
+        writer.println(console.nextBoolean());
+          break;
+      }
+      console.next();
+      System.out.println("Reizen must be a boolean");
+    }
+  }
+
+  public void MmiGmTRequest(){
+    System.out.println("Game Type ?");
+    while(true){
+      if (console.hasNextInt()){
+        writer.println(console.nextInt());
+          break;
+      }
+      console.next();
+      System.out.println("GameType must be an int");
+    }
+  }
+
+  public void MmiGmMRequest(){
+    System.out.println("Game Modifier?");
+    while(true){
+      if (console.hasNextBoolean()){
+        writer.println(console.nextBoolean());
+          break;
+      }
+      console.next();
+      System.out.println("GameModifier must be a boolean");
+    }
+  }
+
+  public void MmiSkRequest(){
+    System.out.println("Skat?");
+    while(true){
+      if (console.hasNextInt()){
+        writer.println(console.nextInt());
+          break;
+      }
+      console.next();
+      System.out.println("skat must be an int");
+    }
+  }
+
+  public void MmiPlRequest(){
+    System.out.println("Play?");
+    while(true){
+      if (console.hasNextInt()){
+        writer.println(console.nextInt());
+          break;
+      }
+      console.next();
+      System.out.println("play must be an int");
+    }
+  }
+
+  public void MmiExRequest(){
+    System.out.println("Exit");
+    System.exit(1);
   }
 
 }

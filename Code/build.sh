@@ -5,10 +5,10 @@ rm -f ../Client/*class
 echo "rm -f ../Server/*class"
 rm -f ../Server/*class
 
-echo "javac Client.java -d ../Client/"
-javac Client.java -d ../Client/
-echo "javac Skat.java -d ../Server/"
-javac Skat.java -d ../Server/
+echo "javac SkatClient.java -d ../Client/"
+javac SkatClient.java -d ../Client/
+echo "javac SkatServer.java -d ../Server/"
+javac SkatServer.java -d ../Server/
 
 
 

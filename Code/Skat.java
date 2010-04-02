@@ -40,9 +40,4 @@ public class Skat{
 
 
 
-public static void main(String[] args){
-  Skat skat=new Skat();
-  skat.getServer().publishInfo();
-  skat.getServer().handleConnections();
-}
 }

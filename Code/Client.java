@@ -41,9 +41,9 @@ public class Client extends Thread{
 
 
 
-    public View(String s){
+    public View(){
       players_name=new ArrayList<String>(3);
-      players_name.add(0,s);
+      players_name.add("");
       players_name.add("");
       players_name.add("");
       role=new ArrayList<Player.Role>(3);
@@ -260,6 +260,10 @@ public class Client extends Thread{
    * reader of user input
    */
   private Scanner reader;
+  /**
+   * Writer to user mmi
+   */
+  private PrintWriter writer;
 
   /**
    * the endpoint of the pipe
@@ -275,12 +279,12 @@ public class Client extends Thread{
     return view;
   }
 
-  public Client(String sp, int p,String name,boolean graphic){
+  public Client(String sp, int p){
     super();
     server_name=sp;
     server_port=p;
     in=new PipedInputStream();
-    reader=(graphic ? new Scanner(in) : new Scanner(System.in));
+    reader=new Scanner(in);
     try{
       c=new Connection(new Socket(server_name,server_port));
     } catch (IOException e) {
@@ -288,7 +292,7 @@ public class Client extends Thread{
       e.printStackTrace();
       System.exit(1);
     }
-    view=new View(name);
+    view=new View();
   }
 
   /**
@@ -299,9 +303,13 @@ public class Client extends Thread{
     return c;
   }
 
+  public void setOutputStream(PipedOutputStream o){
+    writer= new PrintWriter(o,true);
+  }
+
   /**
-   * Access to <code>c</code>
-   * @return c
+   * Gives the graphic interface something on which to write
+   * @return the start point of the pipe
    */
   public PipedOutputStream getOutputStream(){
     PipedOutputStream pout=null;
@@ -317,56 +325,59 @@ public class Client extends Thread{
 
 
   public synchronized void processAIRequest(){
-    System.out.println("AI?");
+    writer.println(Protocol.FILL_BOARD);
     boolean reply=reader.nextBoolean();
     c.out.println(0);
     c.out.println(reply);
   }
 
   public synchronized void processNmRequest(){
-    String reply=view.players_name.get(0);
+    writer.println(Protocol.NAME_CLIENT);
+    String reply=reader.next();
+    view.players_name.set(0,reply);
     c.out.println(1);
     c.out.println(reply);
   }
 
 
   public synchronized void processRzRequest(){
-    System.out.println("Reizen? "+c.in.nextInt());
+    writer.println(Protocol.REIZEN_REQUEST);
+    writer.println(c.in.nextInt());
     boolean reply=reader.nextBoolean();
     c.out.println(2);
     c.out.println(reply);
   }
 
   public synchronized void processGmTRequest(){
-    System.out.println("Game Type ?");
+    writer.println(Protocol.GAMETYPE_REQUEST);
     int reply=reader.nextInt();
     c.out.println(3);
     c.out.println(reply);
   }
 
   public synchronized void processGmMRequest(){
-    System.out.println("Game Modifier?");
+    writer.println(Protocol.GAMETYPE_MODIFIERS_REQUEST);
     boolean reply=reader.nextBoolean();
     c.out.println(4);
     c.out.println(reply);
   }
 
   public synchronized void processSkRequest(){
-    System.out.println("Skat?");
+    writer.println(Protocol.SKAT_REQUEST);
     int reply=reader.nextInt();
     c.out.println(5);
     c.out.println(reply);
   }
 
   public synchronized void processPlRequest(){
-    System.out.println("Play?");
+    writer.println(Protocol.PLAY_REQUEST);
     int reply=reader.nextInt();
     c.out.println(6);
     c.out.println(reply);
   }
 
   public synchronized void processExRequest(){
-    System.out.println("Exit");
+    writer.println(Protocol.QUIT_REQUEST);
     try{
       c.close();
     }catch (IOException e){
@@ -378,45 +389,44 @@ public class Client extends Thread{
   public void run(){
     int chooser;
     CommandLine ihm=new CommandLine(getView(),this);
+    ihm.setOutputStream(getOutputStream());
+    setOutputStream(ihm.getOutputStream());
+    ihm.start();
     while(true){
       chooser=c.in.nextInt();
       switch(chooser){
-        case 0:processAIRequest(); break;
-        case 1:processNmRequest(); break;
-        case 2:processRzRequest(); break;
-        case 3:processGmTRequest(); break;
-        case 4:processGmMRequest(); break;
-        case 5:processSkRequest(); break;
-        case 6:processPlRequest(); break;
-        case 7:processExRequest(); break;
-        case 8:view.processNameInfo(); break;
-        case 9:view.processStatInfo(); break;
-        case 10:view.processGameInfo(); break;
-        case 11:view.processRoleInfo(); break;
-        case 12:view.processHandInfo(); break;
-        case 13:view.processReizenInfo(); break;
-        case 14:view.processModifInfo(); break;
-        case 15:view.processSkatInfo(); break;
-        case 16:view.processGameTypeInfo(); break;
-        case 17:view.processTrickInfo(); break;
-        case 18:view.processTrickListInfo(); break;
-        case 19:view.processTurnInfo(); break;
-        case 20:view.processOuvertInfo(); break;
-        case 21:view.turnStart(); break;
-        case 22:view.gameStart(); break;
-        case 23:view.processTrickWinnerInfo(); break;
-        case 24:view.processResultGameInfo(); break;
-        case 25:view.processScoreInfo(); break;
-        case 26:view.processTakerInfo(); break;
-        default: System.err.println("Bad numbering"); System.exit(1);
+        case Protocol.FILL_BOARD      : processAIRequest(); break;
+        case Protocol.NAME_CLIENT     : processNmRequest(); break;
+        case Protocol.REIZEN_REQUEST  : processRzRequest(); break;
+        case Protocol.GAMETYPE_REQUEST: processGmTRequest(); break;
+        case Protocol.GAMETYPE_MODIFIERS_REQUEST: processGmMRequest(); break;
+        case Protocol.SKAT_REQUEST    : processSkRequest(); break;
+        case Protocol.PLAY_REQUEST    : processPlRequest(); break;
+        case Protocol.QUIT_REQUEST    : processExRequest(); break;
+        case Protocol.NAME_INFO       : view.processNameInfo(); break;
+        case Protocol.STAT_INFO       : view.processStatInfo(); break;
+        case Protocol.GAME_INFO       : view.processGameInfo(); break;
+        case Protocol.ROLE_INFO       : view.processRoleInfo(); break;
+        case Protocol.HAND_INFO       : view.processHandInfo(); break;
+        case Protocol.REIZEN_INFO     : view.processReizenInfo(); break;
+        case Protocol.MODIF_INFO      : view.processModifInfo(); break;
+        case Protocol.SKAT_INFO       : view.processSkatInfo(); break;
+        case Protocol.GAMETYPE_INFO   : view.processGameTypeInfo(); break;
+        case Protocol.TRICK_INFO      : view.processTrickInfo(); break;
+        case Protocol.TRICKLIST_INFO  : view.processTrickListInfo(); break;
+        case Protocol.TURN_INFO       : view.processTurnInfo(); break;
+        case Protocol.OUVERT_INFO     : view.processOuvertInfo(); break;
+        case Protocol.STARTTURN_INFO  : view.turnStart(); break;
+        case Protocol.STARTGAME_INFO  : view.gameStart(); break;
+        case Protocol.TRICKWINNER_INFO: view.processTrickWinnerInfo(); break;
+        case Protocol.RESULTGAME_INFO : view.processResultGameInfo(); break;
+        case Protocol.SCORE_INFO      : view.processScoreInfo(); break;
+        case Protocol.TAKER_INFO      : view.processTakerInfo(); break;
+        default:  System.err.println("Bad numbering"); System.exit(1);
       }
       if (chooser>7){
         view.sendNotification(chooser);
       }
     }
-  }
-
-  public static void main(String[] args){
-    (new Client(args[0],Integer.parseInt(args[1]),"Test",false)).start();
   }
 }

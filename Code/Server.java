@@ -95,7 +95,7 @@ public class Server {
    * Prints server nfo
    */
   public void publishInfo(){
-    System.out.println("SERVER_NAME: "+server_name+"\nSERVER_PORT: "+server_port);
+    System.out.println(server_name+" "+server_port);
   }
 
 }

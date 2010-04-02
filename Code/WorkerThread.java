@@ -80,25 +80,25 @@ public class WorkerThread{
     public void update(Observable o, Object arg){
       Integer decide=(Integer)arg;
       switch(decide.intValue()){
-        case  8: sendNameInfo(); break;
-        case  9: sendStatInfo(); break;
-        case 10: sendGameInfo(); break;
-        case 11: sendRoleInfo(); break;
-        case 12: sendHandInfo(); break;
-        case 13: sendReizenInfo(); break;
-        case 14: sendModifInfo(); break;
-        case 15: sendSkatInfo(); break;
-        case 16: sendGameTypeInfo(); break;
-        case 17: sendTrickInfo(); break;
-        case 18: sendTrickListInfo(); break;
-        case 19: sendTurnInfo(); break;
-        case 20: sendOuvertInfo(); break;
-        case 21: sendTurnStartInfo(); break;
-        case 22: sendGameStartInfo(); break;
-        case 23: sendLastTrickWinnerInfo(); break;
-        case 24: sendResultGameInfo(); break;
-        case 25: sendScoreInfo(); break;
-        case 26: sendTakerInfo(); break;
+        case Protocol.NAME_INFO        : sendNameInfo(); break;
+        case Protocol.STAT_INFO        : sendStatInfo(); break;
+        case Protocol.GAME_INFO        : sendGameInfo(); break;
+        case Protocol.ROLE_INFO        : sendRoleInfo(); break;
+        case Protocol.HAND_INFO        : sendHandInfo(); break;
+        case Protocol.REIZEN_INFO      : sendReizenInfo(); break;
+        case Protocol.MODIF_INFO       : sendModifInfo(); break;
+        case Protocol.SKAT_INFO        : sendSkatInfo(); break;
+        case Protocol.GAMETYPE_INFO    : sendGameTypeInfo(); break;
+        case Protocol.TRICK_INFO       : sendTrickInfo(); break;
+        case Protocol.TRICKLIST_INFO   : sendTrickListInfo(); break;
+        case Protocol.TURN_INFO        : sendTurnInfo(); break;
+        case Protocol.OUVERT_INFO      : sendOuvertInfo(); break;
+        case Protocol.STARTTURN_INFO   : sendTurnStartInfo(); break;
+        case Protocol.STARTGAME_INFO   : sendGameStartInfo(); break;
+        case Protocol.TRICKWINNER_INFO : sendLastTrickWinnerInfo(); break;
+        case Protocol.RESULTGAME_INFO  : sendResultGameInfo(); break;
+        case Protocol.SCORE_INFO       : sendScoreInfo(); break;
+        case Protocol.TAKER_INFO       : sendTakerInfo(); break;
         default: System.err.println("Error in observer"); System.exit(1);
       }
 //      synchronized(spawn){
@@ -597,11 +597,11 @@ public class WorkerThread{
           switch_index=input_flow_array.get(board.getActionPlayerIndex()).nextInt();
         }
         switch(switch_index){
-          case 2:processRzRequest(); break;
-          case 3:processGmTRequest(); break;
-          case 4:processGmMRequest(); break;
-          case 5:processSkRequest(); break;
-          case 6:processPlRequest(); break;
+          case Protocol.REIZEN_REQUEST            :processRzRequest(); break;
+          case Protocol.GAMETYPE_REQUEST          :processGmTRequest(); break;
+          case Protocol.GAMETYPE_MODIFIERS_REQUEST:processGmMRequest(); break;
+          case Protocol.SKAT_REQUEST              :processSkRequest(); break;
+          case Protocol.PLAY_REQUEST              :processPlRequest(); break;
           default: System.err.println("Bad numbering"); System.exit(1);
         }
         checkConnection();
