@@ -314,17 +314,17 @@ public class Board extends Observable{
     List<Card> chosen_skat;
     List<Integer> chosen_modifiers;
 
-    sendNotification(8);
+    sendNotification(Protocol.NAME_INFO);
 
-    sendNotification(22);
+    sendNotification(Protocol.STARTGAME_INFO);
 
-    sendNotification(9);
+    sendNotification(Protocol.STAT_INFO);
 
-    sendNotification(10);
+    sendNotification(Protocol.GAME_INFO);
 
     updateOrderOfPlay();
 
-    sendNotification(11);
+    sendNotification(Protocol.ROLE_INFO);
 
     boolean valid_win;
     switch(tab_player.get(0).getRole()){
@@ -339,14 +339,14 @@ public class Board extends Observable{
     deal(dealer_index);
     System.out.println(this.toString());
 
-    sendNotification(12);
+    sendNotification(Protocol.HAND_INFO);
 
     if (!reizen(dealer_index)){
       game++;
       endGame();
       return;
     }
-    sendNotification(26);
+    sendNotification(Protocol.TAKER_INFO);
     tab_player.get(0).getStat()[0]++;
     tab_player.get(1).getStat()[0]++;
     tab_player.get(2).getStat()[0]++;
@@ -358,7 +358,7 @@ public class Board extends Observable{
     action_player=index_taker;
     game_type=tab_player.get(index_taker).decideGametype();
 
-    sendNotification(16);
+    sendNotification(Protocol.GAMETYPE_INFO);
 
     trump=game_type.getColor();
 
@@ -366,7 +366,7 @@ public class Board extends Observable{
     tab_player.get(1).sortHand();
     tab_player.get(2).sortHand();
 
-    sendNotification(12);
+    sendNotification(Protocol.HAND_INFO);
 
     action_player=index_taker;
     chosen_modifiers=tab_player.get(index_taker).chooseModifiers();
@@ -384,10 +384,10 @@ public class Board extends Observable{
     }
 
 
-    sendNotification(14);
+    sendNotification(Protocol.MODIF_INFO);
 
     if (modifier_ouvert){
-      sendNotification(20);
+      sendNotification(Protocol.OUVERT_INFO);
     }
 
     tab_player.get(index_taker).addCards(skat);
@@ -396,8 +396,8 @@ public class Board extends Observable{
       tab_player.get(index_taker).remove(skat);
     }else{
     tab_player.get(index_taker).sortHand();
-      sendNotification(15);
-      sendNotification(12);
+      sendNotification(Protocol.SKAT_INFO);
+      sendNotification(Protocol.HAND_INFO);
       action_player=index_taker;
       chosen_skat=tab_player.get(index_taker).chooseSkat();
       System.out.println("Skat choisi "+chosen_skat.toString());
@@ -405,20 +405,20 @@ public class Board extends Observable{
       //cas ou pas hand, on remplace
       skat.clear();
       skat.addAll(chosen_skat);
-      sendNotification(15);
+      sendNotification(Protocol.SKAT_INFO);
     }
 //    System.out.println("Size hand"+tab_player.get(index_taker).getHand().getHand().size());
   //  System.out.println("Hand"+tab_player.get(index_taker).getHand().toString());
     for (turn=1;turn<=10;turn++){
-      sendNotification(21);
-      sendNotification(19);
-      sendNotification(12);
+      sendNotification(Protocol.STARTTURN_INFO);
+      sendNotification(Protocol.TURN_INFO);
+      sendNotification(Protocol.HAND_INFO);
       if (modifier_ouvert){
-        sendNotification(20);
+        sendNotification(Protocol.OUVERT_INFO);
       }
       doTurn();
-      sendNotification(18);
-      sendNotification(23);
+      sendNotification(Protocol.TRICKLIST_INFO);
+      sendNotification(Protocol.TRICKWINNER_INFO);
     }
 
     valid_win=checkVictoryPoint(index_taker);
@@ -444,8 +444,8 @@ public class Board extends Observable{
       tab_player.get((index_taker+1)%3).getStat()[4]++;
       tab_player.get((index_taker+2)%3).getStat()[4]++;
     }
-    sendNotification(24);
-    sendNotification(25);
+    sendNotification(Protocol.RESULTGAME_INFO);
+    sendNotification(Protocol.SCORE_INFO);
     game++;
     endGame();
   }
@@ -506,14 +506,14 @@ public class Board extends Observable{
       reizen_proposal=reizen_array[ind];
 
       answer_proposal=tab_player.get(speaker_index).decideReizen(reizen_array[ind]);
-      sendNotification(13);
+      sendNotification(Protocol.REIZEN_INFO);
 
       if (answer_proposal){
         action_player=listener_index;
         reizen_proposal=reizen_array[ind];
 
         answer_proposal=tab_player.get(listener_index).decideReizen(reizen_array[ind]);
-        sendNotification(13);
+        sendNotification(Protocol.REIZEN_INFO);
         if (answer_proposal){
           ind++;
           continue;
@@ -537,7 +537,7 @@ public class Board extends Observable{
             reizen_proposal=reizen_array[ind];
 
             answer_proposal=tab_player.get(listener_index).decideReizen(reizen_array[ind]);
-            sendNotification(13);
+            sendNotification(Protocol.REIZEN_INFO);
             if (answer_proposal){
               index_taker=listener_index;
               reizen_value=reizen_array[ind];
@@ -583,7 +583,7 @@ public class Board extends Observable{
     action_player=last_winner;
     c=tab_player.get(last_winner).play();//pas de check sur la premiere carte
     t.addCard(c,0);
-    sendNotification(17);
+    sendNotification(Protocol.TRICK_INFO);
     asked_info=c;
     tab_player.get(last_winner).remove(c);
 
@@ -595,7 +595,7 @@ public class Board extends Observable{
       c=tab_player.get((last_winner+1)%3).play();
     }
     t.addCard(c,1);
-    sendNotification(17);
+    sendNotification(Protocol.TRICK_INFO);
     tab_player.get((last_winner+1)%3).remove(c);
 
     action_player=(last_winner+2)%3;
@@ -605,7 +605,7 @@ public class Board extends Observable{
       c=tab_player.get((last_winner+2)%3).play();
     }
     t.addCard(c,2);
-    sendNotification(17);
+    sendNotification(Protocol.TRICK_INFO);
     tab_player.get((last_winner+2)%3).remove(c);
 
 
