@@ -22,13 +22,11 @@ public abstract class HumanInterface extends Thread implements Observer{
    */
   protected PrintWriter writer;
 
-  public HumanInterface(Client.View v,Thread t){
-    view=v;
-    view_thread=t;
-    v.addObserver(this);
+  public HumanInterface(){
     in=new PipedInputStream();
     reader=new Scanner(in);
   }
+
 
   public void update(Observable o, Object arg){
     Integer decide=(Integer)arg;
@@ -83,6 +81,16 @@ public abstract class HumanInterface extends Thread implements Observer{
 
   public void run(){
     int client_message;
+    Client client=new Client();
+    view_thread=client;
+    view=client.getView();
+    view.addObserver(this);
+    setOutputStream(client.getOutputStream());
+    client.setOutputStream(getOutputStream());
+    client.start();
+    MmiNameInit();
+    MmiNameServerInit();
+    MmiPortServerInit();
       while(true){
         client_message=reader.nextInt();
         switch(client_message){
@@ -98,6 +106,10 @@ public abstract class HumanInterface extends Thread implements Observer{
         }
       }
   }
+
+  protected abstract void MmiNameInit();
+  protected abstract void MmiNameServerInit();
+  protected abstract void MmiPortServerInit();
 
   protected abstract void MmiAIRequest();
   protected abstract void MmiNmRequest();

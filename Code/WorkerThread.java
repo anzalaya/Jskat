@@ -692,7 +692,8 @@ public class WorkerThread{
             System.err.println("take failed");
             System.exit(1);
           }
-          c1.out.println(0);
+          c1.out.println(Protocol.FILL_BOARD);
+          c1.out.println(1);
           if (rcvFillRequest(c1)){
             if (waiting_list.size()==1){
               try{
@@ -701,7 +702,8 @@ public class WorkerThread{
                 System.err.println("take failed");
                 System.exit(1);
               }
-              c2.out.println(0);
+              c2.out.println(Protocol.FILL_BOARD);
+          c1.out.println(2);
               if (rcvFillRequest(c2)){
                 (new BoardThread(c1,c2)).start();
               }else{

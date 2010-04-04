@@ -1,6 +1,6 @@
 /**
  * Describes the protocol<br/>
- *0 ConnectThread->client:0(FILL_BOARD)<br/>
+ *0 ConnectThread->client:0(FILL_BOARD) human_number<br/>
  *0 client->ConnectThread:0 true/false<br/>
  *<br/>
  *1 BoardThread->client:1(NAME_CLIENT)<br/>
@@ -52,6 +52,11 @@
  *24 BoardThread->client:24 (RESULTGAME_INFO)  win/lose|valuegame<br/>
  *25 BoardThread->client:25 (SCORE_INFO) i score(i)<br/>
  *26 BoardThread->client:26 (TAKER_INFO) i <br/>
+ *<br/>
+ *27 HumanInterface->client: 27 (NAME_PLAYER) name_player<br/>
+ *28 HumanInterface->client: 28 (NAME_SERVER) name_server<br/>
+ *29 HumanInterface->client: 29 (PORT_SERVER) port<br/>
+ *<br/>
  */
 
 
@@ -233,4 +238,21 @@ public class Protocol{
    * BoardThread->client: (TAKER_INFO) i <br/>
    */
   public static final int TAKER_INFO=26;
+
+  /**
+ *27 HumanInterface->client: 27 (NAME_PLAYER) name_player<br/>
+ */
+  public static final int NAME_PLAYER=27;
+
+  /**
+ *28 HumanInterface->client: 28 (NAME_SERVER) name_server<br/>
+ */
+  public static final int NAME_SERVER=28;
+
+
+/**
+ *29 HumanInterface->client: 29 (PORT_SERVER) port<br/>
+ */
+  public static final int PORT_SERVER=29;
+
 }

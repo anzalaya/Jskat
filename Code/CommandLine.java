@@ -12,8 +12,8 @@ public class CommandLine extends HumanInterface{
 
   Scanner console;
 
-  public CommandLine(Client.View v,Thread t){
-    super(v,t);
+  public CommandLine(){
+    super();
     console=new Scanner(System.in);
   }
 
@@ -225,6 +225,32 @@ public class CommandLine extends HumanInterface{
       }
       console.next();
       System.out.println("skat must be an int");
+    }
+  }
+
+  public void MmiNameInit(){
+    System.out.println("Enter your Name:");
+    if (console.hasNext()){
+      writer.println(console.next());
+    }
+  }
+
+  public void MmiNameServerInit(){
+    System.out.println("Enter Server Name :");
+    if (console.hasNext()){
+      writer.println(console.next());
+    }
+  }
+
+  public void MmiPortServerInit(){
+    System.out.println("Enter Server Port :");
+    while(true){
+      if (console.hasNextInt()){
+        writer.println(console.nextInt());
+          break;
+      }
+      console.next();
+      System.out.println("Port must be an int");
     }
   }
 

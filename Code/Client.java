@@ -16,6 +16,7 @@ public class Client extends Thread{
    *A nested class that describes the info a client has
    */
   public class View extends Observable{
+    public int human_player;
     public List<String> players_name;
     public List<int[]> stats;
     public int game;
@@ -279,19 +280,10 @@ public class Client extends Thread{
     return view;
   }
 
-  public Client(String sp, int p){
+  public Client(){
     super();
-    server_name=sp;
-    server_port=p;
     in=new PipedInputStream();
     reader=new Scanner(in);
-    try{
-      c=new Connection(new Socket(server_name,server_port));
-    } catch (IOException e) {
-      System.err.println("connection to "+server_name+" impossible");
-      e.printStackTrace();
-      System.exit(1);
-    }
     view=new View();
   }
 
@@ -325,6 +317,7 @@ public class Client extends Thread{
 
 
   public synchronized void processAIRequest(){
+    view.human_player=c.in.nextInt();
     writer.println(Protocol.FILL_BOARD);
     boolean reply=reader.nextBoolean();
     c.out.println(0);
@@ -332,9 +325,7 @@ public class Client extends Thread{
   }
 
   public synchronized void processNmRequest(){
-    writer.println(Protocol.NAME_CLIENT);
-    String reply=reader.next();
-    view.players_name.set(0,reply);
+    String reply=view.players_name.get(0);
     c.out.println(1);
     c.out.println(reply);
   }
@@ -386,12 +377,36 @@ public class Client extends Thread{
     System.exit(1);
   }
 
+  public synchronized void MmiNameInfo(){
+    if (reader.hasNext()){
+      view.players_name.set(0,reader.next());
+    }
+  }
+
+  public synchronized void MmiNameServerInfo(){
+    if (reader.hasNext()){
+      server_name=reader.next();
+    }
+  }
+
+  public synchronized void MmiPortServerInfo(){
+    if (reader.hasNextInt()){
+      server_port=reader.nextInt();
+    }
+  }
+
   public void run(){
     int chooser;
-    CommandLine ihm=new CommandLine(getView(),this);
-    ihm.setOutputStream(getOutputStream());
-    setOutputStream(ihm.getOutputStream());
-    ihm.start();
+        MmiNameInfo();
+        MmiNameServerInfo();
+        MmiPortServerInfo();
+    try{
+      c=new Connection(new Socket(server_name,server_port));
+    } catch (IOException e) {
+      System.err.println("connection to "+server_name+" impossible");
+      e.printStackTrace();
+      System.exit(1);
+    }
     while(true){
       chooser=c.in.nextInt();
       switch(chooser){
@@ -422,6 +437,7 @@ public class Client extends Thread{
         case Protocol.RESULTGAME_INFO : view.processResultGameInfo(); break;
         case Protocol.SCORE_INFO      : view.processScoreInfo(); break;
         case Protocol.TAKER_INFO      : view.processTakerInfo(); break;
+
         default:  System.err.println("Bad numbering"); System.exit(1);
       }
       if (chooser>7){

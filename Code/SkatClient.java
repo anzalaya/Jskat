@@ -6,6 +6,6 @@
  */
 public class SkatClient{
   public static void main(String[] args){
-    (new Client(args[0],Integer.parseInt(args[1]))).start();
+    (new CommandLine()).start();
   }
 }
