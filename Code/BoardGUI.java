@@ -666,33 +666,16 @@ public class BoardGUI extends javax.swing.JFrame {
   public javax.swing.JLabel card_trick_label[];
   public javax.swing.JLabel hand[];
   public javax.swing.JLabel name_label[];
-//  public javax.swing.JLabel name_label[0];
-//  public javax.swing.JLabel name_label[1];
-//  public javax.swing.JLabel name_label[2];
 
   public javax.swing.JLabel role_label[];
-//  public javax.swing.JLabel role_label[0];
-//  public javax.swing.JLabel role_label[1];
-//  public javax.swing.JLabel role_label[2];
 
   public javax.swing.JLabel name_result_label[];
-//  public javax.swing.JLabel name_result_label[0];
-//  public javax.swing.JLabel name_result_label[1];
-//  public javax.swing.JLabel name_result_label[2];
 
   public javax.swing.JLabel reizen_label[];
-//  public javax.swing.JLabel reizen_label[0];
-//  public javax.swing.JLabel reizen_label[1];
-//  public javax.swing.JLabel reizen_label[2];
 
   public javax.swing.JLabel score_label[];
-//  public javax.swing.JLabel score_label[0];
-//  public javax.swing.JLabel score_label[1];
-//  public javax.swing.JLabel score_label[2];
 
   public javax.swing.JLabel skat_label[];
-//  public javax.swing.JLabel skat_label[0];
-//  public javax.swing.JLabel skat_label[1];
 
   public javax.swing.JLabel choose_game_label;
   public javax.swing.JLabel choose_modifiers_label;
@@ -727,4 +710,38 @@ public class BoardGUI extends javax.swing.JFrame {
   public javax.swing.JRadioButton spades_radio_button;
   public javax.swing.JButton tricks_button;
   public javax.swing.JButton yes_reizen_button;
+
+  public void invisibility(){
+  game_label.setVisible(false);
+  turn_label.setVisible(false);
+  gametype_label.setVisible(false);
+  modifiers_label.setVisible(false);
+
+  last_trick_button.setVisible(false);
+
+  yes_reizen_button.setVisible(false);
+  no_reizen_button.setVisible(false);
+
+  for (int i=0;i<card_trick_label.length;i++){
+    card_trick_label[i].setVisible(false);
+  }
+
+  for (int i=0;i<hand.length;i++){
+    hand[i].setVisible(false);
+  }
+
+   name_label[1].setVisible(false);
+   name_label[2].setVisible(false);
+
+  for (int i=0;i<role_label.length;i++){
+    role_label[i].setVisible(false);
+  }
+
+  for (int i=0;i<reizen_label.length;i++){
+    reizen_label[i].setVisible(false);
+  }
+
+   skat_label[0].setVisible(false);
+   skat_label[1].setVisible(false);
+  }
 }

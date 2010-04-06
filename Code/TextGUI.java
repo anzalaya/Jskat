@@ -28,6 +28,7 @@ public class TextGUI extends HumanInterface{
       } catch (InterruptedException e) {System.err.println("Failed wait"+e.toString());System.exit(1);}
     }
     init.setVisible(false);
+    board.name_label[0].setText(init.name_field.getText());
     writer.println(init.name_field.getText());
     writer.println(init.server_name.getText());
     writer.println(init.server_port.getText());
@@ -47,14 +48,14 @@ public class TextGUI extends HumanInterface{
     }
     ai.setVisible(false);
     if (ai.answer){
-    writer.println(true);
-    java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
-        board.setVisible(true);
-        }
-        });
+      writer.println(true);
+      java.awt.EventQueue.invokeLater(new Runnable() {
+          public void run() {
+          board.setVisible(true);
+          }
+          });
     }else{
-    writer.println(false);
+      writer.println(false);
     }
   }
 
@@ -82,9 +83,9 @@ public class TextGUI extends HumanInterface{
 
 
   public  void drawNameInfo(){
-//    for (int i=0; i<3;i++){
-//      board.setNamePlayer(i,view.players_name.get(i));
-//    }
+    for (int i=0; i<3;i++){
+      board.name_label[i].setText(view.players_name.get(i));
+    }
   }
 
   public  void drawStatInfo(){
@@ -94,23 +95,31 @@ public class TextGUI extends HumanInterface{
   }
 
   public  void drawRoleInfo(){
-//    for (int i=0; i<3;i++){
-//      board.setRolePlayer(i,view.role.get(i).toString());
-//    }
+    for (int i=0; i<3;i++){
+      board.role_label[i].setText(view.role.get(i).toString());
+    }
   }
 
   public  void drawHandInfo(){
-//    String res="";
-//    for (int i=0; i< view.hand.size();i++){
-////      res+=i+" "+view.hand.get(i).toString()+" |";
-//    }
-//    board.setHand(res);
+    for (int i=0; i< view.hand.size();i++){
+      board.hand[i].setText(view.hand.get(i).toString());
+      board.hand[i].setVisible(true);
+    }
   }
 
   public  void drawReizenInfo(){
+    board.reizen_label[view.reizen_index].setText((view.reizen_answer? " accepts ":" refuses ")+view.reizen_value);
+    board.reizen_label[view.reizen_index].setVisible(true);
   }
 
   public  void drawModifInfo(){
+    String res="";
+    res+=(view.tab_modifiers.get(0).intValue()==1 ? "hand, " : "");
+    res+=(view.tab_modifiers.get(1).intValue()==1 ? "schneider, " : "");
+    res+=(view.tab_modifiers.get(2).intValue()==1 ? "schwartz, " : "");
+    res+=(view.tab_modifiers.get(3).intValue()==1 ? "ouvert " : "");
+    board.modifiers_label.setText(res);
+    board.modifiers_label.setVisible(true);
   }
 
   public  void drawSkatInfo(){
@@ -120,16 +129,16 @@ public class TextGUI extends HumanInterface{
   }
 
   public  void drawTrickInfo(){
-//    for (int i=0; i<view.size_trick;i++){
-//      board.setTrickCard(i,view.current_trick[i].toString());
-//    }
+    //    for (int i=0; i<view.size_trick;i++){
+    //      board.setTrickCard(i,view.current_trick[i].toString());
+    //    }
   }
 
   public  void drawTrickListInfo(){
   }
 
   public  void drawTurnInfo(){
-   // board.setGameTurn(view.game,view.turn);
+    // board.setGameTurn(view.game,view.turn);
   }
 
   public  void drawOuvertInfo(){
