@@ -30,9 +30,9 @@ public class InitGUI extends javax.swing.JFrame {
     name_label = new javax.swing.JLabel();
     connect_button = new javax.swing.JButton();
     name_field = new javax.swing.JTextField();
-    server_port = new javax.swing.JTextField();
-    port_label = new javax.swing.JLabel();
     server_name = new javax.swing.JTextField();
+    port_label = new javax.swing.JLabel();
+    server_port = new javax.swing.JTextField();
     server_label = new javax.swing.JLabel();
     welcome = new javax.swing.JLabel();
 
@@ -40,6 +40,8 @@ public class InitGUI extends javax.swing.JFrame {
 
     connect_panel.setBackground(new java.awt.Color(39, 163, 101));
 
+    name_field.setText(System.getProperty("user.name"));
+    server_name.setText("pilipili");
     name_label.setLabelFor(name_field);
     name_label.setText("Player Name");
 
@@ -76,8 +78,8 @@ public class InitGUI extends javax.swing.JFrame {
               .addGap(32, 32, 32)
               .addGroup(connect_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                 .addComponent(name_field, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
-                .addComponent(server_port)
-                .addComponent(server_name))))
+                .addComponent(server_name)
+                .addComponent(server_port))))
           .addContainerGap(23, Short.MAX_VALUE))
         );
     connect_panelLayout.setVerticalGroup(
@@ -92,11 +94,11 @@ public class InitGUI extends javax.swing.JFrame {
           .addGap(18, 18, 18)
           .addGroup(connect_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
             .addComponent(server_label)
-            .addComponent(server_port, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(server_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addGap(18, 18, 18)
           .addGroup(connect_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
             .addComponent(port_label)
-            .addComponent(server_name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(server_port, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addGap(18, 18, 18)
           .addComponent(connect_button)
           .addContainerGap(32, Short.MAX_VALUE))
@@ -132,7 +134,7 @@ public class InitGUI extends javax.swing.JFrame {
   private javax.swing.JLabel welcome;
 
   public javax.swing.JTextField name_field;
-  public javax.swing.JTextField server_name;
   public javax.swing.JTextField server_port;
+  public javax.swing.JTextField server_name;
 
 }

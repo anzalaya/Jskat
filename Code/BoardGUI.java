@@ -19,6 +19,8 @@ public class BoardGUI extends javax.swing.JFrame {
   public BoardGUI(Thread t) {
     initComponents();
     thread=t;
+    skat_rq=false;
+    play_rq=false;
   }
 
   /** This method is called from within the constructor to
@@ -71,7 +73,6 @@ public class BoardGUI extends javax.swing.JFrame {
     skat_label = new javax.swing.JLabel[3];
     skat_label[0] = new javax.swing.JLabel();
     skat_label[1] = new javax.swing.JLabel();
-
     game_type_dialog = new javax.swing.JDialog();
     game_type_panel = new javax.swing.JPanel();
     choose_game_label = new javax.swing.JLabel();
@@ -129,31 +130,37 @@ public class BoardGUI extends javax.swing.JFrame {
 
     game_chooser_group.add(clubs_radio_button);
     clubs_radio_button.setText("Clubs");
+    clubs_radio_button.setBackground(new java.awt.Color(39, 163, 101));
     game_type_panel.add(clubs_radio_button);
     clubs_radio_button.setBounds(0, 50, 60, 22);
 
     game_chooser_group.add(spades_radio_button);
     spades_radio_button.setText("Spades");
+    spades_radio_button.setBackground(new java.awt.Color(39, 163, 101));
     game_type_panel.add(spades_radio_button);
     spades_radio_button.setBounds(100, 50, 80, 22);
 
     game_chooser_group.add(hearts_radio_button);
     hearts_radio_button.setText("Hearts");
+    hearts_radio_button.setBackground(new java.awt.Color(39, 163, 101));
     game_type_panel.add(hearts_radio_button);
     hearts_radio_button.setBounds(210, 50, 70, 22);
 
     game_chooser_group.add(diamonds_radio_button);
     diamonds_radio_button.setText("Diamonds");
+    diamonds_radio_button.setBackground(new java.awt.Color(39, 163, 101));
     game_type_panel.add(diamonds_radio_button);
     diamonds_radio_button.setBounds(310, 50, 90, 22);
 
     game_chooser_group.add(null_radio_button);
     null_radio_button.setText("Null");
+    null_radio_button.setBackground(new java.awt.Color(39, 163, 101));
     game_type_panel.add(null_radio_button);
     null_radio_button.setBounds(50, 90, 50, 22);
 
     game_chooser_group.add(grand_radio_button);
     grand_radio_button.setText("Grand");
+    grand_radio_button.setBackground(new java.awt.Color(39, 163, 101));
     game_type_panel.add(grand_radio_button);
     grand_radio_button.setBounds(260, 90, 63, 22);
 
@@ -168,8 +175,15 @@ public class BoardGUI extends javax.swing.JFrame {
     hand_radio_button.setText("Hand");
     game_type_panel.add(hand_radio_button);
     hand_radio_button.setBounds(0, 160, 60, 22);
+    hand_radio_button.setBackground(new java.awt.Color(39, 163, 101));
+    hand_radio_button.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+        hand_radio_buttonActionPerformed(evt);
+        }
+        });
 
     schneider_radio_button.setText("Schneider");
+    schneider_radio_button.setBackground(new java.awt.Color(39, 163, 101));
     schneider_radio_button.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
         schneider_radio_buttonActionPerformed(evt);
@@ -179,6 +193,7 @@ public class BoardGUI extends javax.swing.JFrame {
     schneider_radio_button.setBounds(90, 160, 90, 22);
 
     schwarz_radio_button.setText("Schwarz");
+    schwarz_radio_button.setBackground(new java.awt.Color(39, 163, 101));
     schwarz_radio_button.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
         schwarz_radio_buttonActionPerformed(evt);
@@ -188,6 +203,7 @@ public class BoardGUI extends javax.swing.JFrame {
     schwarz_radio_button.setBounds(220, 160, 80, 22);
 
     ouvert_radio_button.setText("Ouvert");
+    ouvert_radio_button.setBackground(new java.awt.Color(39, 163, 101));
     ouvert_radio_button.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
         ouvert_radio_buttonActionPerformed(evt);
@@ -597,71 +613,173 @@ public class BoardGUI extends javax.swing.JFrame {
   }
 
   private void yes_reizen_buttonActionPerformed(java.awt.event.ActionEvent evt) {
+    reizen_answer=true;
+    synchronized(thread){
+      thread.notifyAll();
+    }
   }
 
   private void no_reizen_buttonActionPerformed(java.awt.event.ActionEvent evt) {
+    reizen_answer=false;
+    synchronized(thread){
+      thread.notifyAll();
+    }
   }
 
   private void hand0MouseClicked(java.awt.event.MouseEvent evt) {
+    if (!play_rq && !skat_rq) return;
+    synchronized(thread){
+      thread.notifyAll();
+    }
   }
 
   private void hand1MouseClicked(java.awt.event.MouseEvent evt) {
+    if (!play_rq && !skat_rq) return;
+    synchronized(thread){
+      thread.notifyAll();
+    }
   }
 
   private void hand2MouseClicked(java.awt.event.MouseEvent evt) {
+    if (!play_rq && !skat_rq) return;
+    synchronized(thread){
+      thread.notifyAll();
+    }
   }
 
   private void hand3MouseClicked(java.awt.event.MouseEvent evt) {
+    if (!play_rq && !skat_rq) return;
+    synchronized(thread){
+      thread.notifyAll();
+    }
   }
 
   private void hand4MouseClicked(java.awt.event.MouseEvent evt) {
+    if (!play_rq && !skat_rq) return;
+    synchronized(thread){
+      thread.notifyAll();
+    }
   }
 
   private void hand5MouseClicked(java.awt.event.MouseEvent evt) {
+    if (!play_rq && !skat_rq) return;
+    synchronized(thread){
+      thread.notifyAll();
+    }
   }
 
   private void hand6MouseClicked(java.awt.event.MouseEvent evt) {
+    if (!play_rq && !skat_rq) return;
+    synchronized(thread){
+      thread.notifyAll();
+    }
   }
 
   private void hand7MouseClicked(java.awt.event.MouseEvent evt) {
+    if (!play_rq && !skat_rq) return;
+    synchronized(thread){
+      thread.notifyAll();
+    }
   }
 
   private void hand8MouseClicked(java.awt.event.MouseEvent evt) {
+    if (!play_rq && !skat_rq) return;
+    synchronized(thread){
+      thread.notifyAll();
+    }
   }
 
   private void hand9MouseClicked(java.awt.event.MouseEvent evt) {
+    if (!play_rq && !skat_rq) return;
+    synchronized(thread){
+      thread.notifyAll();
+    }
   }
 
   private void send_game_type_infoActionPerformed(java.awt.event.ActionEvent evt) {
+    gameType_answer=(null_radio_button.isSelected() ? 1 : 0)+1*(grand_radio_button.isSelected() ? 1 : 0)+2*(clubs_radio_button.isSelected() ? 1 : 0)+3*(spades_radio_button.isSelected() ? 1 : 0)+4*(hearts_radio_button.isSelected() ? 1 : 0)+5*(diamonds_radio_button.isSelected() ? 1 : 0);
+    hand_modif=hand_radio_button.isSelected();
+    schneider_modif=schneider_radio_button.isSelected();
+    schwarz_modif=schwarz_radio_button.isSelected();
+    ouvert_modif=ouvert_radio_button.isSelected();
+    synchronized(thread){
+      thread.notifyAll();
+    }
+  }
+
+  private void hand_radio_buttonActionPerformed(java.awt.event.ActionEvent evt){
+    if (hand_radio_button.isSelected()) return;
+    schneider_radio_button.setSelected(false);
+    schwarz_radio_button.setSelected(false);
+    if (null_radio_button.isSelected()) return;
+    ouvert_radio_button.setSelected(false);
   }
 
   private void schneider_radio_buttonActionPerformed(java.awt.event.ActionEvent evt) {
+    if (null_radio_button.isSelected()){
+      schneider_radio_button.setSelected(false);
+      return;
+    }
+    hand_radio_button.doClick();
   }
 
   private void schwarz_radio_buttonActionPerformed(java.awt.event.ActionEvent evt) {
+    if (null_radio_button.isSelected()){
+      schwarz_radio_button.setSelected(false);
+      return;
+    }
+    schneider_radio_button.doClick();
   }
 
   private void ouvert_radio_buttonActionPerformed(java.awt.event.ActionEvent evt) {
+    if (null_radio_button.isSelected()){
+      return;
+    }
+    schwarz_radio_button.doClick();
   }
 
   private void last_trick_buttonActionPerformed(java.awt.event.ActionEvent evt) {
+    synchronized(thread){
+      thread.notifyAll();
+    }
   }
 
   private void skat_label0MouseClicked(java.awt.event.MouseEvent evt) {
+    if (!skat_rq) return;
+    synchronized(thread){
+      thread.notifyAll();
+    }
   }
 
   private void skat_label1MouseClicked(java.awt.event.MouseEvent evt) {
+    if (!skat_rq) return;
+    synchronized(thread){
+      thread.notifyAll();
+    }
   }
 
   private void next_game_buttonActionPerformed(java.awt.event.ActionEvent evt) {
+    synchronized(thread){
+      thread.notifyAll();
+    }
   }
 
 
-  // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JPanel board_panel;
   private javax.swing.JPanel result_game_panel;
   private javax.swing.JPanel game_type_panel;
   private Thread thread;
+
+  public boolean reizen_answer;
+  public boolean skat_rq;
+  public int skat_answer;
+  public boolean play_rq;
+  public int play_answer;
+  public int gameType_answer;
+  public boolean hand_modif;
+  public boolean schneider_modif;
+  public boolean schwarz_modif;
+  public boolean ouvert_modif;
 
   public javax.swing.JLabel card_trick_label[];
   public javax.swing.JLabel hand[];
@@ -712,36 +830,36 @@ public class BoardGUI extends javax.swing.JFrame {
   public javax.swing.JButton yes_reizen_button;
 
   public void invisibility(){
-  game_label.setVisible(false);
-  turn_label.setVisible(false);
-  gametype_label.setVisible(false);
-  modifiers_label.setVisible(false);
+    game_label.setVisible(false);
+    turn_label.setVisible(false);
+    gametype_label.setVisible(false);
+    modifiers_label.setVisible(false);
 
-  last_trick_button.setVisible(false);
+    last_trick_button.setVisible(false);
 
-  yes_reizen_button.setVisible(false);
-  no_reizen_button.setVisible(false);
+    yes_reizen_button.setVisible(false);
+    no_reizen_button.setVisible(false);
 
-  for (int i=0;i<card_trick_label.length;i++){
-    card_trick_label[i].setVisible(false);
-  }
+    for (int i=0;i<card_trick_label.length;i++){
+      card_trick_label[i].setVisible(false);
+    }
 
-  for (int i=0;i<hand.length;i++){
-    hand[i].setVisible(false);
-  }
+    for (int i=0;i<hand.length;i++){
+      hand[i].setVisible(false);
+    }
 
-   name_label[1].setVisible(false);
-   name_label[2].setVisible(false);
+    name_label[1].setVisible(false);
+    name_label[2].setVisible(false);
 
-  for (int i=0;i<role_label.length;i++){
-    role_label[i].setVisible(false);
-  }
+    for (int i=0;i<role_label.length;i++){
+      role_label[i].setVisible(false);
+    }
 
-  for (int i=0;i<reizen_label.length;i++){
-    reizen_label[i].setVisible(false);
-  }
+    for (int i=0;i<reizen_label.length;i++){
+      reizen_label[i].setVisible(false);
+    }
 
-   skat_label[0].setVisible(false);
-   skat_label[1].setVisible(false);
+    skat_label[0].setVisible(false);
+    skat_label[1].setVisible(false);
   }
 }
