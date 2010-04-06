@@ -88,9 +88,7 @@ public abstract class HumanInterface extends Thread implements Observer{
     setOutputStream(client.getOutputStream());
     client.setOutputStream(getOutputStream());
     client.start();
-    MmiNameInit();
-    MmiNameServerInit();
-    MmiPortServerInit();
+    MmiInit();
       while(true){
         client_message=reader.nextInt();
         switch(client_message){
@@ -107,9 +105,7 @@ public abstract class HumanInterface extends Thread implements Observer{
       }
   }
 
-  protected abstract void MmiNameInit();
-  protected abstract void MmiNameServerInit();
-  protected abstract void MmiPortServerInit();
+  protected abstract void MmiInit();
 
   protected abstract void MmiAIRequest();
   protected abstract void MmiNmRequest();

@@ -470,6 +470,11 @@ public static final long serialVersionUID = 1L;
    */
   private final Face face ;
 
+  /**
+   * card icon name
+   */
+  private final String image_name;
+
 
   /**
    * The board on which the cards are used
@@ -480,11 +485,13 @@ public static final long serialVersionUID = 1L;
   public Card(Color c, Face f){
     color=c;
     face=f;
+    image_name=face+"_"+color+".gif";
   }
 
   public Card(String color_string, String face_string){
     color=Color.valueOf(color_string);
     face=Face.valueOf(face_string);
+    image_name=face+"_"+color+".gif";
   }
 
   /**
@@ -492,6 +499,15 @@ public static final long serialVersionUID = 1L;
    */
   public void setBoard(Board b){
     board=b;
+  }
+
+  /**
+   * Gives access to the private member image_name
+   * @return the name of the image file
+   */
+
+  public String getImageName(){
+    return image_name;
   }
 
   /**

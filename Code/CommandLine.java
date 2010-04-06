@@ -227,6 +227,11 @@ public class CommandLine extends HumanInterface{
       System.out.println("skat must be an int");
     }
   }
+  public void MmiInit(){
+    MmiNameInit();
+    MmiNameServerInit();
+    MmiPortServerInit();
+  }
 
   public void MmiNameInit(){
     System.out.println("Enter your Name:");

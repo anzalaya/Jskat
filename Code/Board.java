@@ -337,7 +337,6 @@ public class Board extends Observable{
     deck.reset();
     deck.shuffle();
     deal(dealer_index);
-    System.out.println(this.toString());
 
     sendNotification(Protocol.HAND_INFO);
 

@@ -6,6 +6,10 @@
  */
 public class SkatClient{
   public static void main(String[] args){
+    if (args.length>0){
     (new CommandLine()).start();
+    }else{
+    (new TextGUI()).start();
+    }
   }
 }
