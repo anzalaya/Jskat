@@ -113,15 +113,15 @@ public class BoardGUI extends javax.swing.JFrame {
     game_type_dialog.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
     game_type_dialog.setTitle("Game");
     game_type_dialog.setAlwaysOnTop(true);
-    game_type_dialog.setBounds(new java.awt.Rectangle(0, 0, 400, 250));
-    game_type_dialog.setMinimumSize(new java.awt.Dimension(400, 250));
+    game_type_dialog.setBounds(new java.awt.Rectangle(0, 0, 600, 400));
+    game_type_dialog.setMinimumSize(new java.awt.Dimension(600, 400));
     game_type_dialog.setModal(true);
     game_type_dialog.setResizable(false);
 
     game_type_panel.setBackground(new java.awt.Color(39, 163, 101));
-    game_type_panel.setMaximumSize(new java.awt.Dimension(400, 250));
-    game_type_panel.setMinimumSize(new java.awt.Dimension(400, 250));
-    game_type_panel.setPreferredSize(new java.awt.Dimension(400, 250));
+    game_type_panel.setMaximumSize(new java.awt.Dimension(500, 400));
+    game_type_panel.setMinimumSize(new java.awt.Dimension(500, 400));
+    game_type_panel.setPreferredSize(new java.awt.Dimension(500, 400));
     game_type_panel.setLayout(null);
 
     choose_game_label.setText("Choose Game");
@@ -132,41 +132,41 @@ public class BoardGUI extends javax.swing.JFrame {
     clubs_radio_button.setText("Clubs");
     clubs_radio_button.setBackground(new java.awt.Color(39, 163, 101));
     game_type_panel.add(clubs_radio_button);
-    clubs_radio_button.setBounds(0, 50, 60, 22);
+    clubs_radio_button.setBounds(5, 50, 100, 22);
 
     game_chooser_group.add(spades_radio_button);
     spades_radio_button.setText("Spades");
     spades_radio_button.setBackground(new java.awt.Color(39, 163, 101));
     game_type_panel.add(spades_radio_button);
-    spades_radio_button.setBounds(100, 50, 80, 22);
+    spades_radio_button.setBounds(115, 50, 100, 22);
 
     game_chooser_group.add(hearts_radio_button);
     hearts_radio_button.setText("Hearts");
     hearts_radio_button.setBackground(new java.awt.Color(39, 163, 101));
     game_type_panel.add(hearts_radio_button);
-    hearts_radio_button.setBounds(210, 50, 70, 22);
+    hearts_radio_button.setBounds(225, 50, 100, 22);
 
     game_chooser_group.add(diamonds_radio_button);
     diamonds_radio_button.setText("Diamonds");
     diamonds_radio_button.setBackground(new java.awt.Color(39, 163, 101));
     game_type_panel.add(diamonds_radio_button);
-    diamonds_radio_button.setBounds(310, 50, 90, 22);
+    diamonds_radio_button.setBounds(335, 50, 100, 22);
 
     game_chooser_group.add(null_radio_button);
     null_radio_button.setText("Null");
     null_radio_button.setBackground(new java.awt.Color(39, 163, 101));
     game_type_panel.add(null_radio_button);
-    null_radio_button.setBounds(50, 90, 50, 22);
+    null_radio_button.setBounds(60, 90, 100, 22);
 
     game_chooser_group.add(grand_radio_button);
     grand_radio_button.setText("Grand");
     grand_radio_button.setBackground(new java.awt.Color(39, 163, 101));
     game_type_panel.add(grand_radio_button);
-    grand_radio_button.setBounds(260, 90, 63, 22);
+    grand_radio_button.setBounds(280, 90, 100, 22);
 
     separator0.setMinimumSize(new java.awt.Dimension(40, 6));
     game_type_panel.add(separator0);
-    separator0.setBounds(0, 120, 400, 10);
+    separator0.setBounds(0, 120, 600, 10);
 
     choose_modifiers_label.setText("Choose Modifiers");
     game_type_panel.add(choose_modifiers_label);
@@ -174,8 +174,8 @@ public class BoardGUI extends javax.swing.JFrame {
 
     hand_radio_button.setText("Hand");
     game_type_panel.add(hand_radio_button);
-    hand_radio_button.setBounds(0, 160, 60, 22);
-    hand_radio_button.setBackground(new java.awt.Color(39, 163, 101));
+    hand_radio_button.setBounds(0, 160, 100, 22);
+  //  hand_radio_button.setBackground(new java.awt.Color(39, 163, 101));
     hand_radio_button.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
         hand_radio_buttonActionPerformed(evt);
@@ -183,38 +183,38 @@ public class BoardGUI extends javax.swing.JFrame {
         });
 
     schneider_radio_button.setText("Schneider");
-    schneider_radio_button.setBackground(new java.awt.Color(39, 163, 101));
+   // schneider_radio_button.setBackground(new java.awt.Color(39, 163, 101));
     schneider_radio_button.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
         schneider_radio_buttonActionPerformed(evt);
         }
         });
     game_type_panel.add(schneider_radio_button);
-    schneider_radio_button.setBounds(90, 160, 90, 22);
+    schneider_radio_button.setBounds(90, 160, 100, 22);
 
     schwarz_radio_button.setText("Schwarz");
-    schwarz_radio_button.setBackground(new java.awt.Color(39, 163, 101));
+   // schwarz_radio_button.setBackground(new java.awt.Color(39, 163, 101));
     schwarz_radio_button.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
         schwarz_radio_buttonActionPerformed(evt);
         }
         });
     game_type_panel.add(schwarz_radio_button);
-    schwarz_radio_button.setBounds(220, 160, 80, 22);
+    schwarz_radio_button.setBounds(220, 160, 100, 22);
 
     ouvert_radio_button.setText("Ouvert");
-    ouvert_radio_button.setBackground(new java.awt.Color(39, 163, 101));
+  //  ouvert_radio_button.setBackground(new java.awt.Color(39, 163, 101));
     ouvert_radio_button.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
         ouvert_radio_buttonActionPerformed(evt);
         }
         });
     game_type_panel.add(ouvert_radio_button);
-    ouvert_radio_button.setBounds(330, 160, 70, 22);
+    ouvert_radio_button.setBounds(330, 160, 100, 22);
 
     separator1.setMinimumSize(new java.awt.Dimension(40, 6));
     game_type_panel.add(separator1);
-    separator1.setBounds(0, 190, 400, 10);
+    separator1.setBounds(0, 190, 600, 10);
 
     send_game_type_info.setText("Send");
     send_game_type_info.addActionListener(new java.awt.event.ActionListener() {
@@ -223,7 +223,7 @@ public class BoardGUI extends javax.swing.JFrame {
         }
         });
     game_type_panel.add(send_game_type_info);
-    send_game_type_info.setBounds(160, 210, 67, 27);
+    send_game_type_info.setBounds(160, 210, 100, 27);
 
     javax.swing.GroupLayout game_type_dialogLayout = new javax.swing.GroupLayout(game_type_dialog.getContentPane());
     game_type_dialog.getContentPane().setLayout(game_type_dialogLayout);
@@ -828,6 +828,16 @@ public class BoardGUI extends javax.swing.JFrame {
   public javax.swing.JRadioButton spades_radio_button;
   public javax.swing.JButton tricks_button;
   public javax.swing.JButton yes_reizen_button;
+
+  public static void main(String[] args){
+    final BoardGUI init=new BoardGUI(null);
+    java.awt.EventQueue.invokeLater(new Runnable() {
+        public void run() {
+        init.setVisible(true);
+        init.game_type_dialog.setVisible(true);
+        }
+        });
+  }
 
   public void invisibility(){
     game_label.setVisible(false);
