@@ -765,14 +765,22 @@ public class BoardGUI extends javax.swing.JFrame {
   }
 
   private void send_game_type_infoActionPerformed(java.awt.event.ActionEvent evt) {
+    System.out.println("send_game_type_infoActionPerformed0");
     gameType_answer=0*(null_radio_button.isSelected() ? 1 : 0)+1*(grand_radio_button.isSelected() ? 1 : 0)+2*(clubs_radio_button.isSelected() ? 1 : 0)+3*(spades_radio_button.isSelected() ? 1 : 0)+4*(hearts_radio_button.isSelected() ? 1 : 0)+5*(diamonds_radio_button.isSelected() ? 1 : 0);
+    System.out.println("send_game_type_infoActionPerformed1");
     hand_modif=hand_radio_button.isSelected();
+    System.out.println("send_game_type_infoActionPerformed2");
     schneider_modif=schneider_radio_button.isSelected();
+    System.out.println("send_game_type_infoActionPerformed3");
     schwarz_modif=schwarz_radio_button.isSelected();
+    System.out.println("send_game_type_infoActionPerformed4");
     ouvert_modif=ouvert_radio_button.isSelected();
+    System.out.println("send_game_type_infoActionPerformed5");
     synchronized(thread){
       thread.notifyAll();
     }
+    System.out.println("send_game_type_infoActionPerformed6");
+    System.out.println("choice ended");
   }
   
   private void gametype_radio_buttonActionPerformed(java.awt.event.ActionEvent evt){

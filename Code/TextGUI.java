@@ -82,6 +82,7 @@ public class TextGUI extends HumanInterface{
   }
 
   public synchronized void MmiGmTRequest(){
+    System.out.println("yahhhoooooo0");
     board.game_type_dialog.setVisible(true);
     System.out.println("yahhhoooooo1");
     synchronized(Thread.currentThread()){
@@ -100,6 +101,7 @@ public class TextGUI extends HumanInterface{
   }
 
   public synchronized void MmiGmMRequest(){
+    System.out.println("yahhhoooooo4");
     if (modifier_state==0){
     writer.println(board.hand_modif);
     }
