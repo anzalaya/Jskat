@@ -6,9 +6,10 @@
 
 public class TextGUI extends HumanInterface{
 
-  BoardGUI board;  
-  InitGUI init;
-  AiGUI ai;
+  private BoardGUI board;  
+  private InitGUI init;
+  private AiGUI ai;
+  private int modifier_state=0;
 
   public TextGUI(){
     board=new BoardGUI(this) ;
@@ -82,6 +83,7 @@ public class TextGUI extends HumanInterface{
 
   public synchronized void MmiGmTRequest(){
     board.game_type_dialog.setVisible(true);
+    System.out.println("yahhhoooooo1");
     synchronized(Thread.currentThread()){
       try {
         Thread.currentThread().wait();
@@ -90,17 +92,49 @@ public class TextGUI extends HumanInterface{
         System.exit(1);
       }
     }
+    System.out.println("yahhhoooooo2");
+    board.game_type_dialog.setVisible(false);
+    System.out.println("yahhhoooooo3");
+    System.out.println(board.gameType_answer);
     writer.println(board.gameType_answer);
   }
 
   public synchronized void MmiGmMRequest(){
-    board.game_type_dialog.setVisible(false);
+    if (modifier_state==0){
+    writer.println(board.hand_modif);
+    }
+    if (modifier_state==1){
+    writer.println(board.schneider_modif);
+    }
+    if (modifier_state==2){
+    writer.println(board.schwarz_modif);
+    }
+    if (modifier_state==3){
+    writer.println(board.ouvert_modif);
+    }
+    modifier_state++;
   }
 
   public synchronized void MmiSkRequest(){
+    board.skat_rq=true;
+
+
+
+    board.skat_rq=false;
   }
 
   public synchronized void MmiPlRequest(){
+    board.play_rq=true;
+    synchronized(Thread.currentThread()){
+      try {
+        Thread.currentThread().wait();
+      } catch (InterruptedException e) {
+        System.err.println("Failed wait"+e.toString());
+        System.exit(1);
+      }
+    }
+    writer.println(board.play_answer);
+    board.play_rq=false;
   }
 
   public synchronized void MmiExRequest(){
@@ -134,9 +168,15 @@ public class TextGUI extends HumanInterface{
 
   public synchronized  void drawHandInfo(){
     System.out.println("drawHandInfo");
-    for (int i=0; i< view.hand.size();i++){
-      board.hand[i].setText(view.hand.get(i).toString());
+    for (int i=0; i<10; i++){
+      board.hand[i].setText("...");
       board.hand[i].setVisible(true);
+      if (i>=view.hand.size()) continue;
+      board.hand[i].setText(view.hand.get(i).toString());
+    }
+    if (view.hand.size()>10){
+      System.out.println(view.hand.get(10).toString());
+      System.out.println(view.hand.get(11).toString());
     }
   }
 
@@ -146,7 +186,7 @@ public class TextGUI extends HumanInterface{
     board.reizen_label[view.reizen_index].setVisible(true);
     synchronized(Thread.currentThread()){
       try{
-        Thread.currentThread().sleep(700);
+        Thread.currentThread().sleep(1000);
       }catch(InterruptedException e){
         System.err.println("Faulty sleep");
         System.exit(1);
@@ -182,15 +222,18 @@ public class TextGUI extends HumanInterface{
   }
 
   public synchronized  void drawTrickInfo(){
-    System.out.println("drawTrickInfo");
+    int base=view.trick_winner;
+    System.out.println("drawTrickInfo trickwinner="+view.trick_winner);
     board.last_trick_button.setVisible(false);
-    for (int i=0; i<view.size_trick;i++){
-      board.card_trick_label[i].setText(view.current_trick[i].toString());
-      board.card_trick_label[i].setVisible(true);
+    for (int i=0; i<3;i++){
+      board.card_trick_label[(i+base)%3].setText("");
+      board.card_trick_label[(i+base)%3].setVisible(true);
+      if (i>=view.size_trick) continue;
+      board.card_trick_label[(i+view.trick_winner)%3].setText(view.current_trick[i].toString());
     }
     synchronized(Thread.currentThread()){
       try{
-        Thread.currentThread().sleep(700);
+        Thread.currentThread().sleep(1000);
       }catch(InterruptedException e){
         System.err.println("Faulty sleep");
         System.exit(1);
@@ -215,7 +258,7 @@ public class TextGUI extends HumanInterface{
     if (view.turn>0) board.last_trick_button.setVisible(true);
     synchronized(Thread.currentThread()){
       try{
-        Thread.currentThread().sleep(700);
+        Thread.currentThread().sleep(1000);
       }catch(InterruptedException e){
         System.err.println("Faulty sleep");
         System.exit(1);
@@ -228,9 +271,10 @@ public class TextGUI extends HumanInterface{
     board.invisibility();
     board.name_label[1].setVisible(true);
     board.name_label[2].setVisible(true);
+    modifier_state=0;
     synchronized(Thread.currentThread()){
       try{
-        Thread.currentThread().sleep(700);
+        Thread.currentThread().sleep(1000);
       }catch(InterruptedException e){
         System.err.println("Faulty sleep");
         System.exit(1);

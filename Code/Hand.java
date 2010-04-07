@@ -65,7 +65,6 @@ public class Hand {
   public void addCard(Card c){
     hand.add(c);
     current_hand_size++;
-    Collections.sort(hand,Collections.reverseOrder());
   }
 
   public String toString(){
@@ -82,7 +81,6 @@ public class Hand {
   public void addCards(Collection<Card> c){
     hand.addAll(c);
     current_hand_size+=c.size();
-    Collections.sort(hand,Collections.reverseOrder());
   }
 
   public void sortHand(){

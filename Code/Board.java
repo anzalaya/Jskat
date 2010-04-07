@@ -408,6 +408,7 @@ public class Board extends Observable{
     }
 //    System.out.println("Size hand"+tab_player.get(index_taker).getHand().getHand().size());
   //  System.out.println("Hand"+tab_player.get(index_taker).getHand().toString());
+      sendNotification(Protocol.TRICKWINNER_INFO);
     for (turn=1;turn<=10;turn++){
       sendNotification(Protocol.STARTTURN_INFO);
       sendNotification(Protocol.TURN_INFO);
