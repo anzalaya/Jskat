@@ -394,7 +394,6 @@ public class Board extends Observable{
     if (modifier_hand){
       tab_player.get(index_taker).remove(skat);
     }else{
-    tab_player.get(index_taker).sortHand();
       sendNotification(Protocol.SKAT_INFO);
       sendNotification(Protocol.HAND_INFO);
       action_player=index_taker;
@@ -406,8 +405,8 @@ public class Board extends Observable{
       skat.addAll(chosen_skat);
       sendNotification(Protocol.SKAT_INFO);
     }
-//    System.out.println("Size hand"+tab_player.get(index_taker).getHand().getHand().size());
-  //  System.out.println("Hand"+tab_player.get(index_taker).getHand().toString());
+    tab_player.get(index_taker).sortHand();
+      sendNotification(Protocol.HAND_INFO);
       sendNotification(Protocol.TRICKWINNER_INFO);
     for (turn=1;turn<=10;turn++){
       sendNotification(Protocol.STARTTURN_INFO);

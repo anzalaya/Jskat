@@ -662,6 +662,7 @@ public class BoardGUI extends javax.swing.JFrame {
     System.out.println("hand0");
     if (!play_rq && !skat_rq) return;
     play_answer=0;
+    skat_answer=0;
     synchronized(thread){
       thread.notifyAll();
     }
@@ -671,6 +672,7 @@ public class BoardGUI extends javax.swing.JFrame {
     System.out.println("hand1");
     if (!play_rq && !skat_rq) return;
     play_answer=1;
+    skat_answer=1;
     synchronized(thread){
       thread.notifyAll();
     }
@@ -680,6 +682,7 @@ public class BoardGUI extends javax.swing.JFrame {
     System.out.println("hand2");
     if (!play_rq && !skat_rq) return;
     play_answer=2;
+    skat_answer=2;
     synchronized(thread){
       thread.notifyAll();
     }
@@ -689,6 +692,7 @@ public class BoardGUI extends javax.swing.JFrame {
     System.out.println("hand3");
     if (!play_rq && !skat_rq) return;
     play_answer=3;
+    skat_answer=3;
     synchronized(thread){
       thread.notifyAll();
     }
@@ -697,6 +701,7 @@ public class BoardGUI extends javax.swing.JFrame {
   private void hand4MouseClicked(java.awt.event.MouseEvent evt) {
     System.out.println("hand4");
     play_answer=4;
+    skat_answer=4;
     if (!play_rq && !skat_rq) return;
     synchronized(thread){
       thread.notifyAll();
@@ -707,6 +712,7 @@ public class BoardGUI extends javax.swing.JFrame {
     System.out.println("hand5");
     if (!play_rq && !skat_rq) return;
     play_answer=5;
+    skat_answer=5;
     synchronized(thread){
       thread.notifyAll();
     }
@@ -716,6 +722,7 @@ public class BoardGUI extends javax.swing.JFrame {
     System.out.println("hand6");
     if (!play_rq && !skat_rq) return;
     play_answer=6;
+    skat_answer=6;
     synchronized(thread){
       thread.notifyAll();
     }
@@ -725,6 +732,7 @@ public class BoardGUI extends javax.swing.JFrame {
     System.out.println("hand7");
     if (!play_rq && !skat_rq) return;
     play_answer=7;
+    skat_answer=7;
     synchronized(thread){
       thread.notifyAll();
     }
@@ -734,6 +742,7 @@ public class BoardGUI extends javax.swing.JFrame {
     System.out.println("hand8");
     if (!play_rq && !skat_rq) return;
     play_answer=8;
+    skat_answer=8;
     synchronized(thread){
       thread.notifyAll();
     }
@@ -743,6 +752,7 @@ public class BoardGUI extends javax.swing.JFrame {
     System.out.println("hand9");
     if (!play_rq && !skat_rq) return;
     play_answer=9;
+    skat_answer=9;
     synchronized(thread){
       thread.notifyAll();
     }
@@ -776,11 +786,9 @@ public class BoardGUI extends javax.swing.JFrame {
     System.out.println("send_game_type_infoActionPerformed4");
     ouvert_modif=ouvert_radio_button.isSelected();
     System.out.println("send_game_type_infoActionPerformed5");
-    synchronized(thread){
-      thread.notifyAll();
-    }
     System.out.println("send_game_type_infoActionPerformed6");
     System.out.println("choice ended");
+    game_type_dialog.setVisible(false);
   }
   
   private void gametype_radio_buttonActionPerformed(java.awt.event.ActionEvent evt){
