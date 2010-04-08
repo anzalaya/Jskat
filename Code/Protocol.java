@@ -45,7 +45,7 @@
  *17 BoardThread->client:17 (TRICK_INFO) current_trick<br/>
  *18 BoardThread->client:18 (TRICKLIST_INFO) trick_list<br/>
  *19 BoardThread->client:19 (TURN_INFO) turn<br/>
- *20 BoardThread->client:20 (OUVERT_INFO) (1,2) hand_player+i<br/>
+ *20 BoardThread->client:20 (OUVERT_INFO) hand_player<br/>
  *21 BoardThread->client:21 (STARTTURN_INFO)<br/>
  *22 BoardThread->client:22 (STARTGAME_INFO)<br/>
  *23 BoardThread->client:23 (TRICKWINNER_INFO) i <br/>

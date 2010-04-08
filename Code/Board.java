@@ -338,6 +338,10 @@ public class Board extends Observable{
     deck.shuffle();
     deal(dealer_index);
 
+    tab_player.get(0).sortHand();
+    tab_player.get(1).sortHand();
+    tab_player.get(2).sortHand();
+
     sendNotification(Protocol.HAND_INFO);
 
     if (!reizen(dealer_index)){
@@ -652,7 +656,7 @@ public class Board extends Observable{
    *
 
   /**
-   * Updates the order of play, 
+   * Updates the order of play, newrole=(oldrole-1)%3=(oldrole+2)%3 
    */
   public void updateOrderOfPlay(){
     if (game==0){
@@ -660,9 +664,9 @@ public class Board extends Observable{
       tab_player.get(1).setRole(1);
       tab_player.get(2).setRole(2);
     }else{
-      tab_player.get(0).setRole((tab_player.get(0).getRole().getRoleId()+1) % 3);
-      tab_player.get(1).setRole((tab_player.get(1).getRole().getRoleId()+1) % 3);
-      tab_player.get(2).setRole((tab_player.get(2).getRole().getRoleId()+1) % 3);
+      tab_player.get(0).setRole((tab_player.get(0).getRole().getRoleId()+2) % 3);
+      tab_player.get(1).setRole((tab_player.get(1).getRole().getRoleId()+2) % 3);
+      tab_player.get(2).setRole((tab_player.get(2).getRole().getRoleId()+2) % 3);
     }
   }
 

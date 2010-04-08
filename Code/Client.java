@@ -93,9 +93,12 @@ public class Client extends Thread{
 
     public synchronized void processRoleInfo(){
       String res =c.in.next();
-      role.add(0,Player.Role.valueOf(res));
+      role.set(0,Player.Role.valueOf(res));
       role.set(1,Player.Role.idToRole((role.get(0).getRoleId()+1)%3));
       role.set(2,Player.Role.idToRole((role.get(1).getRoleId()+1)%3));
+      System.out.println("0->"+role.get(0).toString());
+      System.out.println("1->"+role.get(1).toString());
+      System.out.println("2->"+role.get(2).toString());
     }
 
     public synchronized void processHandInfo(){
@@ -408,6 +411,7 @@ public class Client extends Thread{
     }
     while(true){
       chooser=c.in.nextInt();
+      System.out.println("chooser="+chooser);
       switch(chooser){
         case Protocol.FILL_BOARD      : processAIRequest(); break;
         case Protocol.NAME_CLIENT     : processNmRequest(); break;

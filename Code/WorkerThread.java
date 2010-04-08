@@ -390,7 +390,6 @@ public class WorkerThread{
     public synchronized void sendRoleInfo(){
       for (int i=0;i<human_number;i++){
         connection_array.get(i).out.println(11);
-        System.out.println(board.getTabPlayer().get(i).getRole().toString());
         connection_array.get(i).out.println(board.getTabPlayer().get(i).getRole().toString());
         }
       }
@@ -491,7 +490,6 @@ public class WorkerThread{
       for (int i=0;i<human_number;i++){
         if (i==board.getIndexTaker()) continue;
         connection_array.get(i).out.println(20);
-        connection_array.get(i).out.println(relativeIndex(i,board.getIndexTaker()));
         try{
           connection_array.get(i).out_stream.writeObject(Collections.unmodifiableList(board.getTabPlayer().get(board.getIndexTaker()).getHand().getHand()));
           connection_array.get(i).out_stream.reset();
