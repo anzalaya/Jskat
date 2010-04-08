@@ -31,6 +31,17 @@ replace integer value by constants in protocol and test that all is well
 finish commandline
 start graphic interface
 
+08/04/2010 version 0.6
+TextGUI works better
+TODO
+Global-> redo init and ai window to make them part of BoardGUI
+Global->total GUI with animation 
+Global->redo Waiting window
+TextGUI-> add result modal window, tricklist, last trick modal window
+Global->test with 2 3 human player
+Global->graceful exit
+WorkerThread->Handle exception when clients quit abruptely
+
 Network organization see Protocol.java
 1 thread per board (three sockets)
 1 threads receives the connected socket and wait to have enough to dispatch to boards
