@@ -40,6 +40,7 @@ Global->redo Waiting window
 TextGUI-> add result modal window, tricklist, last trick modal window
 Global->test with 2 3 human player
 Global->graceful exit
+Global->Reoganize graphical interface code, more modular
 WorkerThread->Handle exception when clients quit abruptely
 
 Network organization see Protocol.java

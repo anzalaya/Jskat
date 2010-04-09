@@ -124,11 +124,13 @@ public class TextGUI extends HumanInterface{
     }
     writer.println(board.skat_answer);
     board.skat_rq=false;
+    System.out.println("skat_state="+skat_state);
     if(skat_state==1){
     board.skat_label[0].setVisible(false);
     board.skat_label[1].setVisible(false);
-    }
+    }else{
     skat_state++;
+    }
   }
 
   public void MmiPlRequest(){
@@ -218,6 +220,7 @@ public class TextGUI extends HumanInterface{
 
   public  void drawSkatInfo(){
     System.out.println("drawSkatInfo");
+    if (skat_state==1) return;
     board.skat_label[0].setText(view.skat.get(0).toString());
     board.skat_label[1].setText(view.skat.get(1).toString());
     board.skat_label[0].setVisible(true);
