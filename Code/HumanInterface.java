@@ -99,7 +99,8 @@ public abstract class HumanInterface extends Thread implements Observer{
           case Protocol.GAMETYPE_MODIFIERS_REQUEST: MmiGmMRequest(); break;
           case Protocol.SKAT_REQUEST              : MmiSkRequest(); break;
           case Protocol.PLAY_REQUEST              : MmiPlRequest(); break;
-          case Protocol.QUIT_REQUEST               : MmiExRequest(); break;
+          case Protocol.QUIT_REQUEST              : MmiExRequest(); break;
+          case Protocol.CONNECTION_ERROR          : MmiInit(); break;
           default:  System.err.println("Bad numbering"); System.exit(1);
         }
       }

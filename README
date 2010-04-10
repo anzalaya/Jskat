@@ -42,6 +42,7 @@ Global->test with 2 3 human player
 Global->graceful exit
 Global->Reoganize graphical interface code, more modular
 WorkerThread->Handle exception when clients quit abruptely
+Global-> Make it easy to play locally : give option quit local network to MmiInit
 
 Network organization see Protocol.java
 1 thread per board (three sockets)

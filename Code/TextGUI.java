@@ -7,51 +7,27 @@
 public class TextGUI extends HumanInterface{
 
   private BoardGUI board;  
-  private InitGUI init;
-  private AiGUI ai;
   private int modifier_state=0;
   private int skat_state=0;
 
   public TextGUI(){
     board=new BoardGUI(this) ;
-    init=new InitGUI(this);
-    ai=new AiGUI(this);
   }
 
   public void MmiInit(){
   System.out.println("MmiInit");
-    java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
-        init.setVisible(true);
-        }
-        });
-    synchronized(Thread.currentThread()){
-      try {
-        Thread.currentThread().wait();
-      } catch (InterruptedException e) {System.err.println("Failed wait"+e.toString());System.exit(1);}
-    }
-    init.setVisible(false);
-    board.name_label[0].setText(init.name_field.getText());
-    writer.println(init.name_field.getText());
-    writer.println(init.server_name.getText());
-    writer.println(init.server_port.getText());
+    board.connect_dialog.setVisible(true);
+    board.name_label[0].setText(board.name_field.getText());
+    writer.println(board.name_field.getText());
+    writer.println(board.server_name.getText());
+    writer.println(board.server_port.getText());
   }
 
   public void MmiAIRequest(){
   System.out.println("MmiAIRequest");
-    ai.AI_Info.setText("You will play with "+(3-view.human_player)+" AI players");
-    java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
-        ai.setVisible(true);
-        }
-        });
-    synchronized(Thread.currentThread()){
-      try {
-        Thread.currentThread().wait();
-      } catch (InterruptedException e) {System.err.println("Failed wait"+e.toString());System.exit(1);}
-    }
-    ai.setVisible(false);
-    if (ai.answer){
+    board.ai_label.setText("You will play with "+(3-view.human_player)+" AI players");
+    board.connect_dialog.setVisible(true);
+    if (board.ai_answer){
       writer.println(true);
       java.awt.EventQueue.invokeLater(new Runnable() {
           public void run() {

@@ -407,7 +407,7 @@ public class Client extends Thread{
       c=new Connection(new Socket(server_name,server_port));
     } catch (IOException e) {
       System.err.println("connection to "+server_name+" impossible");
-      System.exit(1);
+      writer.println(Protocol.CONNECTION_ERROR);
     }
     while(true){
       chooser=c.in.nextInt();

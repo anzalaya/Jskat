@@ -240,7 +240,28 @@ public class BoardGUI extends javax.swing.JFrame {
     }
   }
 
+  private void yes_ai_buttonActionPerformed(java.awt.event.ActionEvent evt){
+    ai_answer=true;
+    connect_dialog.setVisible(false);
+  }
+
+  private void no_ai_buttonActionPerformed(java.awt.event.ActionEvent evt){
+    ai_answer=false;
+    connect_dialog.setVisible(false);
+  }
+
   private void connect_buttonActionPerformed(java.awt.event.ActionEvent evt){
+    yes_ai_button.setVisible(true);
+    no_ai_button.setVisible(true);
+    ai_label.setVisible(true);
+    connect_button.setVisible(false);
+    
+  name_connect_label.setVisible(false);
+  name_field.setVisible(false);
+  server_name.setVisible(false);
+  server_label.setVisible(false);
+  port_label.setVisible(false);
+  server_port.setVisible(false);
     connect_dialog.setVisible(false);
   }
 
@@ -249,6 +270,7 @@ public class BoardGUI extends javax.swing.JFrame {
   private javax.swing.JPanel game_type_panel;
   private Thread thread;
 
+  public boolean ai_answer;
   public boolean reizen_answer;
   public boolean skat_rq;
   public int skat_answer;
@@ -324,6 +346,10 @@ public class BoardGUI extends javax.swing.JFrame {
   private javax.swing.JLabel port_label;
   public javax.swing.JTextField server_port;
   private javax.swing.JButton connect_button;
+
+  public javax.swing.JLabel ai_label;
+  private javax.swing.JButton no_ai_button;
+  private javax.swing.JButton yes_ai_button;
 
   /**
    *Initialize the board frame
@@ -980,11 +1006,15 @@ public class BoardGUI extends javax.swing.JFrame {
     server_port = new javax.swing.JTextField();
     connect_button = new javax.swing.JButton();
 
+    ai_label=new javax.swing.JLabel();
+    no_ai_button = new javax.swing.JButton();
+    yes_ai_button = new javax.swing.JButton();
+
     connect_dialog.setAlwaysOnTop(true);
-    connect_dialog.setBounds(new java.awt.Rectangle(0, 0, 450, 275));
-    connect_dialog.setMinimumSize(new java.awt.Dimension(450, 275));
-    connect_dialog.setMinimumSize(new java.awt.Dimension(450, 275));
-    connect_dialog.setPreferredSize(new java.awt.Dimension(450, 275));
+    connect_dialog.setBounds(new java.awt.Rectangle(50, 50, 410, 350));
+    connect_dialog.setMinimumSize(new java.awt.Dimension(410, 350));
+    connect_dialog.setMinimumSize(new java.awt.Dimension(410, 350));
+    connect_dialog.setPreferredSize(new java.awt.Dimension(410, 350));
     connect_dialog.setModal(true);
     connect_dialog.setResizable(false);
     connect_dialog.setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -1004,6 +1034,20 @@ public class BoardGUI extends javax.swing.JFrame {
         }
         });
 
+      no_ai_button.setText("No");
+      no_ai_button.addActionListener(new java.awt.event.ActionListener() {
+          public void actionPerformed(java.awt.event.ActionEvent evt) {
+          no_ai_buttonActionPerformed(evt);
+          }
+          });
+
+      yes_ai_button.setText("Yes");
+      yes_ai_button.addActionListener(new java.awt.event.ActionListener() {
+          public void actionPerformed(java.awt.event.ActionEvent evt) {
+          yes_ai_buttonActionPerformed(evt);
+          }
+          });
+
     port_label.setText("Server Port");
 
     server_label.setText("Server Name");
@@ -1016,28 +1060,41 @@ public class BoardGUI extends javax.swing.JFrame {
 
     welcome.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     connect_panel.add(welcome);
-    welcome.setBounds(0, 0, 400, 30);
+    welcome.setBounds(5, 0, 390, 30);
 
     connect_panel.add(name_connect_label);
-    name_connect_label.setBounds(0, 60, 47, 15);
+    name_connect_label.setBounds(5, 65, 90, 15);
 
     connect_panel.add(server_label);
-    server_label.setBounds(0, 130, 47, 15);
+    server_label.setBounds(5, 135, 100, 15);
 
     connect_panel.add(port_label);
-    port_label.setBounds(0, 210, 47, 15);
+    port_label.setBounds(5, 215, 90, 15);
 
     connect_panel.add(connect_button);
-    connect_button.setBounds(160, 270, 67, 27);
+    connect_button.setBounds(165, 270, 100, 30);
+
+    connect_panel.add(yes_ai_button);
+    yes_ai_button.setBounds(100, 270, 100, 30);
+    yes_ai_button.setVisible(false);
+
+    connect_panel.add(no_ai_button);
+    no_ai_button.setBounds(210, 270, 100, 30);
+    no_ai_button.setVisible(false);
+
+    connect_panel.add(ai_label);
+    ai_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+    ai_label.setBounds(5,130,400,25);
+    ai_label.setVisible(false);
 
     connect_panel.add(name_field);
-    name_field.setBounds(100, 60, 290, 25);
+    name_field.setBounds(105, 60, 290, 25);
 
     connect_panel.add(server_name);
-    server_name.setBounds(100, 130, 290, 25);
+    server_name.setBounds(105, 130, 290, 25);
 
     connect_panel.add(server_port);
-    server_port.setBounds(100, 210, 290, 25);
+    server_port.setBounds(105, 210, 290, 25);
 
 
     javax.swing.GroupLayout connect_dialogLayout = new javax.swing.GroupLayout(connect_dialog.getContentPane());
@@ -1045,11 +1102,11 @@ public class BoardGUI extends javax.swing.JFrame {
     connect_dialog.getContentPane().setLayout(connect_dialogLayout);
     connect_dialogLayout.setHorizontalGroup(
         connect_dialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addComponent(connect_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+        .addComponent(connect_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
         );
     connect_dialogLayout.setVerticalGroup(
         connect_dialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addComponent(connect_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+        .addComponent(connect_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
         );
 
 
@@ -1057,11 +1114,11 @@ public class BoardGUI extends javax.swing.JFrame {
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 400, Short.MAX_VALUE)
+        .addGap(0, 410, Short.MAX_VALUE)
         );
     layout.setVerticalGroup(
         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addGap(0, 300, Short.MAX_VALUE)
+        .addGap(0, 350, Short.MAX_VALUE)
         );
   }
 

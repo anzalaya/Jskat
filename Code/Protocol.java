@@ -239,20 +239,10 @@ public class Protocol{
    */
   public static final int TAKER_INFO=26;
 
-  /**
- *27 HumanInterface->client: 27 (NAME_PLAYER) name_player<br/>
- */
-  public static final int NAME_PLAYER=27;
-
-  /**
- *28 HumanInterface->client: 28 (NAME_SERVER) name_server<br/>
- */
-  public static final int NAME_SERVER=28;
-
 
 /**
- *29 HumanInterface->client: 29 (PORT_SERVER) port<br/>
+ *27 client->HumanInterface: 30 (CONNECTION_ERROR) <br/>
  */
-  public static final int PORT_SERVER=29;
+  public static final int CONNECTION_ERROR=27;
 
 }

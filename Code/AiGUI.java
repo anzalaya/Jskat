@@ -121,12 +121,12 @@ public class AiGUI extends javax.swing.JFrame {
   }
 
   public boolean answer;
-  public javax.swing.JLabel AI_Info;
 
   private Thread thread;
   private javax.swing.JPanel jPanelConnectScreen;
-  private javax.swing.JButton no_button;
   private javax.swing.JLabel welcome;
+  public javax.swing.JLabel AI_Info;
+  private javax.swing.JButton no_button;
   private javax.swing.JButton yes_button;
 
 }
