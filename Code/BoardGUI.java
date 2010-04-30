@@ -164,19 +164,11 @@ public class BoardGUI extends javax.swing.JFrame {
   }
 
   private void send_game_type_infoActionPerformed(java.awt.event.ActionEvent evt) {
-    System.out.println("send_game_type_infoActionPerformed0");
     gameType_answer=0*(null_radio_button.isSelected() ? 1 : 0)+1*(grand_radio_button.isSelected() ? 1 : 0)+2*(clubs_radio_button.isSelected() ? 1 : 0)+3*(spades_radio_button.isSelected() ? 1 : 0)+4*(hearts_radio_button.isSelected() ? 1 : 0)+5*(diamonds_radio_button.isSelected() ? 1 : 0);
-    System.out.println("send_game_type_infoActionPerformed1");
     hand_modif=hand_radio_button.isSelected();
-    System.out.println("send_game_type_infoActionPerformed2");
     schneider_modif=schneider_radio_button.isSelected();
-    System.out.println("send_game_type_infoActionPerformed3");
     schwarz_modif=schwarz_radio_button.isSelected();
-    System.out.println("send_game_type_infoActionPerformed4");
     ouvert_modif=ouvert_radio_button.isSelected();
-    System.out.println("send_game_type_infoActionPerformed5");
-    System.out.println("send_game_type_infoActionPerformed6");
-    System.out.println("choice ended");
     game_type_dialog.setVisible(false);
   }
 
@@ -250,18 +242,29 @@ public class BoardGUI extends javax.swing.JFrame {
     connect_dialog.setVisible(false);
   }
 
+  private void local_buttonActionPerformed(java.awt.event.ActionEvent evt){
+    locality=true;
+    connect_dialog.setVisible(false);
+  }
+
+  private void connect_quit_buttonActionPerformed(java.awt.event.ActionEvent evt){
+    System.exit(1);
+  }
+
   private void connect_buttonActionPerformed(java.awt.event.ActionEvent evt){
     yes_ai_button.setVisible(true);
     no_ai_button.setVisible(true);
     ai_label.setVisible(true);
     connect_button.setVisible(false);
-    
-  name_connect_label.setVisible(false);
-  name_field.setVisible(false);
-  server_name.setVisible(false);
-  server_label.setVisible(false);
-  port_label.setVisible(false);
-  server_port.setVisible(false);
+
+    name_connect_label.setVisible(false);
+    name_field.setVisible(false);
+    server_name.setVisible(false);
+    server_label.setVisible(false);
+    port_label.setVisible(false);
+    server_port.setVisible(false);
+    connect_quit_button.setVisible(false);
+    local_button.setVisible(false);
     connect_dialog.setVisible(false);
   }
 
@@ -270,6 +273,7 @@ public class BoardGUI extends javax.swing.JFrame {
   private javax.swing.JPanel game_type_panel;
   private Thread thread;
 
+  public boolean locality=false;
   public boolean ai_answer;
   public boolean reizen_answer;
   public boolean skat_rq;
@@ -346,6 +350,8 @@ public class BoardGUI extends javax.swing.JFrame {
   private javax.swing.JLabel port_label;
   public javax.swing.JTextField server_port;
   private javax.swing.JButton connect_button;
+  private javax.swing.JButton local_button;
+  private javax.swing.JButton connect_quit_button;
 
   public javax.swing.JLabel ai_label;
   private javax.swing.JButton no_ai_button;
@@ -723,7 +729,6 @@ public class BoardGUI extends javax.swing.JFrame {
     game_type_dialog.setAlwaysOnTop(true);
     game_type_dialog.setBounds(new java.awt.Rectangle(0, 0, 450, 275));
     game_type_dialog.setMinimumSize(new java.awt.Dimension(450, 275));
-    game_type_dialog.setMinimumSize(new java.awt.Dimension(450, 275));
     game_type_dialog.setPreferredSize(new java.awt.Dimension(450, 275));
     game_type_dialog.setModal(true);
     game_type_dialog.setResizable(false);
@@ -1005,6 +1010,8 @@ public class BoardGUI extends javax.swing.JFrame {
     port_label = new javax.swing.JLabel();
     server_port = new javax.swing.JTextField();
     connect_button = new javax.swing.JButton();
+    local_button=new javax.swing.JButton();
+    connect_quit_button=new javax.swing.JButton();
 
     ai_label=new javax.swing.JLabel();
     no_ai_button = new javax.swing.JButton();
@@ -1034,19 +1041,33 @@ public class BoardGUI extends javax.swing.JFrame {
         }
         });
 
-      no_ai_button.setText("No");
-      no_ai_button.addActionListener(new java.awt.event.ActionListener() {
-          public void actionPerformed(java.awt.event.ActionEvent evt) {
-          no_ai_buttonActionPerformed(evt);
-          }
-          });
+    local_button.setText("Local Game");
+    local_button.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+        local_buttonActionPerformed(evt);
+        }
+        });
 
-      yes_ai_button.setText("Yes");
-      yes_ai_button.addActionListener(new java.awt.event.ActionListener() {
-          public void actionPerformed(java.awt.event.ActionEvent evt) {
-          yes_ai_buttonActionPerformed(evt);
-          }
-          });
+    connect_quit_button.setText("Quit");
+    connect_quit_button.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+        connect_quit_buttonActionPerformed(evt);
+        }
+        });
+
+    no_ai_button.setText("No");
+    no_ai_button.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+        no_ai_buttonActionPerformed(evt);
+        }
+        });
+
+    yes_ai_button.setText("Yes");
+    yes_ai_button.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+        yes_ai_buttonActionPerformed(evt);
+        }
+        });
 
     port_label.setText("Server Port");
 
@@ -1072,7 +1093,13 @@ public class BoardGUI extends javax.swing.JFrame {
     port_label.setBounds(5, 215, 90, 15);
 
     connect_panel.add(connect_button);
-    connect_button.setBounds(165, 270, 100, 30);
+    connect_button.setBounds(5, 270, 100, 30);
+
+    connect_panel.add(local_button);
+    local_button.setBounds(135, 270, 130, 30);
+
+    connect_panel.add(connect_quit_button);
+    connect_quit_button.setBounds(295, 270, 100, 30);
 
     connect_panel.add(yes_ai_button);
     yes_ai_button.setBounds(100, 270, 100, 30);

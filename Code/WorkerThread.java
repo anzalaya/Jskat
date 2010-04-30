@@ -623,6 +623,11 @@ public class WorkerThread{
      */
     private static Lock queueLock;
 
+    /**
+     * locality
+     */
+    boolean local;
+
     static { 
       waiting_list=new ArrayBlockingQueue<Connection>(3);
       queueLock=new ReentrantLock();
@@ -633,9 +638,10 @@ public class WorkerThread{
      */
     private Connection client_connection;
 
-    public ConnectThread(Connection c_s){
+    public ConnectThread(Connection c_s,boolean locality){
       super();
       client_connection=c_s;
+      local=locality;
     }
 
     /**
@@ -662,6 +668,11 @@ public class WorkerThread{
      * Associates group of clients to BoardThread
      */
     public void run(){
+      if (local){
+        (new BoardThread(client_connection)).start();
+        return;
+      }
+
       Connection c1=null;
       Connection c2=null;
       Connection c3=null;

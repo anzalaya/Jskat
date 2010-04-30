@@ -23,10 +23,10 @@ public class Skat{
    */
   private Server server;
 
-  public Skat(){
+  public Skat(boolean locality){
     board_list=new ArrayList<Board>();
     connected_player=new ArrayList<Player>();
-    server=new Server();
+    server=new Server(locality);
   }
   
 

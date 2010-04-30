@@ -17,6 +17,11 @@ public class Server {
   ServerSocket server_socket;
 
   /**
+   * locality of the server
+   */
+  boolean local;
+
+  /**
    * The list of active connections
    */
   List<Connection> client_connections;
@@ -34,7 +39,8 @@ public class Server {
   /*
    * Create a socket and binds to a port
    */
-  public Server(){
+  public Server(boolean locality){
+    local=locality;
     client_connections=new ArrayList<Connection>();
     try {
       server_socket = new ServerSocket(0);
@@ -66,7 +72,7 @@ public class Server {
     }
     conn=new Connection(c);
     client_connections.add(conn);
-    (new WorkerThread.ConnectThread(conn)).start();
+    (new WorkerThread.ConnectThread(conn,local)).start();
     }
   }
 
@@ -91,12 +97,19 @@ public class Server {
     }
   }
 
+  public String getPort(){
+    return ""+server_port;
+  }
+
+  public String getName(){
+    return server_name;
+  }
+
   /*
    * Prints server nfo
    */
   public void publishInfo(){
     System.out.println(server_name+" "+server_port);
   }
-
 }
 

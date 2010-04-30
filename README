@@ -18,7 +18,6 @@ TODO:
 
 21/03/2010 Version 0.4
 Server side seems finished. Only nice quit to do
-bug with play:
 
 30/03/2010 version 0.5
 Version commandline seems to be working
@@ -33,16 +32,23 @@ start graphic interface
 
 08/04/2010 version 0.6
 TextGUI works better
+
 TODO
-Global-> redo init and ai window to make them part of BoardGUI
-Global->total GUI with animation 
+//Global-> redo init and ai window to make them part of BoardGUI
+//Global-> Make it easy to play locally : give option quit and local network to MmiInit, later offer the option for command play
+
 Global->redo Waiting window
 TextGUI-> add result modal window, tricklist, last trick modal window
 Global->test with 2 3 human player
 Global->graceful exit
-Global->Reoganize graphical interface code, more modular
 WorkerThread->Handle exception when clients quit abruptely
-Global-> Make it easy to play locally : give option quit local network to MmiInit
+Solve problem stats
+Global->total GUI with animation 
+Global->Reoganize graphical interface code, more modular
+
+
+Take a look at :
+
 
 Network organization see Protocol.java
 1 thread per board (three sockets)

@@ -9,29 +9,59 @@ public class TextGUI extends HumanInterface{
   private BoardGUI board;  
   private int modifier_state=0;
   private int skat_state=0;
+  private Thread spawn;
+  private Skat localserver;
 
   public TextGUI(){
     board=new BoardGUI(this) ;
   }
 
   public void MmiInit(){
-  System.out.println("MmiInit");
+    System.out.println("MmiInit");
     board.connect_dialog.setVisible(true);
+    if (board.locality){
+      spawn=new Thread(
+          new Runnable(){
+          public void run(){
+          localserver=new Skat(true);
+          localserver.getServer().publishInfo();
+          localserver.getServer().handleConnections();
+          }
+          }
+          );
+      spawn.start();
+      try{
+        Thread.sleep(500);
+      }catch(InterruptedException e){
+        System.err.println("Faulty sleep");
+        System.exit(1);
+      }
+      board.server_name.setText(localserver.getServer().getName());
+      board.server_port.setText(localserver.getServer().getPort());
+    }
     board.name_label[0].setText(board.name_field.getText());
     writer.println(board.name_field.getText());
     writer.println(board.server_name.getText());
     writer.println(board.server_port.getText());
+    if (board.locality){
+      java.awt.EventQueue.invokeLater(new Runnable() {
+          public void run() {
+          board.invisibility();
+          board.setVisible(true);
+          }
+          });
+    }
   }
 
   public void MmiAIRequest(){
-  System.out.println("MmiAIRequest");
+    System.out.println("MmiAIRequest");
     board.ai_label.setText("You will play with "+(3-view.human_player)+" AI players");
     board.connect_dialog.setVisible(true);
     if (board.ai_answer){
       writer.println(true);
       java.awt.EventQueue.invokeLater(new Runnable() {
           public void run() {
-    board.invisibility();
+          board.invisibility();
           board.setVisible(true);
           }
           });
@@ -41,11 +71,11 @@ public class TextGUI extends HumanInterface{
   }
 
   public void MmiNmRequest(){
-  System.out.println("MmiNmRequest");
+    System.out.println("MmiNmRequest");
   }
 
   public void MmiRzRequest(){
-  System.out.println("MmiRzRequest");
+    System.out.println("MmiRzRequest");
     board.yes_reizen_button.setText(reader.nextInt()+" ?");
     board.yes_reizen_button.setVisible(true);
     board.no_reizen_button.setVisible(true);
@@ -64,31 +94,31 @@ public class TextGUI extends HumanInterface{
   }
 
   public void MmiGmTRequest(){
-  System.out.println("MmiGmTRequest");
+    System.out.println("MmiGmTRequest");
     board.game_type_dialog.setVisible(true);
     System.out.println(board.gameType_answer);
     writer.println(board.gameType_answer);
   }
 
   public void MmiGmMRequest(){
-  System.out.println("MmiGmMRequest");
+    System.out.println("MmiGmMRequest");
     if (modifier_state==0){
-    writer.println(board.hand_modif);
+      writer.println(board.hand_modif);
     }
     if (modifier_state==1){
-    writer.println(board.schneider_modif);
+      writer.println(board.schneider_modif);
     }
     if (modifier_state==2){
-    writer.println(board.schwarz_modif);
+      writer.println(board.schwarz_modif);
     }
     if (modifier_state==3){
-    writer.println(board.ouvert_modif);
+      writer.println(board.ouvert_modif);
     }
     modifier_state++;
   }
 
   public void MmiSkRequest(){
-  System.out.println("MmiSkRequest");
+    System.out.println("MmiSkRequest");
     board.skat_rq=true;
     synchronized(Thread.currentThread()){
       try {
@@ -102,15 +132,15 @@ public class TextGUI extends HumanInterface{
     board.skat_rq=false;
     System.out.println("skat_state="+skat_state);
     if(skat_state==1){
-    board.skat_label[0].setVisible(false);
-    board.skat_label[1].setVisible(false);
+      board.skat_label[0].setVisible(false);
+      board.skat_label[1].setVisible(false);
     }else{
-    skat_state++;
+      skat_state++;
     }
   }
 
   public void MmiPlRequest(){
-  System.out.println("MmiPlRequest");
+    System.out.println("MmiPlRequest");
     board.play_rq=true;
     synchronized(Thread.currentThread()){
       try {
@@ -125,7 +155,7 @@ public class TextGUI extends HumanInterface{
   }
 
   public void MmiExRequest(){
-  System.out.println("MmiExRequest");
+    System.out.println("MmiExRequest");
   }
 
 
@@ -138,7 +168,7 @@ public class TextGUI extends HumanInterface{
   }
 
   public  void drawStatInfo(){
-  System.out.println("drawStatInfo");
+    System.out.println("drawStatInfo");
   }
 
   public  void drawGameInfo(){
@@ -184,7 +214,7 @@ public class TextGUI extends HumanInterface{
   }
 
   public  void drawModifInfo(){
-  System.out.println("drawModifInfo");
+    System.out.println("drawModifInfo");
     String res="";
     res+=(view.tab_modifiers.get(0).intValue()==1 ? "hand, " : "");
     res+=(view.tab_modifiers.get(1).intValue()==1 ? "schneider, " : "");
@@ -204,7 +234,7 @@ public class TextGUI extends HumanInterface{
   }
 
   public  void drawGameTypeInfo(){
-  System.out.println("drawGameTypeInfo");
+    System.out.println("drawGameTypeInfo");
     board.reizen_label[0].setVisible(false);
     board.reizen_label[1].setVisible(false);
     board.reizen_label[2].setVisible(false);
@@ -213,7 +243,7 @@ public class TextGUI extends HumanInterface{
   }
 
   public  void drawTrickInfo(){
-  System.out.println("drawTrickInfo");
+    System.out.println("drawTrickInfo");
     int base=view.trick_winner;
     System.out.println("drawTrickInfo trickwinner="+view.trick_winner);
     board.last_trick_button.setVisible(false);
@@ -239,7 +269,7 @@ public class TextGUI extends HumanInterface{
   }
 
   public  void drawTrickListInfo(){
-  System.out.println("drawTrickListInfo");
+    System.out.println("drawTrickListInfo");
   }
 
   public  void drawTurnInfo(){
@@ -249,7 +279,7 @@ public class TextGUI extends HumanInterface{
   }
 
   public  void drawOuvertInfo(){
-  System.out.println("drawOuvertInfo");
+    System.out.println("drawOuvertInfo");
   }
 
   public  void drawTurnStartInfo(){
@@ -283,19 +313,21 @@ public class TextGUI extends HumanInterface{
   }
 
   public  void drawLastTrickWinnerInfo(){
-  System.out.println("drawLastTrickWinnerInfo");
+    System.out.println("drawLastTrickWinnerInfo");
   }
 
   public  void drawResultGameInfo(){
-  System.out.println("drawResultGameInfo");
+    System.out.println("drawResultGameInfo");
+    board.setVisible(false);
+    board.result_game_dialog.setVisible(true);
   }
 
   public  void drawScoreInfo(){
-  System.out.println("drawScoreInfo");
+    System.out.println("drawScoreInfo");
   }
 
   public  void drawTakerInfo(){
-  System.out.println("drawTakerInfo");
+    System.out.println("drawTakerInfo");
   }
 
   protected void clear(){
