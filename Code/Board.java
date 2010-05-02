@@ -422,6 +422,7 @@ public class Board extends Observable{
       doTurn();
       sendNotification(Protocol.TRICKLIST_INFO);
       sendNotification(Protocol.TRICKWINNER_INFO);
+      if (last_winner==index_taker && game_type==GameType.NULL) break;
     }
 
     valid_win=checkVictoryPoint(index_taker);
