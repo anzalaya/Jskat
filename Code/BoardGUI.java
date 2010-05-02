@@ -30,6 +30,7 @@ public class BoardGUI extends javax.swing.JFrame {
     initConnectDialog();
     initGameTypeDialog();
     initResultGameDialog();
+    initTrickListDialog();
     initBoardFrame();
   }
 
@@ -50,6 +51,7 @@ public class BoardGUI extends javax.swing.JFrame {
   private void hand0MouseClicked(java.awt.event.MouseEvent evt) {
     System.out.println("hand0");
     if (!play_rq && !skat_rq) return;
+    last_trick_button.setVisible(false);
     play_answer=0;
     skat_answer=0;
     synchronized(thread){
@@ -60,6 +62,7 @@ public class BoardGUI extends javax.swing.JFrame {
   private void hand1MouseClicked(java.awt.event.MouseEvent evt) {
     System.out.println("hand1");
     if (!play_rq && !skat_rq) return;
+    last_trick_button.setVisible(false);
     play_answer=1;
     skat_answer=1;
     synchronized(thread){
@@ -70,6 +73,7 @@ public class BoardGUI extends javax.swing.JFrame {
   private void hand2MouseClicked(java.awt.event.MouseEvent evt) {
     System.out.println("hand2");
     if (!play_rq && !skat_rq) return;
+    last_trick_button.setVisible(false);
     play_answer=2;
     skat_answer=2;
     synchronized(thread){
@@ -80,6 +84,7 @@ public class BoardGUI extends javax.swing.JFrame {
   private void hand3MouseClicked(java.awt.event.MouseEvent evt) {
     System.out.println("hand3");
     if (!play_rq && !skat_rq) return;
+    last_trick_button.setVisible(false);
     play_answer=3;
     skat_answer=3;
     synchronized(thread){
@@ -89,9 +94,10 @@ public class BoardGUI extends javax.swing.JFrame {
 
   private void hand4MouseClicked(java.awt.event.MouseEvent evt) {
     System.out.println("hand4");
+    if (!play_rq && !skat_rq) return;
+    last_trick_button.setVisible(false);
     play_answer=4;
     skat_answer=4;
-    if (!play_rq && !skat_rq) return;
     synchronized(thread){
       thread.notifyAll();
     }
@@ -100,6 +106,7 @@ public class BoardGUI extends javax.swing.JFrame {
   private void hand5MouseClicked(java.awt.event.MouseEvent evt) {
     System.out.println("hand5");
     if (!play_rq && !skat_rq) return;
+    last_trick_button.setVisible(false);
     play_answer=5;
     skat_answer=5;
     synchronized(thread){
@@ -110,6 +117,7 @@ public class BoardGUI extends javax.swing.JFrame {
   private void hand6MouseClicked(java.awt.event.MouseEvent evt) {
     System.out.println("hand6");
     if (!play_rq && !skat_rq) return;
+    last_trick_button.setVisible(false);
     play_answer=6;
     skat_answer=6;
     synchronized(thread){
@@ -120,6 +128,7 @@ public class BoardGUI extends javax.swing.JFrame {
   private void hand7MouseClicked(java.awt.event.MouseEvent evt) {
     System.out.println("hand7");
     if (!play_rq && !skat_rq) return;
+    last_trick_button.setVisible(false);
     play_answer=7;
     skat_answer=7;
     synchronized(thread){
@@ -130,6 +139,7 @@ public class BoardGUI extends javax.swing.JFrame {
   private void hand8MouseClicked(java.awt.event.MouseEvent evt) {
     System.out.println("hand8");
     if (!play_rq && !skat_rq) return;
+    last_trick_button.setVisible(false);
     play_answer=8;
     skat_answer=8;
     synchronized(thread){
@@ -140,6 +150,7 @@ public class BoardGUI extends javax.swing.JFrame {
   private void hand9MouseClicked(java.awt.event.MouseEvent evt) {
     System.out.println("hand9");
     if (!play_rq && !skat_rq) return;
+    last_trick_button.setVisible(false);
     play_answer=9;
     skat_answer=9;
     synchronized(thread){
@@ -220,11 +231,16 @@ public class BoardGUI extends javax.swing.JFrame {
   }
 
   private void last_trick_buttonActionPerformed(java.awt.event.ActionEvent evt) {
-    synchronized(thread){
-      thread.notifyAll();
-    }
+    tricklist_dialog.setVisible(true);
   }
 
+  private void quit_buttonActionPerformed(java.awt.event.ActionEvent evt) {
+    System.exit(1);
+  }
+
+  private void tricks_buttonActionPerformed(java.awt.event.ActionEvent evt) {
+    tricklist_dialog.setVisible(true);
+  }
 
   private void next_game_buttonActionPerformed(java.awt.event.ActionEvent evt) {
     synchronized(thread){
@@ -269,7 +285,7 @@ public class BoardGUI extends javax.swing.JFrame {
   }
 
   private javax.swing.JPanel board_panel;
-  private javax.swing.JPanel result_game_panel;
+  private javax.swing.JComponent result_game_panel;
   private javax.swing.JPanel game_type_panel;
   private Thread thread;
 
@@ -356,6 +372,10 @@ public class BoardGUI extends javax.swing.JFrame {
   public javax.swing.JLabel ai_label;
   private javax.swing.JButton no_ai_button;
   private javax.swing.JButton yes_ai_button;
+
+  public javax.swing.JDialog tricklist_dialog;
+  public javax.swing.JPanel tricklist_panel;
+  public javax.swing.JLabel[] trick_label;
 
   /**
    *Initialize the board frame
@@ -666,22 +686,22 @@ public class BoardGUI extends javax.swing.JFrame {
     game_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     game_label.setText("game 100");
     board_panel.add(game_label);
-    game_label.setBounds(480, 10, 80, 20);
+    game_label.setBounds(460, 10, 80, 20);
 
     turn_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     turn_label.setText("turn 10");
     board_panel.add(turn_label);
-    turn_label.setBounds(480, 40, 70, 20);
+    turn_label.setBounds(460, 40, 80, 20);
 
     gametype_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     gametype_label.setText("Player0 chose diamonds");
     board_panel.add(gametype_label);
-    gametype_label.setBounds(420, 70, 300, 20);
+    gametype_label.setBounds(390, 70, 300, 20);
 
     modifiers_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     modifiers_label.setText("hand, schneider, schwarz, ouvert");
     board_panel.add(modifiers_label);
-    modifiers_label.setBounds(370, 100, 300, 20);
+    modifiers_label.setBounds(360, 100, 300, 20);
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
@@ -885,11 +905,18 @@ public class BoardGUI extends javax.swing.JFrame {
   }
 
   /**
+   * Produces the string for the result
+   */
+  public String resultString(boolean win, String player, int score, int value){
+    return "<html><p style=\"text-align: center;\">"+player+" "+(win?"wins":"loses")+"<br>with "+score+" vs. "+(120-score)+"<br>The value of the game is "+value+"</p></html>";
+  }
+
+  /**
    * Initialize the result_game dialog box
    */
   private void initResultGameDialog(){
     result_game_dialog = new javax.swing.JDialog();
-    result_game_panel = new javax.swing.JPanel();
+    result_game_panel = (javax.swing.JComponent) result_game_dialog.getContentPane();
 
     game_score_label = new javax.swing.JLabel();
     result_game_label = new javax.swing.JLabel();
@@ -916,6 +943,7 @@ public class BoardGUI extends javax.swing.JFrame {
     result_game_dialog.setAlwaysOnTop(true);
     result_game_dialog.setModal(true);
     result_game_dialog.setResizable(false);
+    result_game_dialog.setBounds(new java.awt.Rectangle(50, 50, 410, 300));
 
     result_game_panel.setBackground(new java.awt.Color(39, 163, 101));
     result_game_panel.setLayout(null);
@@ -928,17 +956,17 @@ public class BoardGUI extends javax.swing.JFrame {
     name_result_label[0].setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     name_result_label[0].setText("Player0");
     result_game_panel.add(name_result_label[0]);
-    name_result_label[0].setBounds(10, 130, 50, 15);
+    name_result_label[0].setBounds(10, 130, 120, 15);
 
     name_result_label[1].setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     name_result_label[1].setText("Player1");
     result_game_panel.add(name_result_label[1]);
-    name_result_label[1].setBounds(170, 130, 50, 15);
+    name_result_label[1].setBounds(140, 130, 100, 15);
 
     name_result_label[2].setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     name_result_label[2].setText("Player2");
     result_game_panel.add(name_result_label[2]);
-    name_result_label[2].setBounds(340, 130, 50, 15);
+    name_result_label[2].setBounds(270, 130, 100, 15);
 
     game_score_label.setText("Score");
     result_game_panel.add(game_score_label);
@@ -951,29 +979,30 @@ public class BoardGUI extends javax.swing.JFrame {
     score_label[0].setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     score_label[0].setText("1000");
     result_game_panel.add(score_label[0]);
-    score_label[0].setBounds(10, 160, 40, 15);
+    score_label[0].setBounds(45, 160, 40, 15);
 
     score_label[1].setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     score_label[1].setText("1000");
     result_game_panel.add(score_label[1]);
-    score_label[1].setBounds(170, 160, 50, 15);
+    score_label[1].setBounds(175, 160, 50, 15);
 
     score_label[2].setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     score_label[2].setText("1000");
     result_game_panel.add(score_label[2]);
-    score_label[2].setBounds(340, 160, 50, 15);
+    score_label[2].setBounds(305, 160, 50, 15);
 
     overall_score_label.setText("Overall Score");
     result_game_panel.add(overall_score_label);
-    overall_score_label.setBounds(150, 100, 90, 15);
+    overall_score_label.setBounds(150, 100, 150, 15);
 
     tricks_button.setText("Tricks");
     result_game_panel.add(tricks_button);
-    tricks_button.setBounds(160, 240, 90, 27);
-
-    quit_button.setText("Quit");
-    result_game_panel.add(quit_button);
-    quit_button.setBounds(330, 240, 70, 27);
+    tricks_button.setBounds(0, 240, 90, 27);
+    tricks_button.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+        tricks_buttonActionPerformed(evt);
+        }
+        });
 
     next_game_button.setText("Next Game");
     next_game_button.addActionListener(new java.awt.event.ActionListener() {
@@ -982,18 +1011,42 @@ public class BoardGUI extends javax.swing.JFrame {
         }
         });
     result_game_panel.add(next_game_button);
-    next_game_button.setBounds(0, 240, 90, 27);
+    next_game_button.setBounds(150, 240, 120, 27);
 
-    javax.swing.GroupLayout result_game_dialogLayout = new javax.swing.GroupLayout(result_game_dialog.getContentPane());
-    result_game_dialog.getContentPane().setLayout(result_game_dialogLayout);
-    result_game_dialogLayout.setHorizontalGroup(
-        result_game_dialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addComponent(result_game_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
-        );
-    result_game_dialogLayout.setVerticalGroup(
-        result_game_dialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-        .addComponent(result_game_panel, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+
+    quit_button.setText("Quit");
+    quit_button.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+        quit_buttonActionPerformed(evt);
+        }
+        });
+    result_game_panel.add(quit_button);
+    quit_button.setBounds(330, 240, 70, 27);
+  }
+
+  /**
+   * Initialize the trick list dialog box
+   */
+  private void initTrickListDialog(){
+    tricklist_dialog=new javax.swing.JDialog();
+    trick_label=new javax.swing.JLabel[10];
+    tricklist_panel=(javax.swing.JPanel) tricklist_dialog.getContentPane();
+
+    tricklist_dialog.setAlwaysOnTop(true);
+    tricklist_dialog.setModal(true);
+    tricklist_dialog.setTitle("Trick(s)");
+    tricklist_dialog.setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
+    tricklist_dialog.setBounds(new java.awt.Rectangle(50, 50, 450, 330));
+    tricklist_dialog.setResizable(false);
+
+    tricklist_panel.setBackground(new java.awt.Color(39, 163, 101));
+    tricklist_panel.setLayout(null);
+    for (int i=0;i<10;i++){
+      trick_label[i]=new javax.swing.JLabel();  
+      trick_label[i].setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+      trick_label[i].setBounds(10, 10+i*30, 420, 15);
+      tricklist_panel.add(trick_label[i]);
+    }
   }
 
   /**
@@ -1182,5 +1235,6 @@ public class BoardGUI extends javax.swing.JFrame {
 
     skat_label[0].setVisible(false);
     skat_label[1].setVisible(false);
+    for (int i=0; i<10;i++) trick_label[i].setText("");
   }
 }

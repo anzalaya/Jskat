@@ -164,6 +164,7 @@ public class TextGUI extends HumanInterface{
     System.out.println("drawNameInfo");
     for (int i=0; i<3;i++){
       board.name_label[i].setText(view.players_name.get(i));
+      board.name_result_label[i].setText(view.players_name.get(i));
     }
   }
 
@@ -173,8 +174,8 @@ public class TextGUI extends HumanInterface{
 
   public  void drawGameInfo(){
     System.out.println("drawGameInfo");
-    board.turn_label.setText("Game "+view.game);
-    board.turn_label.setVisible(true);
+    board.game_label.setText("Game "+(view.game+1));
+    board.game_label.setVisible(true);
   }
 
   public  void drawRoleInfo(){
@@ -246,7 +247,6 @@ public class TextGUI extends HumanInterface{
     System.out.println("drawTrickInfo");
     int base=view.trick_winner;
     System.out.println("drawTrickInfo trickwinner="+view.trick_winner);
-    board.last_trick_button.setVisible(false);
     for (int i=0; i<3;i++){
       board.card_trick_label[(i+base)%3].setText("");
       board.card_trick_label[(i+base)%3].setVisible(true);
@@ -269,13 +269,23 @@ public class TextGUI extends HumanInterface{
   }
 
   public  void drawTrickListInfo(){
-    System.out.println("drawTrickListInfo");
+    System.out.println("drawTrickListInfo "+view.turn);
+    for (int i=0; i<view.trick_list.size();i++){
+      board.trick_label[i].setText((i+1)+": "+view.trick_list.get(i).getCards()[0]+", "+view.trick_list.get(i).getCards()[1] +", "+view.trick_list.get(i).getCards()[2]);
+    }
   }
 
   public  void drawTurnInfo(){
     System.out.println("drawTurnInfo");
-    board.turn_label.setText("Turn "+view.turn);
+    board.turn_label.setText("Turn "+(view.turn));
     board.turn_label.setVisible(true);
+    for (int i=0; i<10;i++){
+      board.trick_label[i].setVisible(false);
+    }
+    if (view.turn>1){
+      board.last_trick_button.setVisible(true);
+      board.trick_label[view.trick_list.size()-1].setVisible(true);
+    }
   }
 
   public  void drawOuvertInfo(){
@@ -283,8 +293,7 @@ public class TextGUI extends HumanInterface{
   }
 
   public  void drawTurnStartInfo(){
-    System.out.println("drawTurnStartInfo");
-    if (view.turn>0) board.last_trick_button.setVisible(true);
+    System.out.println("drawTurnStartInfo "+view.turn);
     synchronized(Thread.currentThread()){
       try{
         Thread.currentThread().sleep(1000);
@@ -298,6 +307,7 @@ public class TextGUI extends HumanInterface{
   public  void drawGameStartInfo(){
     System.out.println("drawGameStartInfo");
     board.invisibility();
+    board.setVisible(true);
     board.name_label[1].setVisible(true);
     board.name_label[2].setVisible(true);
     modifier_state=0;
@@ -318,6 +328,9 @@ public class TextGUI extends HumanInterface{
 
   public  void drawResultGameInfo(){
     System.out.println("drawResultGameInfo");
+    for (int i=0; i<10;i++){
+      board.trick_label[i].setVisible(true);
+    }
     board.setVisible(false);
     board.result_game_dialog.setVisible(true);
   }

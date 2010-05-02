@@ -58,6 +58,7 @@ public class Client extends Thread{
     }
 
     public synchronized void gameStart(){
+      turn=1;
     }
 
     public synchronized void turnStart(){
