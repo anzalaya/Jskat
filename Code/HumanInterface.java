@@ -50,6 +50,7 @@ public abstract class HumanInterface extends Thread implements Observer{
       case Protocol.RESULTGAME_INFO  :drawResultGameInfo();  break;
       case Protocol.SCORE_INFO       :drawScoreInfo();  break;
       case Protocol.TAKER_INFO       :drawTakerInfo();  break;
+      case Protocol.QUIT_INFO        :drawQuitInfo(); break;
       default: System.err.println("Error in observer"); System.exit(1);
     }
     synchronized(view_thread){
@@ -137,6 +138,7 @@ public abstract class HumanInterface extends Thread implements Observer{
   public abstract void drawResultGameInfo();
   public abstract void drawScoreInfo();
   public abstract void drawTakerInfo();
+  public abstract void drawQuitInfo();
   protected abstract void clear();
 
 }                         

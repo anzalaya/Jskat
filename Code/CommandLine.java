@@ -272,8 +272,17 @@ public class CommandLine extends HumanInterface{
   }
 
   public void MmiExRequest(){
-    System.out.println("Exit");
-    System.exit(1);
+    System.out.println("Quit?");
+    while(true){
+      if (console.hasNextBoolean()){
+        writer.println(console.nextBoolean());
+          break;
+      }
+      console.next();
+      System.out.println("play must be a boolean");
+    }
   }
 
+  public void drawQuitInfo(){
+  }
 }

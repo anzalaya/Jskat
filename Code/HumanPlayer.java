@@ -264,4 +264,23 @@ public class HumanPlayer extends Player{
       writer.println(6);
     }
   }
+
+  public boolean continuePlay(){
+    writer.println(Protocol.QUIT_REQUEST);
+    while(!action_player_bool) {
+      synchronized(Thread.currentThread()){
+        try {
+          Thread.currentThread().wait();
+        } catch (InterruptedException e) {System.err.println("Failed wait"+e.toString());System.exit(1);}
+      }
+    }
+    action_player_bool=false;
+    while (true){
+      if (reader.hasNextBoolean()){
+        return reader.nextBoolean();
+      }
+      reader.next();
+      writer.println(Protocol.QUIT_REQUEST);
+    }
+  }
 }

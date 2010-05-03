@@ -99,11 +99,12 @@ public class WorkerThread{
         case Protocol.RESULTGAME_INFO  : sendResultGameInfo(); break;
         case Protocol.SCORE_INFO       : sendScoreInfo(); break;
         case Protocol.TAKER_INFO       : sendTakerInfo(); break;
+        case Protocol.QUIT_INFO        : sendQuitInfo(); break;
         default: System.err.println("Error in observer"); System.exit(1);
       }
-//      synchronized(spawn){
-//        spawn.notifyAll();
-//      }
+      //      synchronized(spawn){
+      //        spawn.notifyAll();
+      //      }
     }
 
     /**
@@ -228,6 +229,26 @@ public class WorkerThread{
       }
     }
 
+    /**
+     * Request the client for an answer to stage 7 of the protocol
+     */
+    private boolean rcvQuit(Connection c){
+      while(true){
+        if (c.in.hasNextInt()){
+          if (c.in.nextInt()==Protocol.QUIT_REQUEST) break;
+        }
+        c.in.next();
+        c.out.println(Protocol.QUIT_REQUEST);
+      }
+      while(true){
+        if (c.in.hasNextBoolean()){
+          return c.in.nextBoolean();
+        }
+        c.in.next();
+        c.out.println(Protocol.QUIT_REQUEST);
+      }
+    }
+
     public synchronized void processRzRequest(){
       Connection c=connection_array.get(board.getActionPlayerIndex());
       int possible_reizen=input_flow_array.get(board.getActionPlayerIndex()).nextInt();
@@ -300,6 +321,7 @@ public class WorkerThread{
       }
     }
 
+
     public synchronized void processPlRequest(){
       Connection c=connection_array.get(board.getActionPlayerIndex());
       int reply;
@@ -312,8 +334,21 @@ public class WorkerThread{
       synchronized(spawn){
         spawn.notifyAll();
       }
-
     }
+
+    public synchronized void  processQtRequest(){
+      Connection c=connection_array.get(board.getActionPlayerIndex());
+      boolean reply;
+      c.out.println(Protocol.QUIT_REQUEST);
+      reply=rcvQuit(c);
+      output_flow_array.get(board.getActionPlayerIndex()).println(reply);
+
+      player_list.get(board.getActionPlayerIndex()).setActionPlayer();
+      synchronized(spawn){
+        spawn.notifyAll();
+      }
+    }
+
 
     int relativeIndex(int i,int j){
       int index = (j-i);
@@ -347,7 +382,7 @@ public class WorkerThread{
 
     public synchronized void sendNameInfo(){
       for (int i=0;i<human_number;i++){
-          connection_array.get(i).out.println(8);
+        connection_array.get(i).out.println(8);
         for(int j=(i+1)%3;j!=i;j=(j+1)%3){
           connection_array.get(i).out.println(relativeIndex(i,j));
           connection_array.get(i).out.println(board.getTabPlayer().get(j).getName());
@@ -357,15 +392,15 @@ public class WorkerThread{
 
     public synchronized void sendStatInfo(){
       for (int i=0;i<human_number;i++){
-          connection_array.get(i).out.println(9);
-          connection_array.get(i).out.println(relativeIndex(i,i));
-          try{
-            connection_array.get(i).out_stream.writeObject(board.getTabPlayer().get(i).getStat());
-            connection_array.get(i).out_stream.reset();
-          }catch (IOException e){
-            System.err.println("Serialization error:"+e.toString());
-            System.exit(1);
-          }
+        connection_array.get(i).out.println(9);
+        connection_array.get(i).out.println(relativeIndex(i,i));
+        try{
+          connection_array.get(i).out_stream.writeObject(board.getTabPlayer().get(i).getStat());
+          connection_array.get(i).out_stream.reset();
+        }catch (IOException e){
+          System.err.println("Serialization error:"+e.toString());
+          System.exit(1);
+        }
         for(int j=(i+1)%3;j!=i;j=(j+1)%3){
           connection_array.get(i).out.println(9);
           connection_array.get(i).out.println(relativeIndex(i,j));
@@ -391,8 +426,8 @@ public class WorkerThread{
       for (int i=0;i<human_number;i++){
         connection_array.get(i).out.println(11);
         connection_array.get(i).out.println(board.getTabPlayer().get(i).getRole().toString());
-        }
       }
+    }
 
     public synchronized void sendHandInfo(){
       for (int i=0;i<human_number;i++){
@@ -515,7 +550,7 @@ public class WorkerThread{
 
     public synchronized void sendLastTrickWinnerInfo(){
       for (int i=0;i<human_number;i++){
-        connection_array.get(i).out.println(23);
+        connection_array.get(i).out.println(Protocol.TRICKWINNER_INFO);
         connection_array.get(i).out.println(relativeIndex(i,board.getLastWinner()));
       }
     }
@@ -542,6 +577,13 @@ public class WorkerThread{
       for (int i=0;i<human_number;i++){
         connection_array.get(i).out.println(26);
         connection_array.get(i).out.println(relativeIndex(i,board.getIndexTaker()));
+      }
+    }
+
+    public synchronized void sendQuitInfo(){
+      for (int i=0;i<human_number;i++){
+        connection_array.get(i).out.println(Protocol.QUIT_INFO);
+        connection_array.get(i).out.println(board.getQuitGame());
       }
     }
 
@@ -600,6 +642,7 @@ public class WorkerThread{
           case Protocol.GAMETYPE_MODIFIERS_REQUEST:processGmMRequest(); break;
           case Protocol.SKAT_REQUEST              :processSkRequest(); break;
           case Protocol.PLAY_REQUEST              :processPlRequest(); break;
+          case Protocol.QUIT_REQUEST              :processQtRequest(); break;
           default: System.err.println("Bad numbering"); System.exit(1);
         }
         checkConnection();
@@ -643,6 +686,8 @@ public class WorkerThread{
       client_connection=c_s;
       local=locality;
     }
+
+
 
     /**
      * Request the client for an answer to stage 0 of the protocol
@@ -712,7 +757,7 @@ public class WorkerThread{
                 System.exit(1);
               }
               c2.out.println(Protocol.FILL_BOARD);
-          c1.out.println(2);
+              c1.out.println(2);
               if (rcvFillRequest(c2)){
                 (new BoardThread(c1,c2)).start();
               }else{

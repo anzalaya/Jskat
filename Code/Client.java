@@ -39,6 +39,7 @@ public class Client extends Thread{
     public int value_game;
     public int[] scores;
     public int size_trick;
+    public boolean quit_game;
 
 
 
@@ -162,7 +163,7 @@ public class Client extends Thread{
     public synchronized void processTrickInfo(){
       try{
         current_trick=(Card[])c.in_stream.readObject();
-      size_trick++;
+        size_trick++;
       }catch (IOException e){
         System.err.println("Serialization error:"+e.toString());
         e.printStackTrace();
@@ -224,6 +225,10 @@ public class Client extends Thread{
       scores[index]=c.in.nextInt();
       index=c.in.nextInt();
       scores[index]=c.in.nextInt();
+    }
+
+    public synchronized void processQuitInfo(){
+      quit_game=c.in.nextBoolean();
     }
 
     public synchronized void processTakerInfo(){
@@ -373,12 +378,9 @@ public class Client extends Thread{
 
   public synchronized void processExRequest(){
     writer.println(Protocol.QUIT_REQUEST);
-    try{
-      c.close();
-    }catch (IOException e){
-      e.printStackTrace();
-    }
-    System.exit(1);
+    boolean reply=reader.nextBoolean();
+    c.out.println(Protocol.QUIT_REQUEST);
+    c.out.println(reply);
   }
 
   public synchronized void MmiNameInfo(){
@@ -401,9 +403,9 @@ public class Client extends Thread{
 
   public void run(){
     int chooser;
-        MmiNameInfo();
-        MmiNameServerInfo();
-        MmiPortServerInfo();
+    MmiNameInfo();
+    MmiNameServerInfo();
+    MmiPortServerInfo();
     try{
       c=new Connection(new Socket(server_name,server_port));
     } catch (IOException e) {
@@ -441,6 +443,7 @@ public class Client extends Thread{
         case Protocol.RESULTGAME_INFO : view.processResultGameInfo(); break;
         case Protocol.SCORE_INFO      : view.processScoreInfo(); break;
         case Protocol.TAKER_INFO      : view.processTakerInfo(); break;
+        case Protocol.QUIT_INFO       : view.processQuitInfo(); break;
 
         default:  System.err.println("Bad numbering"); System.exit(1);
       }

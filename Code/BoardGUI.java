@@ -235,7 +235,10 @@ public class BoardGUI extends javax.swing.JFrame {
   }
 
   private void quit_buttonActionPerformed(java.awt.event.ActionEvent evt) {
-    System.exit(1);
+    quit_answer=true;
+    synchronized(thread){
+      thread.notifyAll();
+    }
   }
 
   private void tricks_buttonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -243,6 +246,7 @@ public class BoardGUI extends javax.swing.JFrame {
   }
 
   private void next_game_buttonActionPerformed(java.awt.event.ActionEvent evt) {
+    quit_answer=false;
     synchronized(thread){
       thread.notifyAll();
     }
@@ -289,6 +293,7 @@ public class BoardGUI extends javax.swing.JFrame {
   private javax.swing.JPanel game_type_panel;
   private Thread thread;
 
+  public boolean quit_answer;
   public boolean locality=false;
   public boolean ai_answer;
   public boolean reizen_answer;

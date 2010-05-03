@@ -399,6 +399,12 @@ public abstract class Player {
    * @return list of option
    */
   public  abstract List<Integer> chooseModifiers();
+
+  /**
+   * Allow implementation for human and AI
+   * @return continuation
+   */
+  public  abstract boolean continuePlay();
 }
 
 

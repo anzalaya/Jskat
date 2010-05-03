@@ -61,4 +61,8 @@ public class DummyAI extends Player{
     List<Integer> l=Arrays.asList((generator.nextBoolean() ? 1 : 0),(generator.nextBoolean() ? 1 : 0),(generator.nextBoolean() ? 1 : 0),(generator.nextBoolean() ? 1 : 0));
     return l;
   }
+
+  public boolean continuePlay(){
+    return true;
+  }
 }

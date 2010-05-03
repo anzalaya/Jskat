@@ -74,4 +74,8 @@ public class ReizenAI extends Player{
   public  List<Integer> chooseModifiers(){
     return null;
   }
+
+  public boolean continuePlay(){
+    return true;
+  }
 }

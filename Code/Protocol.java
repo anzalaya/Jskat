@@ -53,9 +53,8 @@
  *25 BoardThread->client:25 (SCORE_INFO) i score(i)<br/>
  *26 BoardThread->client:26 (TAKER_INFO) i <br/>
  *<br/>
- *27 HumanInterface->client: 27 (NAME_PLAYER) name_player<br/>
- *28 HumanInterface->client: 28 (NAME_SERVER) name_server<br/>
- *29 HumanInterface->client: 29 (PORT_SERVER) port<br/>
+ *27 client->HumanInterface: 27 (CONNECTION_ERROR) <br/>
+ *28 board->Client: 28 (QUIT_INFO) <br/>
  *<br/>
  */
 
@@ -241,8 +240,13 @@ public class Protocol{
 
 
 /**
- *27 client->HumanInterface: 30 (CONNECTION_ERROR) <br/>
+ *27 client->HumanInterface: 27 (CONNECTION_ERROR) <br/>
  */
   public static final int CONNECTION_ERROR=27;
+
+/**
+ *28 board->Client: 28 (QUIT_INFO) <br/>
+ */
+  public static final int QUIT_INFO=28;
 
 }
