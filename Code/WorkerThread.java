@@ -585,6 +585,7 @@ public class WorkerThread{
         connection_array.get(i).out.println(Protocol.QUIT_INFO);
         connection_array.get(i).out.println(board.getQuitGame());
       }
+      if (board.getQuitGame()) spawn.interrupt();
     }
 
     public void run(){
@@ -618,7 +619,7 @@ public class WorkerThread{
       spawn=new Thread(
           new Runnable(){
           public void run(){
-          while (true) board.play_game();
+          while (!Thread.currentThread().isInterrupted()) board.play_game();
           }
           }
           );
@@ -631,7 +632,7 @@ public class WorkerThread{
         System.exit(1);
       }
       int switch_index=-1;
-      while(true){
+      while(spawn.isAlive()){
         if (!(board.getActionPlayerIndex()<human_number)) continue;
         if (input_flow_array.get(board.getActionPlayerIndex()).hasNextInt()){
           switch_index=input_flow_array.get(board.getActionPlayerIndex()).nextInt();

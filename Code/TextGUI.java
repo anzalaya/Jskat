@@ -350,7 +350,7 @@ public class TextGUI extends HumanInterface{
 
   public void drawQuitInfo(){
     if (view.quit_game){
-      System.exit(1);
+      board.quit_game_dialog.setVisible(true);
     }else{
       board.setVisible(true);
     }

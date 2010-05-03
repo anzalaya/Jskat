@@ -30,6 +30,7 @@ public class BoardGUI extends javax.swing.JFrame {
     initConnectDialog();
     initGameTypeDialog();
     initResultGameDialog();
+    initQuitGameDialog();
     initTrickListDialog();
     initBoardFrame();
   }
@@ -234,6 +235,10 @@ public class BoardGUI extends javax.swing.JFrame {
     tricklist_dialog.setVisible(true);
   }
 
+  private void ok_buttonActionPerformed(java.awt.event.ActionEvent evt){
+    System.exit(1);
+  }
+
   private void quit_buttonActionPerformed(java.awt.event.ActionEvent evt) {
     quit_answer=true;
     synchronized(thread){
@@ -381,6 +386,12 @@ public class BoardGUI extends javax.swing.JFrame {
   public javax.swing.JDialog tricklist_dialog;
   public javax.swing.JPanel tricklist_panel;
   public javax.swing.JLabel[] trick_label;
+
+  public javax.swing.JDialog quit_game_dialog;
+  public javax.swing.JPanel quit_game_panel;
+  public javax.swing.JLabel quit_game_label;
+  public javax.swing.JButton ok_button;
+
 
   /**
    *Initialize the board frame
@@ -916,6 +927,41 @@ public class BoardGUI extends javax.swing.JFrame {
     return "<html><p style=\"text-align: center;\">"+player+" "+(win?"wins":"loses")+"<br>with "+score+" vs. "+(120-score)+"<br>The value of the game is "+value+"</p></html>";
   }
 
+/**
+ * Initialize the quitting dialog box
+ */
+
+private void initQuitGameDialog(){
+    quit_game_dialog = new javax.swing.JDialog();
+    quit_game_panel = (javax.swing.JComponent) result_game_dialog.getContentPane();
+
+    quit_game_label = new javax.swing.JLabel();
+    ok_button = new javax.swing.JButton();
+
+    quit_game_dialog.setTitle("Quit");
+    quit_game_dialog.setAlwaysOnTop(true);
+    quit_game_dialog.setModal(true);
+    quit_game_dialog.setResizable(false);
+    quit_game_dialog.setBounds(new java.awt.Rectangle(50, 50, 310, 60));
+
+    quit_game_panel.setBackground(new java.awt.Color(39, 163, 101));
+    quit_game_panel.setLayout(null);
+
+    quit_game_label.setText("A participant chose to quit the game");
+    quit_game_label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+    quit_game_panel.add(quit_game_label);
+    quit_game_label.setBounds(5, 5, 300, 20);
+
+    ok_button.setText("Ok");
+    ok_button.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+    quit_game_panel.add(ok_button);
+    ok_button.setBounds(130,35,50,20);
+    ok_button.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+        ok_buttonActionPerformed(evt);
+        }
+        });
+}
   /**
    * Initialize the result_game dialog box
    */
