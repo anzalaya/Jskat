@@ -37,11 +37,11 @@ TODO
 //Global-> redo init and ai window to make them part of BoardGUI
 //Global-> Make it easy to play locally : give option quit and local network to MmiInit, later offer the option for command play
 //TextGUI-> tricklist, last trick modal window
+//Global->graceful exit
 
 Global->redo Waiting window
 Global->test with 2 3 human player
-Global->graceful exit
-WorkerThread->Handle exception when clients quit abruptely
+WorkerThread->Handle exception when clients quit abruptely add a thread in 
 Solve problem stats
 Global->total GUI with animation 
 Global->Reoganize graphical interface code, more modular, more clean, no need of panels

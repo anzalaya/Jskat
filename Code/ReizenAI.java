@@ -76,6 +76,6 @@ public class ReizenAI extends Player{
   }
 
   public boolean continuePlay(){
-    return true;
+    return false;
   }
 }

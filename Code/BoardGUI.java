@@ -241,9 +241,7 @@ public class BoardGUI extends javax.swing.JFrame {
 
   private void quit_buttonActionPerformed(java.awt.event.ActionEvent evt) {
     quit_answer=true;
-    synchronized(thread){
-      thread.notifyAll();
-    }
+    result_game_dialog.setVisible(false);
   }
 
   private void tricks_buttonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -252,9 +250,7 @@ public class BoardGUI extends javax.swing.JFrame {
 
   private void next_game_buttonActionPerformed(java.awt.event.ActionEvent evt) {
     quit_answer=false;
-    synchronized(thread){
-      thread.notifyAll();
-    }
+    result_game_dialog.setVisible(false);
   }
 
   private void yes_ai_buttonActionPerformed(java.awt.event.ActionEvent evt){
@@ -933,7 +929,7 @@ public class BoardGUI extends javax.swing.JFrame {
 
 private void initQuitGameDialog(){
     quit_game_dialog = new javax.swing.JDialog();
-    quit_game_panel = (javax.swing.JComponent) result_game_dialog.getContentPane();
+    quit_game_panel = (javax.swing.JPanel) quit_game_dialog.getContentPane();
 
     quit_game_label = new javax.swing.JLabel();
     ok_button = new javax.swing.JButton();
@@ -942,7 +938,7 @@ private void initQuitGameDialog(){
     quit_game_dialog.setAlwaysOnTop(true);
     quit_game_dialog.setModal(true);
     quit_game_dialog.setResizable(false);
-    quit_game_dialog.setBounds(new java.awt.Rectangle(50, 50, 310, 60));
+    quit_game_dialog.setBounds(new java.awt.Rectangle(50, 50, 310, 100));
 
     quit_game_panel.setBackground(new java.awt.Color(39, 163, 101));
     quit_game_panel.setLayout(null);
@@ -955,7 +951,7 @@ private void initQuitGameDialog(){
     ok_button.setText("Ok");
     ok_button.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
     quit_game_panel.add(ok_button);
-    ok_button.setBounds(130,35,50,20);
+    ok_button.setBounds(120,40,70,25);
     ok_button.addActionListener(new java.awt.event.ActionListener() {
         public void actionPerformed(java.awt.event.ActionEvent evt) {
         ok_buttonActionPerformed(evt);

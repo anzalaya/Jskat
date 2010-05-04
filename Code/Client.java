@@ -377,6 +377,7 @@ public class Client extends Thread{
   }
 
   public synchronized void processExRequest(){
+    System.out.println("je passe par la une fois");
     writer.println(Protocol.QUIT_REQUEST);
     boolean reply=reader.nextBoolean();
     c.out.println(Protocol.QUIT_REQUEST);

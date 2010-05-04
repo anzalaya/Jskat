@@ -102,6 +102,7 @@ public class WorkerThread{
         case Protocol.QUIT_INFO        : sendQuitInfo(); break;
         default: System.err.println("Error in observer"); System.exit(1);
       }
+      System.out.println("notification "+decide);
       //      synchronized(spawn){
       //        spawn.notifyAll();
       //      }
@@ -336,11 +337,13 @@ public class WorkerThread{
       }
     }
 
-    public synchronized void  processQtRequest(){
+    public synchronized void processQtRequest(){
+      System.out.println("BoardThread::processQtRequest "+board.getActionPlayerIndex());
       Connection c=connection_array.get(board.getActionPlayerIndex());
       boolean reply;
       c.out.println(Protocol.QUIT_REQUEST);
       reply=rcvQuit(c);
+      System.out.println("BoardThread::processQtRequest apres reponse"+board.getActionPlayerIndex());
       output_flow_array.get(board.getActionPlayerIndex()).println(reply);
 
       player_list.get(board.getActionPlayerIndex()).setActionPlayer();
@@ -353,6 +356,22 @@ public class WorkerThread{
     int relativeIndex(int i,int j){
       int index = (j-i);
       return (index < 0 ? 3-index : index);
+    }
+
+    /**
+     * closes all communication between the worker thread the client and the board
+     */
+    public void closeConnections(){
+      for (int i=0;i<human_number;i++){
+        try{
+          connection_array.get(i).close();
+        }catch (IOException e){
+          System.err.println("closing error");
+          System.exit(1);
+        }
+        input_flow_array.get(i).close();
+        output_flow_array.get(i).close();
+      }
     }
 
     /**
@@ -585,7 +604,10 @@ public class WorkerThread{
         connection_array.get(i).out.println(Protocol.QUIT_INFO);
         connection_array.get(i).out.println(board.getQuitGame());
       }
-      if (board.getQuitGame()) spawn.interrupt();
+      if (board.getQuitGame()){ 
+        spawn.interrupt();
+        closeConnections();
+      }
     }
 
     public void run(){
@@ -615,11 +637,14 @@ public class WorkerThread{
         case 3: board=new Board(player_list.get(0),player_list.get(1),player_list.get(2)); break;
         default: System.err.println("Wrong number of humans"); System.exit(1);
       }
+
       setObserver();
       spawn=new Thread(
           new Runnable(){
           public void run(){
-          while (!Thread.currentThread().isInterrupted()) board.play_game();
+          while (!Thread.currentThread().isInterrupted()) {
+          board.play_game();
+          }
           }
           }
           );
@@ -632,11 +657,14 @@ public class WorkerThread{
         System.exit(1);
       }
       int switch_index=-1;
+      int store_action_player;
       while(spawn.isAlive()){
-        if (!(board.getActionPlayerIndex()<human_number)) continue;
-        if (input_flow_array.get(board.getActionPlayerIndex()).hasNextInt()){
-          switch_index=input_flow_array.get(board.getActionPlayerIndex()).nextInt();
+        store_action_player=board.getActionPlayerIndex();
+        if (!(store_action_player<human_number)) continue;
+        if (input_flow_array.get(store_action_player).hasNextInt()){
+          switch_index=input_flow_array.get(store_action_player).nextInt();
         }
+        System.out.println("Received "+switch_index+" from action_player: "+store_action_player+" human_number: "+human_number);
         switch(switch_index){
           case Protocol.REIZEN_REQUEST            :processRzRequest(); break;
           case Protocol.GAMETYPE_REQUEST          :processGmTRequest(); break;
@@ -646,7 +674,7 @@ public class WorkerThread{
           case Protocol.QUIT_REQUEST              :processQtRequest(); break;
           default: System.err.println("Bad numbering"); System.exit(1);
         }
-        checkConnection();
+        //checkConnection();
       }
     }
   }

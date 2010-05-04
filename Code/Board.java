@@ -482,9 +482,7 @@ public boolean getQuitGame(){
     action_player=2;
     quit_game=quit_game || tab_player.get(2).continuePlay();
     
-    if (quit_game){
-      sendNotification(Protocol.QUIT_INFO);
-    }
+    sendNotification(Protocol.QUIT_INFO);
   }
 
   /**

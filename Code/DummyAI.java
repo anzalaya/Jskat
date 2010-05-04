@@ -63,6 +63,6 @@ public class DummyAI extends Player{
   }
 
   public boolean continuePlay(){
-    return true;
+    return false;
   }
 }

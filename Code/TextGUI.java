@@ -156,14 +156,6 @@ public class TextGUI extends HumanInterface{
 
   public void MmiExRequest(){
     System.out.println("MmiExRequest");
-    synchronized(Thread.currentThread()){
-      try {
-        Thread.currentThread().wait();
-      } catch (InterruptedException e) {
-        System.err.println("Failed wait"+e.toString());
-        System.exit(1);
-      }
-    }
     writer.println(board.quit_answer);
   }
 
@@ -349,6 +341,7 @@ public class TextGUI extends HumanInterface{
   }
 
   public void drawQuitInfo(){
+    System.out.println("drawQuitInfo");
     if (view.quit_game){
       board.quit_game_dialog.setVisible(true);
     }else{

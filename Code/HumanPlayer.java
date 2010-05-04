@@ -266,7 +266,9 @@ public class HumanPlayer extends Player{
   }
 
   public boolean continuePlay(){
+    System.out.println("HumanPlayer: entry "+ Protocol.QUIT_REQUEST);
     writer.println(Protocol.QUIT_REQUEST);
+    System.out.println(Protocol.QUIT_REQUEST+" sent");
     while(!action_player_bool) {
       synchronized(Thread.currentThread()){
         try {
@@ -276,9 +278,12 @@ public class HumanPlayer extends Player{
     }
     action_player_bool=false;
     while (true){
+    System.out.println("reponse bool");
       if (reader.hasNextBoolean()){
+    System.out.println("lit bool");
         return reader.nextBoolean();
       }
+    System.out.println("trash on the line and resend message");
       reader.next();
       writer.println(Protocol.QUIT_REQUEST);
     }
