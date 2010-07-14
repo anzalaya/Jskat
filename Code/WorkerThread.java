@@ -680,6 +680,27 @@ public class WorkerThread{
   }
 
   /**
+   * The class WatcherThread checks to see if all the human connections are still alive, if not, they gracefully terminate
+   *@author Alexandre Anzala-Yamajako
+   *@version 0.1
+   */
+  public static class WatcherThread extends Thread{
+    List<Connection> connection_array;
+    BoardThread board_thread;
+
+    public WatcherThread(List<Connection> c,BoardThread b){
+      connection_array=c;
+      board_thread=b;
+    }
+
+    public void run(){
+      while (true) {
+      }
+    }
+
+  }
+
+  /**
    *The class ConnectThread handles the connection of clients and the number of AI players involved
    *@author Alexandre Anzala-Yamajako
    *@version 0.1

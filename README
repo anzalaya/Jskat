@@ -41,7 +41,7 @@ TODO
 
 Global->redo Waiting window
 Global->test with 2 3 human player
-WorkerThread->Handle exception when clients quit abruptely add a thread in 
+WorkerThread->Handle NoSuchElementException when client quits abruptely and warn other clients
 Solve problem stats
 Global->total GUI with animation 
 Global->Reoganize graphical interface code, more modular, more clean, no need of panels
@@ -51,12 +51,6 @@ Protocol constants in HumanPlayer
 Take a look at :
 revert turn 0<=turn<=9 and think drawturnstart info
 d l s thing, on turn 2
-
-
-Network organization see Protocol.java
-1 thread per board (three sockets)
-1 threads receives the connected socket and wait to have enough to dispatch to boards
-
 
 
 
