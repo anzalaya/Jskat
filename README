@@ -51,6 +51,7 @@ Protocol constants in HumanPlayer
 Take a look at :
 revert turn 0<=turn<=9 and think drawturnstart info
 d l s thing, on turn 2
+WorkerThread.java:810 why 2?
 
 
 

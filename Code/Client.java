@@ -329,13 +329,13 @@ public class Client extends Thread{
     view.human_player=c.in.nextInt();
     writer.println(Protocol.FILL_BOARD);
     boolean reply=reader.nextBoolean();
-    c.out.println(0);
+    c.out.println(Protocol.FILL_BOARD);
     c.out.println(reply);
   }
 
   public synchronized void processNmRequest(){
     String reply=view.players_name.get(0);
-    c.out.println(1);
+    c.out.println(Protocol.NAME_CLIENT);
     c.out.println(reply);
   }
 
@@ -344,35 +344,35 @@ public class Client extends Thread{
     writer.println(Protocol.REIZEN_REQUEST);
     writer.println(c.in.nextInt());
     boolean reply=reader.nextBoolean();
-    c.out.println(2);
+    c.out.println(Protocol.REIZEN_REQUEST);
     c.out.println(reply);
   }
 
   public synchronized void processGmTRequest(){
     writer.println(Protocol.GAMETYPE_REQUEST);
     int reply=reader.nextInt();
-    c.out.println(3);
+    c.out.println(Protocol.GAMETYPE_REQUEST);
     c.out.println(reply);
   }
 
   public synchronized void processGmMRequest(){
     writer.println(Protocol.GAMETYPE_MODIFIERS_REQUEST);
     boolean reply=reader.nextBoolean();
-    c.out.println(4);
+    c.out.println(Protocol.GAMETYPE_MODIFIERS_REQUEST);
     c.out.println(reply);
   }
 
   public synchronized void processSkRequest(){
     writer.println(Protocol.SKAT_REQUEST);
     int reply=reader.nextInt();
-    c.out.println(5);
+    c.out.println(Protocol.SKAT_REQUEST);
     c.out.println(reply);
   }
 
   public synchronized void processPlRequest(){
     writer.println(Protocol.PLAY_REQUEST);
     int reply=reader.nextInt();
-    c.out.println(6);
+    c.out.println(Protocol.PLAY_REQUEST);
     c.out.println(reply);
   }
 

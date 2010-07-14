@@ -114,17 +114,17 @@ public class WorkerThread{
     public String rcvName (Connection c){
       while(true){
         if (c.in.hasNextInt()){
-          if (c.in.nextInt()==1) break;
+          if (c.in.nextInt()==Protocol.NAME_CLIENT) break;
         }
         c.in.next();
-        c.out.println(1);
+        c.out.println(Protocol.NAME_CLIENT);
       }
       while(true){
         if (c.in.hasNext()){
           return c.in.next();
         }
         c.in.next();
-        c.out.println(1);
+        c.out.println(Protocol.NAME_CLIENT);
       }
     }
 
@@ -134,10 +134,10 @@ public class WorkerThread{
     public boolean rcvReizen (Connection c,int reizen){
       while(true){
         if (c.in.hasNextInt()){
-          if (c.in.nextInt()==2) break;
+          if (c.in.nextInt()==Protocol.REIZEN_REQUEST) break;
         }
         c.in.next();
-        c.out.println(2);
+        c.out.println(Protocol.REIZEN_REQUEST);
         c.out.println(reizen);
       }
       while(true){
@@ -145,7 +145,7 @@ public class WorkerThread{
           return c.in.nextBoolean();
         }
         c.in.next();
-        c.out.println(2);
+        c.out.println(Protocol.REIZEN_REQUEST);
         c.out.println(reizen);
       }
     }
@@ -156,17 +156,17 @@ public class WorkerThread{
     public int rcvGameType (Connection c){
       while(true){
         if (c.in.hasNextInt()){
-          if (c.in.nextInt()==3) break;
+          if (c.in.nextInt()==Protocol.GAMETYPE_REQUEST) break;
         }
         c.in.next();
-        c.out.println(3);
+        c.out.println(Protocol.GAMETYPE_REQUEST);
       }
       while(true){
         if (c.in.hasNextInt()){
           return c.in.nextInt();
         }
         c.in.next();
-        c.out.println(3);
+        c.out.println(Protocol.GAMETYPE_REQUEST);
       }
     }
 
@@ -176,17 +176,17 @@ public class WorkerThread{
     public boolean rcvModifier (Connection c){
       while(true){
         if (c.in.hasNextInt()){
-          if (c.in.nextInt()==4) break;
+          if (c.in.nextInt()==Protocol.GAMETYPE_MODIFIERS_REQUEST) break;
         }
         c.in.next();
-        c.out.println(3);
+        c.out.println(Protocol.GAMETYPE_MODIFIERS_REQUEST);
       }
       while(true){
         if (c.in.hasNextBoolean()){
           return c.in.nextBoolean();
         }
         c.in.next();
-        c.out.println(4);
+        c.out.println(Protocol.GAMETYPE_MODIFIERS_REQUEST);
       }
     }
 
@@ -196,17 +196,17 @@ public class WorkerThread{
     public int rcvSkat(Connection c){
       while(true){
         if (c.in.hasNextInt()){
-          if (c.in.nextInt()==5) break;
+          if (c.in.nextInt()==Protocol.SKAT_REQUEST) break;
         }
         c.in.next();
-        c.out.println(5);
+        c.out.println(Protocol.SKAT_REQUEST);
       }
       while(true){
         if (c.in.hasNextInt()){
           return c.in.nextInt();
         }
         c.in.next();
-        c.out.println(5);
+        c.out.println(Protocol.SKAT_REQUEST);
       }
     }
 
@@ -216,17 +216,17 @@ public class WorkerThread{
     public int rcvCard (Connection c){
       while(true){
         if (c.in.hasNextInt()){
-          if (c.in.nextInt()==6) break;
+          if (c.in.nextInt()==Protocol.PLAY_REQUEST) break;
         }
         c.in.next();
-        c.out.println(6);
+        c.out.println(Protocol.PLAY_REQUEST);
       }
       while(true){
         if (c.in.hasNextInt()){
           return c.in.nextInt();
         }
         c.in.next();
-        c.out.println(6);
+        c.out.println(Protocol.PLAY_REQUEST);
       }
     }
 
@@ -255,7 +255,7 @@ public class WorkerThread{
       int possible_reizen=input_flow_array.get(board.getActionPlayerIndex()).nextInt();
       boolean reply;
 
-      c.out.println(2);
+      c.out.println(Protocol.REIZEN_REQUEST);
       c.out.println(possible_reizen);
       reply=rcvReizen(c,possible_reizen);
       output_flow_array.get(board.getActionPlayerIndex()).println(reply);
@@ -269,7 +269,7 @@ public class WorkerThread{
       Connection c=connection_array.get(board.getActionPlayerIndex());
       int reply;
 
-      c.out.println(3);
+      c.out.println(Protocol.GAMETYPE_REQUEST);
       reply=rcvGameType(c);
       output_flow_array.get(board.getActionPlayerIndex()).println(reply);
       player_list.get(board.getActionPlayerIndex()).setActionPlayer();
@@ -282,19 +282,19 @@ public class WorkerThread{
     public synchronized void processGmMRequest(){
       Connection c=connection_array.get(board.getActionPlayerIndex());
       boolean reply;
-      c.out.println(4);
+      c.out.println(Protocol.GAMETYPE_MODIFIERS_REQUEST);
       reply=rcvModifier(c);
       output_flow_array.get(board.getActionPlayerIndex()).println(reply);
 
-      c.out.println(4);
+      c.out.println(Protocol.GAMETYPE_MODIFIERS_REQUEST);
       reply=rcvModifier(c);
       output_flow_array.get(board.getActionPlayerIndex()).println(reply);
 
-      c.out.println(4);
+      c.out.println(Protocol.GAMETYPE_MODIFIERS_REQUEST);
       reply=rcvModifier(c);
       output_flow_array.get(board.getActionPlayerIndex()).println(reply);
 
-      c.out.println(4);
+      c.out.println(Protocol.GAMETYPE_MODIFIERS_REQUEST);
       reply=rcvModifier(c);
       output_flow_array.get(board.getActionPlayerIndex()).println(reply);
 
@@ -308,11 +308,11 @@ public class WorkerThread{
       Connection c=connection_array.get(board.getActionPlayerIndex());
       int reply;
 
-      c.out.println(5);
+      c.out.println(Protocol.SKAT_REQUEST);
       reply=rcvSkat(c);
       output_flow_array.get(board.getActionPlayerIndex()).println(reply);
 
-      c.out.println(5);
+      c.out.println(Protocol.SKAT_REQUEST);
       reply=rcvSkat(c);
       output_flow_array.get(board.getActionPlayerIndex()).println(reply);
 
@@ -327,7 +327,7 @@ public class WorkerThread{
       Connection c=connection_array.get(board.getActionPlayerIndex());
       int reply;
 
-      c.out.println(6);
+      c.out.println(Protocol.PLAY_REQUEST);
       reply=rcvCard(c);
       output_flow_array.get(board.getActionPlayerIndex()).println(reply);
 
@@ -387,7 +387,7 @@ public class WorkerThread{
       if (exit){
         for (Connection c : connection_array){
           if(!c.socket.isClosed()){
-            c.out.println(7);
+            c.out.println(Protocol.QUIT_REQUEST);
             try{
               c.close();
             }catch (IOException e){
@@ -401,7 +401,7 @@ public class WorkerThread{
 
     public synchronized void sendNameInfo(){
       for (int i=0;i<human_number;i++){
-        connection_array.get(i).out.println(8);
+        connection_array.get(i).out.println(Protocol.NAME_INFO);
         for(int j=(i+1)%3;j!=i;j=(j+1)%3){
           connection_array.get(i).out.println(relativeIndex(i,j));
           connection_array.get(i).out.println(board.getTabPlayer().get(j).getName());
@@ -411,7 +411,7 @@ public class WorkerThread{
 
     public synchronized void sendStatInfo(){
       for (int i=0;i<human_number;i++){
-        connection_array.get(i).out.println(9);
+        connection_array.get(i).out.println(Protocol.STAT_INFO);
         connection_array.get(i).out.println(relativeIndex(i,i));
         try{
           connection_array.get(i).out_stream.writeObject(board.getTabPlayer().get(i).getStat());
@@ -421,7 +421,7 @@ public class WorkerThread{
           System.exit(1);
         }
         for(int j=(i+1)%3;j!=i;j=(j+1)%3){
-          connection_array.get(i).out.println(9);
+          connection_array.get(i).out.println(Protocol.STAT_INFO);
           connection_array.get(i).out.println(relativeIndex(i,j));
           try{
             connection_array.get(i).out_stream.writeObject(board.getTabPlayer().get(j).getStat());
@@ -436,21 +436,21 @@ public class WorkerThread{
 
     public synchronized void sendGameInfo(){
       for (int i=0;i<human_number;i++){
-        connection_array.get(i).out.println(10);
+        connection_array.get(i).out.println(Protocol.GAME_INFO);
         connection_array.get(i).out.println(board.getGame());
       }
     }
 
     public synchronized void sendRoleInfo(){
       for (int i=0;i<human_number;i++){
-        connection_array.get(i).out.println(11);
+        connection_array.get(i).out.println(Protocol.ROLE_INFO);
         connection_array.get(i).out.println(board.getTabPlayer().get(i).getRole().toString());
       }
     }
 
     public synchronized void sendHandInfo(){
       for (int i=0;i<human_number;i++){
-        connection_array.get(i).out.println(12);
+        connection_array.get(i).out.println(Protocol.HAND_INFO);
         try{
           connection_array.get(i).out_stream.writeObject(Collections.unmodifiableList(board.getTabPlayer().get(i).getHand().getHand()));
           connection_array.get(i).out_stream.reset();
@@ -463,7 +463,7 @@ public class WorkerThread{
 
     public synchronized void sendReizenInfo(){
       for (int i=0;i<human_number;i++){
-        connection_array.get(i).out.println(13);
+        connection_array.get(i).out.println(Protocol.REIZEN_INFO);
         connection_array.get(i).out.println(relativeIndex(i,board.getActionPlayerIndex()));
         connection_array.get(i).out.println(board.getReizenProposal());
         connection_array.get(i).out.println(board.getAnswerProposal());
@@ -472,7 +472,7 @@ public class WorkerThread{
 
     public synchronized void sendModifInfo(){
       for (int i=0;i<human_number;i++){
-        connection_array.get(i).out.println(14);
+        connection_array.get(i).out.println(Protocol.MODIF_INFO);
         connection_array.get(i).out.println(board.isHand());
         connection_array.get(i).out.println(board.isSchneider());
         connection_array.get(i).out.println(board.isSchwarz());
@@ -483,7 +483,7 @@ public class WorkerThread{
 
     public synchronized void sendSkatInfo(){
       if (!(board.getIndexTaker()<human_number)) return;
-      connection_array.get(board.getIndexTaker()).out.println(15);
+      connection_array.get(board.getIndexTaker()).out.println(Protocol.SKAT_INFO);
       try{
         connection_array.get(board.getIndexTaker()).out_stream.writeObject(Collections.unmodifiableList(board.getSkat()));
         connection_array.get(board.getIndexTaker()).out_stream.reset();
@@ -496,7 +496,7 @@ public class WorkerThread{
 
     public synchronized void sendGameTypeInfo(){
       for (int i=0;i<human_number;i++){
-        connection_array.get(i).out.println(16);
+        connection_array.get(i).out.println(Protocol.GAMETYPE_INFO);
         try{
           connection_array.get(i).out_stream.writeObject(board.getGameType());
           connection_array.get(i).out_stream.reset();
@@ -509,7 +509,7 @@ public class WorkerThread{
 
     public synchronized void sendTrickInfo(){
       for (int i=0;i<human_number;i++){
-        connection_array.get(i).out.println(17);
+        connection_array.get(i).out.println(Protocol.TRICK_INFO);
         try{
           connection_array.get(i).out_stream.writeObject(board.getTrick().getCards());
           connection_array.get(i).out_stream.reset();
@@ -522,7 +522,7 @@ public class WorkerThread{
 
     public synchronized void sendTrickListInfo(){
       for (int i=0;i<human_number;i++){
-        connection_array.get(i).out.println(18);
+        connection_array.get(i).out.println(Protocol.TRICKLIST_INFO);
         try{
           connection_array.get(i).out_stream.writeObject(board.getTricks());
           connection_array.get(i).out_stream.reset();
@@ -535,7 +535,7 @@ public class WorkerThread{
 
     public synchronized void sendTurnInfo(){
       for (int i=0;i<human_number;i++){
-        connection_array.get(i).out.println(19);
+        connection_array.get(i).out.println(Protocol.TURN_INFO);
         connection_array.get(i).out.println(board.getTurn());
       }
     }
@@ -543,7 +543,7 @@ public class WorkerThread{
     public synchronized void sendOuvertInfo(){
       for (int i=0;i<human_number;i++){
         if (i==board.getIndexTaker()) continue;
-        connection_array.get(i).out.println(20);
+        connection_array.get(i).out.println(Protocol.OUVERT_INFO);
         try{
           connection_array.get(i).out_stream.writeObject(Collections.unmodifiableList(board.getTabPlayer().get(board.getIndexTaker()).getHand().getHand()));
           connection_array.get(i).out_stream.reset();
@@ -557,13 +557,13 @@ public class WorkerThread{
 
     public synchronized void sendTurnStartInfo(){
       for (int i=0;i<human_number;i++){
-        connection_array.get(i).out.println(21);
+        connection_array.get(i).out.println(Protocol.STARTTURN_INFO);
       }
     }
 
     public synchronized void sendGameStartInfo(){
       for (int i=0;i<human_number;i++){
-        connection_array.get(i).out.println(22);
+        connection_array.get(i).out.println(Protocol.STARTGAME_INFO);
       }
     }
 
@@ -576,7 +576,7 @@ public class WorkerThread{
 
     public synchronized void sendResultGameInfo(){
       for (int i=0;i<human_number;i++){
-        connection_array.get(i).out.println(24);
+        connection_array.get(i).out.println(Protocol.RESULTGAME_INFO);
         connection_array.get(i).out.println(board.isWon());
         connection_array.get(i).out.println((board.isWon() ? 1 : -2)*board.getMaxReizenValue());
       }
@@ -585,7 +585,7 @@ public class WorkerThread{
     public synchronized void sendScoreInfo(){
       for (int i=0;i<human_number;i++){
         for(int j=i;j!=i;j=(j+1)%3){
-          connection_array.get(i).out.println(25);
+          connection_array.get(i).out.println(Protocol.SCORE_INFO);
           connection_array.get(i).out.println(relativeIndex(i,j));
           connection_array.get(i).out.println(board.getTabPlayer().get(j).getOverallScore());
         }
@@ -594,7 +594,7 @@ public class WorkerThread{
 
     public synchronized void sendTakerInfo(){
       for (int i=0;i<human_number;i++){
-        connection_array.get(i).out.println(26);
+        connection_array.get(i).out.println(Protocol.TAKER_INFO);
         connection_array.get(i).out.println(relativeIndex(i,board.getIndexTaker()));
       }
     }
@@ -616,7 +616,7 @@ public class WorkerThread{
       for(int i=0;i<human_number;i++){
         PipedInputStream in;
 
-        connection_array.get(i).out.println(1);
+        connection_array.get(i).out.println(Protocol.NAME_CLIENT);
         s[i]=rcvName(connection_array.get(i));
 
         in=new PipedInputStream();
@@ -745,17 +745,17 @@ public class WorkerThread{
     private boolean rcvFillRequest(Connection c){
       while(true){
         if (c.in.hasNextInt()){
-          if (c.in.nextInt()==0) break;
+          if (c.in.nextInt()==Protocol.FILL_BOARD) break;
         }
         c.in.next();
-        c.out.println(0);
+        c.out.println(Protocol.FILL_BOARD);
       }
       while(true){
         if (c.in.hasNextBoolean()){
           return c.in.nextBoolean();
         }
         c.in.next();
-        c.out.println(0);
+        c.out.println(Protocol.FILL_BOARD);
       }
     }
 
@@ -797,7 +797,7 @@ public class WorkerThread{
             System.exit(1);
           }
           c1.out.println(Protocol.FILL_BOARD);
-          c1.out.println(1);
+          c1.out.println(1);//number of human players
           if (rcvFillRequest(c1)){
             if (waiting_list.size()==1){
               try{
@@ -807,7 +807,7 @@ public class WorkerThread{
                 System.exit(1);
               }
               c2.out.println(Protocol.FILL_BOARD);
-              c1.out.println(2);
+              c1.out.println(2);// number of human players
               if (rcvFillRequest(c2)){
                 (new BoardThread(c1,c2)).start();
               }else{

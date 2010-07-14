@@ -79,7 +79,7 @@ public class HumanPlayer extends Player{
    */
   public boolean decideReizen(int value){
       synchronized(Thread.currentThread()){
-    writer.println(2);
+    writer.println(Protocol.REIZEN_REQUEST);
     writer.println(value);
       }
     while(!action_player_bool) {
@@ -98,7 +98,7 @@ public class HumanPlayer extends Player{
         return reader.nextBoolean();
       }
       reader.next();
-      writer.println(2);
+      writer.println(Protocol.REIZEN_REQUEST);
       writer.println(value);
     }
   }
@@ -110,7 +110,7 @@ public class HumanPlayer extends Player{
    */
   public Board.GameType decideGametype(){
     int index=0;
-    writer.println(3);
+    writer.println(Protocol.GAMETYPE_REQUEST);
     while(!action_player_bool) {
       synchronized(Thread.currentThread()){
         try {
@@ -121,12 +121,12 @@ public class HumanPlayer extends Player{
     action_player_bool=false;
     while (true){
       if (reader.hasNextInt()){
-        index=reader.nextInt(6);
-        index=(index<0 ? -index : index);
+        index=reader.nextInt(6);//6 is the mod since there are 6 gametypes
+        index=(index<0 ? -index : index); // prevent funny stuff with the mod
         break;
       }
       reader.next();
-      writer.println(3);
+      writer.println(Protocol.GAMETYPE_REQUEST);
     }
     switch(index){
 
@@ -147,7 +147,7 @@ public class HumanPlayer extends Player{
   public List<Integer> chooseModifiers(){
     List<Integer> l;
     Integer[] modifiers_array=new Integer[4];
-    writer.println(4);
+    writer.println(Protocol.GAMETYPE_MODIFIERS_REQUEST);
     while(!action_player_bool) {
       synchronized(Thread.currentThread()){
         try {
@@ -162,7 +162,7 @@ public class HumanPlayer extends Player{
         break;
       }
       reader.next();
-      writer.println(4);
+      writer.println(Protocol.GAMETYPE_MODIFIERS_REQUEST);
     }
     while(true){
       if (reader.hasNextBoolean()){
@@ -170,7 +170,7 @@ public class HumanPlayer extends Player{
         break;
       }
       reader.next();
-      writer.println(4);
+      writer.println(Protocol.GAMETYPE_MODIFIERS_REQUEST);
     }
     while(true){
       if (reader.hasNextBoolean()){
@@ -178,7 +178,7 @@ public class HumanPlayer extends Player{
         break;
       }
       reader.next();
-      writer.println(4);
+      writer.println(Protocol.GAMETYPE_MODIFIERS_REQUEST);
     }
     while(true){
       if (reader.hasNextBoolean()){
@@ -186,7 +186,7 @@ public class HumanPlayer extends Player{
         break;
       }
       reader.next();
-      writer.println(4);
+      writer.println(Protocol.GAMETYPE_MODIFIERS_REQUEST);
     }
     l=Arrays.asList(modifiers_array);
     return l;
@@ -198,7 +198,7 @@ public class HumanPlayer extends Player{
    */
   public List<Card> chooseSkat(){
     List<Card> temp_skat=new ArrayList<Card>(2);
-    writer.println(5);
+    writer.println(Protocol.SKAT_REQUEST);
     while(!action_player_bool) {
       synchronized(Thread.currentThread()){
         try {
@@ -215,7 +215,7 @@ public class HumanPlayer extends Player{
         break;
       }
       reader.next();
-      writer.println(5);
+      writer.println(Protocol.SKAT_REQUEST);
     }
     while(true){
       if (reader.hasNextInt()){
@@ -223,7 +223,7 @@ public class HumanPlayer extends Player{
         break;
       }
       reader.next();
-      writer.println(5);
+      writer.println(Protocol.SKAT_REQUEST);
     }
     while (c1.equals(c2)){
       while(true){
@@ -232,7 +232,7 @@ public class HumanPlayer extends Player{
           break;
         }
         reader.next();
-        writer.println(5);
+        writer.println(Protocol.SKAT_REQUEST);
       }
     }
     temp_skat.add(c1);
@@ -246,7 +246,7 @@ public class HumanPlayer extends Player{
    */
   public Card play(){
     int index;
-    writer.println(6);
+    writer.println(Protocol.PLAY_REQUEST);
     while(!action_player_bool) {
       synchronized(Thread.currentThread()){
         try {
@@ -261,7 +261,7 @@ public class HumanPlayer extends Player{
         return player_hand.getHand().get(index);
       }
       reader.next();
-      writer.println(6);
+      writer.println(Protocol.PLAY_REQUEST);
     }
   }
 

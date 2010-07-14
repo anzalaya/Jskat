@@ -411,7 +411,7 @@ public boolean getQuitGame(){
       sendNotification(Protocol.HAND_INFO);
       action_player=index_taker;
       chosen_skat=tab_player.get(index_taker).chooseSkat();
-      System.out.println("Skat choisi "+chosen_skat.toString());
+//      System.out.println("Skat choisi "+chosen_skat.toString());
       tab_player.get(index_taker).remove(chosen_skat);
       //cas ou pas hand, on remplace
       skat.clear();
